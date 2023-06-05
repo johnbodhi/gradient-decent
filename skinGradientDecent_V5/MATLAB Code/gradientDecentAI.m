@@ -1,8 +1,6 @@
-% clc; clear all; close all; 
+clear all; close all; clc; tic;
 
 % We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
-
-tic;
 
 global L C X N Nl RA classGroups classType
 
@@ -28,7 +26,7 @@ Nl = zeros(1,size(numImages,2)+1);
 for j = 1:1:size(numImages,2)
 
     % Nl(1,j) = numImages(j); % Number of objects per class.
-    Nl(1,j) = 1; 
+    Nl(1,j) = 5; 
 end
 totalN = sum(Nl); 
 
@@ -42,7 +40,7 @@ L = size( dataSet, 1 ); C = size( dataSet, 2 );
 
 % randomizedPhotos = randomizedPhotos( dataSet, Nr, Mr, L, C, Nl ); % Randomize all photos.
 
-% dataSetRandomized = dataSetRandomized( dataSet, L, C );  % Randomize all pixels.
+%  = dataSetRandomized( dataSet, L, C );  % Randomize all pixels.
 
 dataSetRandomized = readmatrix('dataSetRandomized.csv');
 
@@ -52,7 +50,7 @@ skinObservation = dataSetRandomized( :, C ); % Extract randmized observations fo
 
 totalN = size( dataSetRandomized, 1 ); 
 
-trainingN = floor( 0.60 * totalN ); 
+trainingN = floor( 0.50 * totalN ); 
 
 testN = floor( 0.0 * totalN );
 
@@ -115,7 +113,8 @@ for k = 1:1:size(RA,3)
     
         hh = hh + 1;
 
-        if (hh == size(Nl,2))
+        if ( hh == size(Nl,2) )
+
             break; % Non-even test sequence.
         end
     end
