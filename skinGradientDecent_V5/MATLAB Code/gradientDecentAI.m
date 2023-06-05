@@ -12,23 +12,23 @@ photoToArray(); % Pre-process all images.
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\MATLAB Code"); 
 
-classType = [ 1 2 ]; % Skin class designations.
+classType = [ 1 2 ]; % Number of column-wsie designations.
 
-classGroups = zeros( 1, (size(numImages,2)-1) / 2 );
+classGroups = zeros( 1, (size(numImages,2)-1) / 2 ); % Groupings for cyclic weight.
 
-classGroups(1:end) = size(classType,2); 
+classGroups(1,1:end) = size(classType,2); 
 
 Nr = 25; Mr = 25; % Photo length, and width. 
 
 % Number of images per class to classify.
 
-N = size(classType,2)*size(classGroups,2);
+N = size(classType,2)*size(classGroups,2); % Total number of classes.
 
 Nl = zeros(1,size(numImages,2)+1);
 for j = 1:1:size(numImages,2)
 
-    Nl(1,j) = numImages(j); 
-    Nl(1,j) = 2; 
+    % Nl(1,j) = numImages(j); % Number of objects per class.
+    Nl(1,j) = 1; 
 end
 totalN = sum(Nl); 
 
@@ -52,7 +52,7 @@ skinObservation = dataSetRandomized( :, C ); % Extract randmized observations fo
 
 totalN = size( dataSetRandomized, 1 ); 
 
-trainingN = floor( 0.55 * totalN ); 
+trainingN = floor( 0.60 * totalN ); 
 
 testN = floor( 0.0 * totalN );
 

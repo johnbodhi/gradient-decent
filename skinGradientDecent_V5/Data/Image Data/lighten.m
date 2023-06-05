@@ -1,5 +1,3 @@
-
-
 for i = 1:1:size(dataSet,1)
     for j = 1:1:size(dataSet,2)
         if( dataSet(i,j) == 0 )
