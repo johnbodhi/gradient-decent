@@ -12,7 +12,7 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_
 
 classType = [ 1 2 ]; % Number of column-wsie designations.
 
-classGroups = zeros( 1, ( size(numImages, 2) - 1 ) / 2 ); % Groupings for cyclic weight.
+classGroups = zeros( 1, ( size(numImages, 2) - 1 ) / 2 + 1); % Groupings for cyclic weight.
 
 classGroups(1,1:end) = size(classType,2); 
 
@@ -26,7 +26,7 @@ Nl = zeros(1,size(numImages,2)+1);
 for j = 1:1:size(numImages,2)
 
     % Nl(1,j) = numImages(j); % Number of objects per class.
-    Nl(1,j) = 5; 
+    Nl(1,j) = 1; 
 end
 totalN = sum(Nl); 
 
@@ -113,17 +113,15 @@ for k = 1:1:size(RA,3)
     
         hh = hh + 1;
 
-        if ( hh == size(Nl,2) )
+        if ( hh == uu )
 
             break; % Non-even test sequence.
         end
-
     end
 
     uu = uu + 2; vv = vv + 2;    
 end
 
-toc;
-
 AVE = [ mean(PREC) mean(REC) mean(ACC) mean(F1) ];
 
+toc;
