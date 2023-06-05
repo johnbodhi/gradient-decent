@@ -12,7 +12,9 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_
 
 classType = [ 1 2 ]; % Number of column-wsie designations.
 
-classGroups = zeros( 1, ( size(numImages, 2) - 1 ) / 2 + 1); % Groupings for cyclic weight.
+NTest = 1; % Number of test columns.
+
+classGroups = zeros( 1, ( size(numImages, 2) - 1 ) / 2 + NTest); % Groupings for cyclic weight.
 
 classGroups(1,1:end) = size(classType,2); 
 
@@ -22,11 +24,11 @@ Nr = 25; Mr = 25; % Photo length, and width.
 
 N = size(classType,2)*size(classGroups,2); % Total number of classes.
 
-Nl = zeros(1,size(numImages,2)+1);
+Nl = zeros(1,size(numImages,2));
 for j = 1:1:size(numImages,2)
 
     % Nl(1,j) = numImages(j); % Number of objects per class.
-    Nl(1,j) = 1; 
+    Nl(1,j) = 5; 
 end
 totalN = sum(Nl); 
 
@@ -105,18 +107,18 @@ for k = 1:1:size(RA,3)
         cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\MATLAB Code");
         
         [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN, testN, C );
+
+        if ( hh == size(Nl,2) )
+
+            break; % Non-even test sequence.
+        end
     
         if( hh < size(Nl,2)-1 )
         
             [ PREC( hh ), REC( hh ), ACC( hh ), F1( hh ) ] = fMeasure( D, E ); 
         end
-    
+
         hh = hh + 1;
-
-        if ( hh == uu )
-
-            break; % Non-even test sequence.
-        end
     end
 
     uu = uu + 2; vv = vv + 2;    

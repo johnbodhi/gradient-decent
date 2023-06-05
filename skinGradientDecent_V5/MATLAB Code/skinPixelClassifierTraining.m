@@ -5,12 +5,10 @@ global i n N W RA R G B classGroups classType CFLAG
     CFLAG = 0;
 
     R = zeros( N, trainingN ); G = zeros( N, trainingN ); B = zeros( N, trainingN );
-
-    NTest = 1; % Number of test columns.
     
-    RA = zeros( 2, 3, size( classGroups, 2) + NTest ); % Allocate for cyclic weighting / infinite parameter gain.
+    RA = zeros( 2, 3, size( classGroups, 2) ); % Allocate for cyclic weighting / infinite parameter gain.
 
-    W = zeros( 2, 3, size( classGroups, 2) + NTest );
+    W = zeros( 2, 3, size( classGroups, 2) );
 
     for kk = 1:1:size( classGroups, 2 )
         for ii = 1:1:size(classType, 2 )

@@ -84,9 +84,9 @@ function [ Z ] = gradientDecent( F )
     if( Z == 1 )
 
         Z = uu;
-
     elseif (Z == 2 )
 
         Z = vv;
     end
+
 end
