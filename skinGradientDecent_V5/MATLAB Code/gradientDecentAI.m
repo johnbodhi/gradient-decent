@@ -25,8 +25,8 @@ N = size(classType,2)*size(classGroups,2); % Total number of classes.
 Nl = zeros(1,size(numImages,2)+1);
 for j = 1:1:size(numImages,2)
 
-    Nl(1,j) = numImages(j); % Number of objects per class.
-    % Nl(1,j) = 5; 
+    % Nl(1,j) = numImages(j); % Number of objects per class.
+    Nl(1,j) = 5; 
 end
 totalN = sum(Nl); 
 
@@ -117,7 +117,7 @@ for k = 1:1:size(RA,3)
 
             break; % Non-even test sequence.
         end
-        
+
     end
 
     uu = uu + 2; vv = vv + 2;    
