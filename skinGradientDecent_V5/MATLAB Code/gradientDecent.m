@@ -1,10 +1,13 @@
 function [ Z ] = gradientDecent( F )
 
-    global W RA C imageLength classType classGroups
+    global W RA C imageLength classType classGroups uu vv
 
     Y = F(:,1:C-1); % We can remove all labels from the data.
 
     eps = 1e1; ii = 0;
+
+    % We need to generate the learning rate, and find the gradient. This
+    % gradient is modified for infinite convolutional locii...
 
     for mm = 2:1:size(classGroups,2)
         for k = 2:size(classType,2)
@@ -63,15 +66,25 @@ function [ Z ] = gradientDecent( F )
         Y = F(:,1:C-1);
     end
 
-    uu = 1;
+    cc = 1;
     for mm = 1:1:size(iiVec,4)
         for k = 1:1:size(iiVec,3)
     
-            S(uu) = sum(sum(iiVec(:,:,k,mm)));
+            S(cc,1) = sum(sum(iiVec(:,:,k,mm)));
 
-            uu = uu + 1;
+            cc = cc + 1;
         end
     end
 
-    [ ~, Z ] = min(S(:));
+    [ ~, Z ] = min(S(uu:vv,1));
+
+    if( Z == 1 )
+
+        Z = uu;
+
+    elseif (Z == 2 )
+
+        Z = vv;
+    end
+
 end

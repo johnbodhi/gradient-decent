@@ -35,7 +35,7 @@ function [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN
             disp( A )
         end
 
-        % runningAverage( RGB ); % We can update RA during classification.
+        % runningAverage( RGB ); % We can utilize non-stationary RA during classification.
     end
 
 end
