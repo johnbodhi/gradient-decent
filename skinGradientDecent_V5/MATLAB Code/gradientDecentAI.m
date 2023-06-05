@@ -1,4 +1,4 @@
-clear all; close all; clc; tic;
+% clear all; close all; clc; tic;
 
 % We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
 
@@ -14,7 +14,7 @@ classType = [ 1 2 ]; % Number of column-wsie designations.
 
 NTest = 1; % Number of test columns.
 
-classGroups = zeros( 1, ( size(numImages, 2) - 1 ) / 2 + NTest); % Groupings for cyclic weight.
+classGroups = zeros( 1, size(numImages, 2)); % Groupings for cyclic weight.
 
 classGroups(1,1:end) = size(classType,2); 
 
@@ -42,7 +42,7 @@ L = size( dataSet, 1 ); C = size( dataSet, 2 );
 
 % randomizedPhotos = randomizedPhotos( dataSet, Nr, Mr, L, C, Nl ); % Randomize all photos.
 
-%  = dataSetRandomized( dataSet, L, C );  % Randomize all pixels.
+% dataSetRandomized = dataSetRandomized( dataSet, L, C );  % Randomize all pixels.
 
 dataSetRandomized = readmatrix('dataSetRandomized.csv');
 
@@ -75,8 +75,10 @@ for k = 1:1:size(RA,3)
     for j = 1:1:size( X, 2 )
     
         cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\Data\Excel Data");
+
+        dataSet = readmatrix( 'verificationRGB.csv' ); % Organized.
     
-        dataSet = readmatrix( 'testRGB.csv' ); % Organized.
+        % dataSet = readmatrix( 'testRGB.csv' ); % Organized.
     
         L = size(dataSet,1);
     
@@ -108,12 +110,12 @@ for k = 1:1:size(RA,3)
         
         [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN, testN, C );
 
-        if ( hh == size(Nl,2) )
+        if ( hh == size(Nl,2) + NTest)
 
             break; % Non-even test sequence.
         end
     
-        if( hh < size(Nl,2)-1 )
+        if( hh < size(Nl,2) )
         
             [ PREC( hh ), REC( hh ), ACC( hh ), F1( hh ) ] = fMeasure( D, E ); 
         end
