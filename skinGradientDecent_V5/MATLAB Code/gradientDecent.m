@@ -76,6 +76,9 @@ function [ Z ] = gradientDecent( F )
         end
     end
 
+    % We can implement segmentation in the classification process by
+    % classifying only class groups at a time.
+
     [ ~, Z ] = min(S(uu:vv,1));
 
     if( Z == 1 )
@@ -86,5 +89,4 @@ function [ Z ] = gradientDecent( F )
 
         Z = vv;
     end
-
 end
