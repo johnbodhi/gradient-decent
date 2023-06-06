@@ -72,10 +72,15 @@ uu = 1; vv = 2; hh = 1;
 
 for k = 1:1:size(RA,3)
 
+    if ( hh > size(Nl,2) )
+
+        break; % End test sequence.
+    end
+
     X = [ uu, vv ];    
 
     for j = 1:1:size( X, 2 )
-    
+
         cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\Data\Excel Data");
 
         % dataSet = readmatrix( 'verificationRGB.csv' ); % Organized
@@ -113,12 +118,12 @@ for k = 1:1:size(RA,3)
         
         [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN, testN, C );
 
-        if( hh < size(Nl,2) )
+        if( hh <= size(Nl,2) )
         
             [ PREC( hh ), REC( hh ), ACC( hh ), F1( hh ) ] = fMeasure( D, E ); 
         end
 
-        hh = hh + 1;
+        hh = hh + 1;        
     end
 
     uu = uu + 2; vv = vv + 2;    
