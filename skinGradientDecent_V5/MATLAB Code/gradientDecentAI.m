@@ -29,8 +29,8 @@ N = size(classType,2)*size(classGroups,2); % Total number of classes.
 Nl = zeros(1,size(numImages,2));
 for j = 1:1:size(numImages,2)
 
-    Nl(1,j) = numImages(j); % Number of objects per class.
-    % Nl(1,j) = 5; 
+    % Nl(1,j) = numImages(j); % Number of objects per class.
+    Nl(1,j) = 5; 
 end
 totalN = sum(Nl); 
 
@@ -54,7 +54,7 @@ skinObservation = dataSetRandomized( :, C ); % Extract randmized observations fo
 
 totalN = size( dataSetRandomized, 1 ); 
 
-trainingN = floor( 0.5 * totalN ); 
+trainingN = floor( 0.3 * totalN ); 
 
 testN = floor( 0.0 * totalN );
 
@@ -113,11 +113,6 @@ for k = 1:1:size(RA,3)
         
         [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN, testN, C );
 
-        if ( hh == size(Nl,2) + NTest)
-
-            break; % Non-even test sequence.
-        end
-    
         if( hh < size(Nl,2) )
         
             [ PREC( hh ), REC( hh ), ACC( hh ), F1( hh ) ] = fMeasure( D, E ); 
