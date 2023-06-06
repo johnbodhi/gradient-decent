@@ -29,6 +29,6 @@ global i n N W RA R G B classGroups classType CFLAG
         
         RGB = dataSetRandomized( i, 1:C-1 );
         
-        runningAverage( RGB );
+        [ RA ] = runningAverage( RGB );
     end
 end

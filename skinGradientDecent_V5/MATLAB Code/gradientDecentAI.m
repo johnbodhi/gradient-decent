@@ -1,14 +1,16 @@
-% clear all; close all; clc; tic;
+% clear all; close all; clc; 
 
-% We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
-
-global L C X N Nl RA classGroups classType uu vv
+tic;
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\Data\Image Data");
 
 photoToArray(); % Pre-process all images.
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\MATLAB Code"); 
+
+% We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
+
+global L C X N Nl RA classGroups classType uu vv
 
 classType = [ 1 2 ]; % Number of column-wsie designations.
 
@@ -27,12 +29,10 @@ N = size(classType,2)*size(classGroups,2); % Total number of classes.
 Nl = zeros(1,size(numImages,2));
 for j = 1:1:size(numImages,2)
 
-    % Nl(1,j) = numImages(j); % Number of objects per class.
-    Nl(1,j) = 5; 
+    Nl(1,j) = numImages(j); % Number of objects per class.
+    % Nl(1,j) = 5; 
 end
 totalN = sum(Nl); 
-
-M = 1; % Class training epochs 1-Total Photos. (Trains RA on a percentage of the pixels in M photos)
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\Data\Excel Data");
 
@@ -46,13 +46,15 @@ L = size( dataSet, 1 ); C = size( dataSet, 2 );
 
 dataSetRandomized = readmatrix('dataSetRandomized.csv');
 
+M = 1; % Class training epochs 1-Total Photos. (Trains RA on a percentage of the pixels in M photos)
+
 dataSetRandomized = dataSetRandomized( 1:M * Nr * Mr, 1:C );  % Assign randomized pixels over the length of images.
 
 skinObservation = dataSetRandomized( :, C ); % Extract randmized observations for training.
 
 totalN = size( dataSetRandomized, 1 ); 
 
-trainingN = floor( 0.6 * totalN ); 
+trainingN = floor( 0.5 * totalN ); 
 
 testN = floor( 0.0 * totalN );
 
@@ -76,9 +78,10 @@ for k = 1:1:size(RA,3)
     
         cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\Data\Excel Data");
 
-        dataSet = readmatrix( 'verificationRGB.csv' ); % Organized.
+        % dataSet = readmatrix( 'verificationRGB.csv' ); % Organized
+        % verification sequence.
     
-        % dataSet = readmatrix( 'testRGB.csv' ); % Organized.
+        dataSet = readmatrix( 'testRGB.csv' ); % Organized test sequence.
     
         L = size(dataSet,1);
     
