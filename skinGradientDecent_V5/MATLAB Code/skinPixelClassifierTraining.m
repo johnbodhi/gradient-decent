@@ -6,11 +6,11 @@ global i n N W RA R G B classGroups classType CFLAG
 
     R = zeros( N, trainingN ); 
     
-    G = zeros( N, trainingN ); 
+    %G = zeros( N, trainingN ); 
     
-    B = zeros( N, trainingN );
+    %B = zeros( N, trainingN );
     
-    RA = zeros( 2, 3, size( classGroups, 2) ); % Allocate for cyclic weighting / infinite parameter gain.
+    RA = zeros( 2, 1, size( classGroups, 2) ); % Allocate for cyclic weighting / infinite parameter gain.
 
     W = zeros( 2, 3, size( classGroups, 2) );
 
@@ -31,7 +31,7 @@ global i n N W RA R G B classGroups classType CFLAG
 
         n = skinObservation( i ); 
         
-        RGB = dataSetRandomized( i, 1:C-1 );
+        RGB = dataSetRandomized( i, 1:C-3 );
         
         [ RA ] = runningAverage( RGB );
     end
