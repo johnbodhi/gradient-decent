@@ -8,7 +8,7 @@ function [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN
 
     ii = 1;
 
-    Nr = 28; Mr = 28;
+    Nr = 58; Mr = 58;
 
     imageLength = Nr * Mr;
 
