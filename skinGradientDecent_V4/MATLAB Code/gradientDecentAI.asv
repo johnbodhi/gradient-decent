@@ -10,6 +10,8 @@ classType = [ 1 2 3 ]; % Skin class designations.
 
 Nr = 58; Mr = 58; % Photo length, and width. 
 
+
+
 N = [ 0 0 10 ]; % Number of images per class to classify.
 
 M = 1; % Class training epochs 1-Total Photos. (Trains RA on a percentage of the pixels in M photos)
