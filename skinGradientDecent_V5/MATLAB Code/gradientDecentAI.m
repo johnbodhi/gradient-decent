@@ -14,8 +14,6 @@ global L C X N Nl RA classGroups classType uu vv
 
 classType = [ 1 2 ]; % Number of column-wsie designations.
 
-NTest = 1; % Number of test columns.
-
 classGroups = zeros( 1, size(numImages, 2)); % Groupings for cyclic weight.
 
 classGroups(1,1:end) = size(classType,2); 
