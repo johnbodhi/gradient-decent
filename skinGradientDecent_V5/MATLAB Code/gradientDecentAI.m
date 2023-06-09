@@ -80,9 +80,6 @@ for k = 1:1:size(RA,3)
     for j = 1:1:size( X, 2 )
 
         cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\Data\Excel Data");
-
-        % dataSet = readmatrix( 'verificationRGB.csv' ); % Organized
-        % verification sequence.
     
         dataSet = readmatrix( 'testRGB.csv' ); % Organized test sequence.
     
