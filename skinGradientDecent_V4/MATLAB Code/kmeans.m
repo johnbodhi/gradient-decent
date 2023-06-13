@@ -20,7 +20,9 @@ global imageLength C RA
             end
         end
     
-        % Ci = mean( D( :, 1 ) ); Cj = mean( D( :, 2 ) ) ; Ck = mean( D( :, 3 ) ); Cn = [ Ci Cj Ck ]; 
+        % Ci = mean( D( :, 1 ) ); Cj = mean( D( :, 2 ) ) ; Ck = mean( D( :, 3 ) ); 
+        % 
+        % Cn = [ Ci Cj Ck ]; 
         
         Ci = mean( D( :, 1 ) ); Cn = [ Ci ]; % Dimensionality reduction...
         

@@ -28,7 +28,7 @@ Nl = zeros(1,size(numImages,2));
 for j = 1:1:size(numImages,2)
 
     % Nl(1,j) = numImages(j); % Number of objects per class.
-    Nl(1,j) = 1; 
+    Nl(1,j) = 2; 
 end
 totalN = sum(Nl); 
 
