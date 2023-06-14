@@ -10,7 +10,7 @@ classType = [ 1 2 3 ]; % Skin class designations.
 
 Nr = 58; Mr = 58; % Photo length, and width. 
 
-N = [ 0 0 10 ]; % Number of images per class to classify.
+N = [ 50 50 10 ]; % Number of images per class to classify.
 
 M = 1; % Class training epochs 1-Total Photos. (Trains RA on a percentage of the pixels in M photos)
 
@@ -50,7 +50,7 @@ skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN, tota
 
 hh = 1;
 
-for j = classType(1,3):1:size( classType, 2 )
+for j = 1:1:size( classType, 2 )
 
     cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V4\Data\Excel Data");
 
@@ -84,9 +84,13 @@ for j = classType(1,3):1:size( classType, 2 )
     cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V4\MATLAB Code");
     
     [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN, testN, C );
-
     
-    [ PREC( hh ), REC( hh ), ACC( hh ), F1( hh ) ] = fMeasure( D, E ); hh = hh + 1;
+    if ( j < size(N,2) - 1 )
+    
+        [ PREC( hh ), REC( hh ), ACC( hh ), F1( hh ) ] = fMeasure( D, E );   
+    end
+
+    hh = hh + 1;
 
     toc;
 end
