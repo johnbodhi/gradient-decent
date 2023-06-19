@@ -30,6 +30,7 @@ global imageLength classGroups C RA
                 if( n ~= B(i,j) )
                     B(i,j) = 0;
                 end
+                
             end
         end
 
@@ -45,13 +46,12 @@ global imageLength classGroups C RA
 
        % We can find all 2norms with the mask...
 
-        for j = 1:C-3
+        for j = 1:C-1
             for i = 1:size( X, 1 )
         
                 if ( TA )
         
-                    D( i, j ) = ( ( X( i, j ) - RA( 1, j, TA ) )^p )^( 1 / p );
-        
+                    D( i, j ) = ( ( X( i, j ) - RA( 1, j, TA ) )^p )^( 1 / p );        
                 elseif ( TB )
         
                     D( i, j ) = ( ( X( i, j ) - RA( 2, j, TB ) )^p )^( 1 / p );
@@ -60,13 +60,13 @@ global imageLength classGroups C RA
             end
         end
 
-%         Ci = mean(D(:,1)); Cj = mean(D(:,2)); Ck = mean(D(:,3)); 
-% 
-%         Cn = [ Ci Cj Ck ]; 
+        Ci = mean(D(:,1)); Cj = mean(D(:,2)); Ck = mean(D(:,3)); 
 
-        Ci = mean(D(:,1));  Cn = [ Ci ]; 
+        Cn = [ Ci Cj Ck ]; 
 
-        for j = 1:C-3
+        % Ci = mean(D(:,1));  Cn = [ Ci ]; 
+
+        for j = 1:C-1
             for i = 1:imageLength
 
                 Y( i, j ) = ( ( X( i, j ) - Cn( j ) )^p )^(1/p); 

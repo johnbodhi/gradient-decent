@@ -1,18 +1,18 @@
-function skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN, totalN, C )
+function skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN )
 
-global i n N W RA R G B classGroups classType CFLAG
+global i n N W RA R G B C classGroups classType CFLAG
 
     CFLAG = 0;
 
     R = zeros( N, trainingN ); 
     
-    %G = zeros( N, trainingN ); 
+    G = zeros( N, trainingN ); 
     
-    %B = zeros( N, trainingN );
+    B = zeros( N, trainingN );
     
-    RA = zeros( 2, 1, size( classGroups, 2) ); % Allocate for cyclic weighting / infinite parameter gain.
+    RA = zeros( size( classType, 2), 3, size( classGroups, 2) ); % Allocate for cyclic weighting / infinite parameter gain.
 
-    W = zeros( 2, 3, size( classGroups, 2) );
+    W  = zeros( size( classType, 2), 3, size( classGroups, 2) );
 
     for kk = 1:1:size( classGroups, 2 )
         for ii = 1:1:size(classType, 2 )
@@ -23,7 +23,12 @@ global i n N W RA R G B classGroups classType CFLAG
             elseif ( ii == 2 )
     
                 W(ii,:,kk) = 1e3;
+
+            elseif ( ii == 3 )
+    
+                W(ii,:,kk) = 0;
             end
+
         end
     end
 
@@ -31,7 +36,7 @@ global i n N W RA R G B classGroups classType CFLAG
 
         n = skinObservation( i ); 
         
-        RGB = dataSetRandomized( i, 1:C-3 );
+        RGB = dataSetRandomized( i, 1:C-1 );
         
         [ RA ] = runningAverage( RGB );
     end

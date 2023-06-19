@@ -12,7 +12,7 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_
 
 global L C X N Nl RA classGroups classType uu vv
 
-classType = [ 1 2 ]; % Number of column-wsie designations.
+classType = [ 1 2 ]; % Number of column-wise designations.
 
 classGroups = zeros( 1, size(numImages, 2)); % Groupings for cyclic weight.
 
@@ -27,8 +27,8 @@ N = size(classType,2)*size(classGroups,2); % Total number of classes.
 Nl = zeros(1,size(numImages,2));
 for j = 1:1:size(numImages,2)
 
-    Nl(1,j) = numImages(j); % Number of objects per class.
-    % Nl(1,j) = 2; 
+    % Nl(1,j) = numImages(j); % Number of objects per class.
+    Nl(1,j) = 1; 
 end
 totalN = sum(Nl); 
 
@@ -58,7 +58,7 @@ testN = floor( 0.0 * totalN );
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\MATLAB Code");
 
-skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN, totalN, C );
+skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN );
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -87,9 +87,10 @@ for k = 1:1:size(RA,3)
     
         % We can grab all observations in order, no matter the order of the
         % data content.
+        
         ii = 1;
         for i = 1:L
-            if ( dataSet( i, C ) == X( 1, j ))
+            if ( dataSet( i, C ) == X( 1, j ) )
 
                 dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
             end
