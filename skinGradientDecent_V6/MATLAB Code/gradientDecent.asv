@@ -46,7 +46,7 @@ function [ Z ] = gradientDecent( F )
                             ii = ii + 1;
                         end 
 
-                        iiVec( i, j, k, mm ) = ii; ii = 0;                        
+                        iiVec( i, j, k, mm ) = ii; ii = 0;
                     end
     
                     Y = F(:,1:C-1); 
@@ -57,7 +57,7 @@ function [ Z ] = gradientDecent( F )
                                 eps( k, j, mm ) );
                             ii = ii + 1;
                         end
-
+                        
                         iiVec( i, j, k, mm ) = ii; ii = 0;
                     end      
     
@@ -74,7 +74,7 @@ function [ Z ] = gradientDecent( F )
     for mm = 1:1:size(iiVec,4)
         for k = 1:1:size(iiVec,3)
     
-            S( cc, 1 ) = sum( sum( iiVec(:,:,k,mm) ) );
+            S( cc, 1 ) = sum(sum(iiVec(:,:,k,mm)));
 
             cc = cc + 1;
         end
@@ -83,7 +83,7 @@ function [ Z ] = gradientDecent( F )
     % We can implement segmentation in the classification process by
     % classifying only class groups at a time.
 
-    [ ~, Z ] = min( S(uu:vv+1, 1) );
+    [ ~, Z ] = min( S( uu:vv, 1 ) );
 
     if( Z == 1 )
 
@@ -91,10 +91,6 @@ function [ Z ] = gradientDecent( F )
     elseif ( Z == 2 )
 
         Z = vv;
-
-    elseif ( Z == 3 )
-
-        Z = 0;
     end
     
 end

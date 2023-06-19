@@ -13,6 +13,7 @@ function [ Z ] = gradientDecent( F )
         for k = 2:1:size(classType,2)
             for j = 1:1:C-1
                 for i = 2:imageLength
+
                     gamma( i, j, mm ) = abs( ...
                                         ( Y( i, 1 ) - Y( i-1, 1 ) ) *...
                                         ( RA( k, j, mm ) - RA( k-1, j, mm-1 ) ) + eps ) /...
@@ -56,6 +57,7 @@ function [ Z ] = gradientDecent( F )
                                 eps( k, j, mm ) );
                             ii = ii + 1;
                         end
+
                         iiVec( i, j, k, mm ) = ii; ii = 0;
                     end      
     
@@ -88,7 +90,7 @@ function [ Z ] = gradientDecent( F )
         Z = uu;
     elseif ( Z == 2 )
 
-        Z = vv;
+        Z = vv;        
     end
     
 end
