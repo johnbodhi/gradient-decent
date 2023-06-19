@@ -72,7 +72,7 @@ function [ Z ] = gradientDecent( F )
     for mm = 1:1:size(iiVec,4)
         for k = 1:1:size(iiVec,3)
     
-            S(cc,1) = sum(sum(iiVec(:,:,k,mm)));
+            S( cc, 1 ) = sum(sum(iiVec(:,:,k,mm)));
 
             cc = cc + 1;
         end
@@ -81,7 +81,7 @@ function [ Z ] = gradientDecent( F )
     % We can implement segmentation in the classification process by
     % classifying only class groups at a time.
 
-    [ ~, Z ] = min( S(uu:vv, 1) );
+    [ ~, Z ] = min( S( uu:vv, 1 ) );
 
     if( Z == 1 )
 
