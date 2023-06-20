@@ -61,7 +61,10 @@ global imageLength classGroups C RA
                     end            
                 end
             end
-
+       
+            Ci = mean(D(:,1)); Cj = mean(D(:,2)); Ck = mean(D(:,3)); 
+    
+            Cn = [ Ci Cj Ck ]; 
         else 
 
             for k = 1:1:size(RA,3)
@@ -71,20 +74,20 @@ global imageLength classGroups C RA
         
                             D( i, j, ii, k ) = ( ( X( i, j ) - RA( ii, j, k ) )^p )^( 1 / p );  
                         end
-                    end                    
+                    end    
+
+                    Z_(ii,1) = sum(sum(D(:,:,ii,k)));
                 end
 
-                Z_(ii,1) = sum(sum(D(:,:,ii,k)));
+                Z(k,1) = min(Z_);
             end
 
-            Z(k,1) = min(Z_);
-        end
-
-        [~,W] = min(Z);
+            [~,W] = min(Z);
        
-        Ci = mean(D(:,1,W)); Cj = mean(D(:,2,W)); Ck = mean(D(:,3,W)); 
-
-        Cn = [ Ci Cj Ck ]; 
+            Ci = mean(D(:,1,W)); Cj = mean(D(:,2,W)); Ck = mean(D(:,3,W)); 
+    
+            Cn = [ Ci Cj Ck ];
+        end
 
         for j = 1:C-1
             for i = 1:imageLength
@@ -102,4 +105,3 @@ global imageLength classGroups C RA
     end
 
 end
-
