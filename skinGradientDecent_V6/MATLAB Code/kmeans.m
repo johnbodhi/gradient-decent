@@ -9,6 +9,7 @@ global imageLength classGroups C RA
     while( jj < N * imageLength ) % Modified convergence criterion.
 
         if ( ii  == N * imageLength )
+
             ii = 1;
         end
 
@@ -64,18 +65,22 @@ global imageLength classGroups C RA
         else 
 
             for k = 1:1:size(RA,3)
-                for j = 1:C-1
-                    for i = 1:size( X, 1 )
-    
-                        D( i, j, k ) = ( ( X( i, j ) - RA( i, j, k ) )^p )^( 1 / p );  
-
-                    end
+                for ii = 1:1:size(RA,1)
+                    for j = 1:C-1                    
+                        for i = 1:size( X, 1 )
+        
+                            D( i, j, ii, k ) = ( ( X( i, j ) - RA( ii, j, k ) )^p )^( 1 / p );  
+                        end
+                    end                    
                 end
-                Z(k,1) = sum(sum(D(:,:,k)));
+
+                Z_(ii,1) = sum(sum(D(:,:,ii,k)));
             end
+
+            Z(k,1) = min(Z_);
         end
 
-        [~,W] = min(Z,1);
+        [~,W] = min(Z);
        
         Ci = mean(D(:,1,W)); Cj = mean(D(:,2,W)); Ck = mean(D(:,3,W)); 
 
@@ -95,4 +100,6 @@ global imageLength classGroups C RA
 
         Y( i, 4 ) = V( i );
     end
+
 end
+
