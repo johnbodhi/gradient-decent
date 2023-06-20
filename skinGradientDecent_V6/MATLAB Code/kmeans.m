@@ -34,7 +34,7 @@ global imageLength classGroups C RA
             end
         end
 
-       TA = find(B(1,:) == n); TB = find(B(2,:) == n);
+       TA = find(B(1,:) == n ); TB = find(B(2,:) == n );
 
        if( TA )
 
@@ -46,25 +46,40 @@ global imageLength classGroups C RA
 
        % We can find all 2norms with the mask...
 
-        for j = 1:C-1
-            for i = 1:size( X, 1 )
-        
-                if ( TA )
-        
-                    D( i, j ) = ( ( X( i, j ) - RA( 1, j, TA ) )^p )^( 1 / p );        
-                elseif ( TB )
-        
-                    D( i, j ) = ( ( X( i, j ) - RA( 2, j, TB ) )^p )^( 1 / p );
-                end                
-        
+        if( V ) 
+
+            for j = 1:C-1
+                for i = 1:size( X, 1 )
+            
+                    if ( TA )
+            
+                        D( i, j ) = ( ( X( i, j ) - RA( 1, j, TA ) )^p )^( 1 / p );        
+                    elseif ( TB )
+            
+                        D( i, j ) = ( ( X( i, j ) - RA( 2, j, TB ) )^p )^( 1 / p );
+                    end            
+                end
+            end
+
+        else 
+
+            for k = 1:1:size(RA,3)
+                for j = 1:C-1
+                    for i = 1:size( X, 1 )
+    
+                        D( i, j, k ) = ( ( X( i, j ) - RA( i, j, k ) )^p )^( 1 / p );  
+
+                    end
+                end
+                Z(k,1) = sum(sum(D(:,:,k)));
             end
         end
 
-        Ci = mean(D(:,1)); Cj = mean(D(:,2)); Ck = mean(D(:,3)); 
+        [~,W] = min(Z,1);
+       
+        Ci = mean(D(:,1,W)); Cj = mean(D(:,2,W)); Ck = mean(D(:,3,W)); 
 
         Cn = [ Ci Cj Ck ]; 
-
-        % Ci = mean(D(:,1));  Cn = [ Ci ]; 
 
         for j = 1:C-1
             for i = 1:imageLength
@@ -80,5 +95,4 @@ global imageLength classGroups C RA
 
         Y( i, 4 ) = V( i );
     end
-
 end

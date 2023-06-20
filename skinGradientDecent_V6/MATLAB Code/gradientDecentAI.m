@@ -10,9 +10,9 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_
 
 % We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
 
-global L C X N Nl RA classGroups classType uu vv
+global L C X N Nl RA V classGroups classType uu vv
 
-classType = [ 1 2 3 ]; % Number of column-wise designations.
+classType = [ 1 2 ]; % Number of column-wise designations.
 
 classGroups = zeros( 1, size(numImages, 2)); % Groupings for cyclic weight.
 
@@ -27,8 +27,8 @@ N = size(classType,2)*size(classGroups,2); % Total number of classes.
 Nl = zeros(1,size(numImages,2));
 for j = 1:1:size(numImages,2)
 
-    % Nl(1,j) = numImages(j); % Number of objects per class.
-    Nl(1,j) = 1; 
+    Nl(1,j) = numImages(j); % Number of objects per class.
+    % Nl(1,j) = 1; 
 end
 totalN = sum(Nl); 
 
@@ -60,74 +60,136 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_
 
 skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN );
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % We can feed the gradient with organized images, or randomized images,
 % and then select out which observations to feed. Otherwise, we can
 % feed the gradient a totally random distribution of images.
 
-uu = 1; vv = 2; hh = 1;
+% In this version the classifier is fed in batches. Instead, we can
+% classify all test images without a verification stages by convolving
+% over all classes / groups within the gradient as an MLE.
 
-for k = 1:1:size(RA,3)
 
-    if ( hh > size(Nl,2) )
 
-        break; % End test sequence.
+% Supervised Verification / Test...
+
+% uu = 1; vv = 2; hh = 1; V = 1;
+% 
+% for k = 1:1:size(RA,3)
+% 
+%     if ( hh > size(Nl,2) )
+% 
+%         break; % End test sequence.
+%     end
+% 
+%     X = [ uu, vv ]; % Batch indexes.
+% 
+%     for j = 1:1:size( X, 2 )
+% 
+%         cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Excel Data");
+% 
+%         % dataSet = readmatrix( 'verificationRGB.csv' ); % Organized test sequence.
+%     
+%         dataSet = readmatrix( 'testRGB (1).csv' ); % Organized test sequence.
+%     
+%         L = size(dataSet,1);
+%     
+%         % We can grab all observations in order, no matter the order of the
+%         % data content.
+%         
+%         ii = 1;
+%         for i = 1:L
+%             if ( dataSet( i, C ) == X( 1, j ) )
+% 
+%                 dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
+%             end
+%         end
+%     
+%         % dataSet = readmatrix( 'randomizedPhotos.csv' ); % Random assortment of images.
+%         % dataSet_ = dataSet; 
+%         clear dataSet
+%         % dataSet = dataSet_( 1:N * Nr * Mr, 1:C );
+% 
+%         % We can iterate through all class images we desire.
+%         
+%         dataSet = dataSet_( 1:Nl( 1, hh ) * Nr * Mr, 1:C ); 
+%     
+%         skinObservation = dataSet( :, C );
+%         
+%         totalN = size( dataSet, 1 );     
+%     
+%         trainingN = floor( 0.0 * totalN ); 
+%         
+%         testN = floor( 1.0 * totalN );
+%          
+%         cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\MATLAB Code");
+%         
+%         [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN, testN );
+% 
+%         if( hh <= size( Nl, 2 ) )
+%         
+%             [ PREC( hh ), REC( hh ), ACC( hh ), F1( hh ) ] = fMeasure( D, E ); 
+%         end
+% 
+%         hh = hh + 1;        
+%     end
+% 
+%     uu = uu + 2; vv = vv + 2;
+% end
+% 
+% AVE = [ mean(PREC) mean(REC) mean(ACC) mean(F1) ];
+
+
+% Unsupervised Test...
+
+V = 0;
+
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Excel Data");
+
+dataSet = readmatrix('testRGB (2).csv'); % Organized test sequence.
+
+for j = 1:1:size(dataSet, 1)
+
+    cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Excel Data");
+
+    dataSet = readmatrix( 'testRGB (2).csv' ); % Organized test sequence.
+
+    L = size(dataSet,1);
+
+    % We can grab all observations in order, no matter the order of the
+    % data content.
+    
+    ii = 1;
+    for i = 1:L
+        if ( dataSet( i, C ) == 0 ) % New test class index ( unknown label )
+
+            dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
+        end
     end
 
-    X = [ uu, vv ]; % Batch indexes.
+    % dataSet = readmatrix( 'randomizedPhotos.csv' ); % Random assortment of images.
+    % dataSet_ = dataSet; 
+    clear dataSet
+    % dataSet = dataSet_( 1:N * Nr * Mr, 1:C );
 
-    for j = 1:1:size( X, 2 )
-
-        cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Excel Data");
+    % We can iterate through all class images we desire.
     
-        dataSet = readmatrix( 'testRGB.csv' ); % Organized test sequence.
-    
-        L = size(dataSet,1);
-    
-        % We can grab all observations in order, no matter the order of the
-        % data content.
-        
-        ii = 1;
-        for i = 1:L
-            if ( dataSet( i, C ) == X( 1, j ) )
+    dataSet = dataSet_( :, 1:C ); 
 
-                dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
-            end
-        end
+    skinObservation = dataSet( :, C );
     
-        % dataSet = readmatrix( 'randomizedPhotos.csv' ); % Random assortment of images.
-        % dataSet_ = dataSet; 
-        clear dataSet
-        % dataSet = dataSet_( 1:N * Nr * Mr, 1:C );
+    totalN = size( dataSet, 1 );     
 
-        % We can iterate through all class images we desire.
-        
-        dataSet = dataSet_( 1:Nl( 1, hh ) * Nr * Mr, 1:C ); 
+    trainingN = floor( 0.0 * totalN ); 
     
-        skinObservation = dataSet( :, C );
-        
-        totalN = size( dataSet, 1 );     
+    testN = floor( 1.0 * totalN );
+     
+    cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\MATLAB Code");
     
-        trainingN = floor( 0.0 * totalN ); 
-        
-        testN = floor( 1.0 * totalN );
-         
-        cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\MATLAB Code");
-        
-        [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN, testN );
-
-        if( hh <= size( Nl, 2 ) )
-        
-            [ PREC( hh ), REC( hh ), ACC( hh ), F1( hh ) ] = fMeasure( D, E ); 
-        end
-
-        hh = hh + 1;        
-    end
-
-    uu = uu + 2; vv = vv + 2;
+    [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN, testN );  
 end
-
-AVE = [ mean(PREC) mean(REC) mean(ACC) mean(F1) ];
 
 toc;

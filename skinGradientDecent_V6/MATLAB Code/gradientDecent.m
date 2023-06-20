@@ -6,8 +6,12 @@ function [ Z ] = gradientDecent( F )
 
     eps = 1e1; ii = 0;
 
+    X = [ uu, vv ]; % Batch indexes.
+
     % We need to generate the learning rate, and find the gradient. This
     % gradient is modified for infinite convolutional locii...
+
+    RA = circshift( RA( 2, :, : ) , 1, 3 );
 
     for mm = 2:1:size(classGroups,2)
         for k = 2:1:size(classType,2)
@@ -83,14 +87,14 @@ function [ Z ] = gradientDecent( F )
     % We can implement segmentation in the classification process by
     % classifying only class groups at a time.
 
-    [ ~, Z ] = min( S( uu:vv, 1 ) );
-
-    if( Z == 1 )
-
-        Z = uu;
-    elseif ( Z == 2 )
-
-        Z = vv;        
-    end
+%     [ ~, Z ] = min( S( uu:vv, 1 ) );
+% 
+%     if( Z == 1 )
+% 
+%         Z = uu;
+%     elseif ( Z == 2 )
+% 
+%         Z = vv;        
+%     end
     
 end
