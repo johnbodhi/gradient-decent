@@ -87,6 +87,7 @@ global imageLength classGroups C RA
             Ci = mean(D(:,1,W)); Cj = mean(D(:,2,W)); Ck = mean(D(:,3,W)); 
     
             Cn = [ Ci Cj Ck ];
+            
         end
 
         for j = 1:C-1

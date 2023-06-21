@@ -14,7 +14,7 @@ global L C X N Nl RA V classGroups classType uu vv
 
 classType = [ 1 2 ]; % Number of column-wise designations.
 
-classGroups = zeros( 1, size(numImages, 2)); % Groupings for cyclic weight.
+classGroups = zeros( 1, 0.5 * size(numImages, 2) ); % Groupings for cyclic weight.
 
 classGroups(1,1:end) = size(classType,2); 
 
@@ -60,8 +60,6 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_
 
 skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN );
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % We can feed the gradient with organized images, or randomized images,
@@ -71,8 +69,6 @@ skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN );
 % In this version the classifier is fed in batches. Instead, we can
 % classify all test images without a verification stages by convolving
 % over all classes / groups within the gradient as an MLE.
-
-
 
 % Supervised Verification / Test...
 
@@ -142,7 +138,6 @@ skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN );
 % 
 % AVE = [ mean(PREC) mean(REC) mean(ACC) mean(F1) ];
 
-
 % Unsupervised Test...
 
 V = 0;
@@ -157,7 +152,7 @@ for j = 1:1:size(dataSet, 1)
 
     dataSet = readmatrix( 'testRGB (2).csv' ); % Organized test sequence.
 
-    L = size(dataSet,1);
+    L = 0.10 * size(dataSet,1);
 
     % We can grab all observations in order, no matter the order of the
     % data content.
