@@ -9,7 +9,7 @@ function [ Z ] = gradientDecentUS( F )
     % We need to generate the learning rate, and find the gradient. This
     % gradient is modified for infinite convolutional locii...
 
-    N = size( RA, 3 ) * size( RA, 3 ); 
+    N = size( RA, 3 )*size( RA, 3 ); 
 
     RA_ = RA; kk = 1; ll = 1;
 
