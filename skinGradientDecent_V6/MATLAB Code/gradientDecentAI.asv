@@ -72,71 +72,73 @@ skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN );
 
 % Supervised Verification / Test...
 
-% uu = 1; vv = 2; hh = 1; V = 1;
-% 
-% for k = 1:1:size(RA,3)
-% 
-%     if ( hh > size(Nl,2) )
-% 
-%         break; % End test sequence.
-%     end
-% 
-%     X = [ uu, vv ]; % Batch indexes.
-% 
-%     for j = 1:1:size( X, 2 )
-% 
-%         cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Excel Data");
-% 
-%         % dataSet = readmatrix( 'verificationRGB.csv' ); % Organized test sequence.
-%     
-%         % dataSet = readmatrix( 'testRGB (1).csv' ); % Organized test sequence.
-%     
-%         L = size(dataSet,1);
-%     
-%         % We can grab all observations in order, no matter the order of the
-%         % data content.
-%         
-%         ii = 1;
-%         for i = 1:L
-%             if ( dataSet( i, C ) == 0 )
-% 
-%                 dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
-%             end
-%         end
-%     
-%         % dataSet = readmatrix( 'randomizedPhotos.csv' ); % Random assortment of images.
-%         % dataSet_ = dataSet; 
-%         clear dataSet
-%         % dataSet = dataSet_( 1:N * Nr * Mr, 1:C );
-% 
-%         % We can iterate through all class images we desire.
-%         
-%         dataSet = dataSet_( 1:Nl( 1, hh ) * Nr * Mr, 1:C ); 
-%     
-%         skinObservation = dataSet( :, C );
-%         
-%         totalN = size( dataSet, 1 );     
-%     
-%         trainingN = floor( 0.0 * totalN ); 
-%         
-%         testN = floor( 1.0 * totalN );
-%          
-%         cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\MATLAB Code");
-%         
-%         [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN, testN );
-% 
-%         if( hh <= size( Nl, 2 ) )
-%         
-%             [ PREC( hh ), REC( hh ), ACC( hh ), F1( hh ) ] = fMeasure( D, E ); 
-%         end
-% 
-%         hh = hh + 1;        
-%     end
-% 
-%     uu = uu + 2; vv = vv + 2;
-% end
-% 
-% AVE = [ mean(PREC) mean(REC) mean(ACC) mean(F1) ];
+uu = 1; vv = 2; hh = 1; V = 1;
+
+for k = 1:1:size(RA,3)
+
+    if ( hh > size(Nl,2) )
+
+        break; % End test sequence.
+    end
+
+    X = [ uu, vv ]; % Batch indexes.
+
+    for j = 1:1:size( X, 2 )
+
+        cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Excel Data");
+
+        % dataSet = readmatrix( 'verificationRGB.csv' ); % Organized test sequence.
+    
+        % dataSet = readmatrix( 'testRGB (1).csv' ); % Organized test sequence.
+
+        dataSet = readmatrix( 'testRGB (2).csv' ); % Organized unsupervised test sequence.
+    
+        L = size(dataSet,1);
+    
+        % We can grab all observations in order, no matter the order of the
+        % data content.
+        
+        ii = 1;
+        for i = 1:L
+            if ( dataSet( i, C ) == 0 )
+
+                dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
+            end
+        end
+    
+        % dataSet = readmatrix( 'randomizedPhotos.csv' ); % Random assortment of images.
+        % dataSet_ = dataSet; 
+        clear dataSet
+        % dataSet = dataSet_( 1:N * Nr * Mr, 1:C );
+
+        % We can iterate through all class images we desire.
+        
+        dataSet = dataSet_( 1:Nl( 1, hh ) * Nr * Mr, 1:C ); 
+    
+        skinObservation = dataSet( :, C );
+        
+        totalN = size( dataSet, 1 );     
+    
+        trainingN = floor( 0.0 * totalN ); 
+        
+        testN = floor( 1.0 * totalN );
+         
+        cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\MATLAB Code");
+        
+        [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN, testN );
+
+        if( hh <= size( Nl, 2 ) )
+        
+            [ PREC( hh ), REC( hh ), ACC( hh ), F1( hh ) ] = fMeasure( D, E ); 
+        end
+
+        hh = hh + 1;        
+    end
+
+    uu = uu + 2; vv = vv + 2;
+end
+
+AVE = [ mean(PREC) mean(REC) mean(ACC) mean(F1) ];
 
 % Unsupervised Test...
 
@@ -152,7 +154,7 @@ for j = 1:1:size(dataSet, 1)
 
     dataSet = readmatrix( 'testRGB (2).csv' ); % Organized test sequence.
 
-    L = 0.05 * size(dataSet,1);
+    L = 0.10 * size(dataSet,1);
 
     % We can grab all observations in order, no matter the order of the
     % data content.

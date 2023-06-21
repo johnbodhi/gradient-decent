@@ -9,9 +9,11 @@ function [ Z ] = gradientDecentUS( F )
     % We need to generate the learning rate, and find the gradient. This
     % gradient is modified for infinite convolutional locii...
 
-    N = size( RA, 3 )*size( RA, 3 ); 
+    N = size( RA, 3 )*size( RA, 3 );
 
-    RA_ = RA; kk = 1; ll = 1;
+    RA_ = RA; 
+    
+    kk = 1; ll = 1;
 
     while ( ll < N - 1 )
         
@@ -36,6 +38,7 @@ function [ Z ] = gradientDecentUS( F )
                 for i = 1:1:size(classType,2)
                     
                     eps( i, j, mm ) = RA( i, j, mm ) / W( i, j, mm );
+
                 end
             end
         end
@@ -86,7 +89,9 @@ function [ Z ] = gradientDecentUS( F )
             end
         end
     
-        [ ~, X( kk, 1 ) ] = min( S ); kk = kk + 1;
+        [ ~, X( kk, 1 ) ] = min( S ); 
+        
+        kk = kk + 1;
 
         ll = ll + 1;
 
@@ -95,7 +100,7 @@ function [ Z ] = gradientDecentUS( F )
         Y = F(:,1:C-1); 
     end
     
-    [ ~, Z ] = min( X );
+    [ Z, ~ ] = min( X );
     
     RA = RA_;
 end
