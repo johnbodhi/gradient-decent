@@ -22,10 +22,12 @@ function [ Z ] = gradientDecentUS( F )
                 for j = 1:1:C-1
                     for i = 2:imageLength
     
-                        gamma( i, j, mm ) = abs(...
-                                            ( Y( i, j ) - Y( i-1, j ) ) *...
-                                            ( RA( k, j, mm ) - RA( k-1, j, mm-1 ) ) + eps ) /...
-                                            ( abs( RA( k, j, mm ) - RA( k-1, j, mm-1 ) ) + eps )^2;
+%                         gamma( i, j, mm ) = abs(...
+%                                             ( Y( i, j ) - Y( i-1, j ) ) *...
+%                                             ( RA( k, j, mm ) - RA( k-1, j, mm-1 ) ) + eps ) /...
+%                                             ( abs( RA( k, j, mm ) - RA( k-1, j, mm-1 ) ) + eps )^2;
+
+                        gamma( i, j, mm ) = 1;
                     end
                 end
     
@@ -89,7 +91,7 @@ function [ Z ] = gradientDecentUS( F )
             end
         end
     
-        [ ~, X( kk, 1 ) ] = min( S ); 
+        [ X( kk, 1 ), P( kk, 1 ) ] = min( S ); 
         
         kk = kk + 1;
 
@@ -99,8 +101,6 @@ function [ Z ] = gradientDecentUS( F )
 
         Y = F(:,1:C-1); 
     end
-    
-    [ Z, ~ ] = min( X );
     
     RA = RA_;
 end
