@@ -72,7 +72,7 @@ skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN );
 
 % Supervised Verification / Test...
 
-uu = 1; vv = 2; hh = 1; D = 0;
+uu = 1; vv = 2; hh = 1; V = 1;
 
 for k = 1:1:size(RA,3)
 
@@ -89,7 +89,7 @@ for k = 1:1:size(RA,3)
 
         % dataSet = readmatrix( 'verificationRGB.csv' ); % Organized test sequence.
     
-        dataSet = readmatrix( 'testRGB (1).csv' ); % Organized test sequence.
+        % dataSet = readmatrix( 'testRGB (1).csv' ); % Organized test sequence.
     
         L = size(dataSet,1);
     
@@ -98,13 +98,13 @@ for k = 1:1:size(RA,3)
         
         ii = 1;
         for i = (1+D):L
-            if ( dataSet( i, C ) == X( 1, j ) )
+            if ( dataSet( i, C ) == 0 )
 
                 dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
             end
         end
 
-        D = D + size(dataSet_,1);
+        D = L - size(dataSet_,1);
     
         % dataSet = readmatrix( 'randomizedPhotos.csv' ); % Random assortment of images.
         % dataSet_ = dataSet; 
@@ -139,5 +139,6 @@ for k = 1:1:size(RA,3)
 end
 
 AVE = [ mean(PREC) mean(REC) mean(ACC) mean(F1) ];
+
 
 toc;

@@ -12,7 +12,7 @@ function [ PREC, REC, ACC, F1 ] = fMeasure( D, E )
     
     REC = TP / ( TP + FN );
 
-    if( TP == 0)
+    if( TP == 0 )
 
         REC = 0;
     end
