@@ -10,7 +10,7 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_
 
 % We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
 
-global L C X N Nl RA V classGroups classType uu vv
+global L C X N Nl RA classGroups classType imageLength uu vv
 
 classType = [ 1 2 ]; % Number of column-wise designations.
 
@@ -18,7 +18,7 @@ classGroups = zeros( 1, 0.5 * size(numImages, 2) ); % Groupings for cyclic weigh
 
 classGroups(1,1:end) = size(classType,2); 
 
-Nr = 25; Mr = 25; % Photo length, and width. 
+Nr = 25; Mr = 25; imageLength = Nr * Mr; % Photo length, and width. 
 
 % Number of images per class to classify.
 
@@ -83,56 +83,64 @@ for k = 1:1:size(RA,3)
 
     X = [ uu, vv ]; % Batch indexes.
 
-    for j = 1:1:size( X, 2 )
+    for j = 1:1:size(X,2)
 
-        cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Excel Data");
+        for kk = 1:(Nr*Mr):L
 
-        % dataSet = readmatrix( 'verificationRGB.csv' ); % Organized test sequence.
+            cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Excel Data");
     
-        dataSet = readmatrix( 'testRGB (1).csv' ); % Organized test sequence.
-    
-        L = size(dataSet,1);
-    
-        % We can grab all observations in order, no matter the order of the
-        % data content.
+            % dataSet = readmatrix( 'verificationRGB.csv' ); % Organized test sequence.
         
-        ii = 1;
-        for i = (1+D):L
-            if ( dataSet( i, C ) == X( 1, j ) )
-
-                dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
+            % dataSet = readmatrix( 'testRGB (1).csv' ); % Organized test sequence.
+    
+            dataSet = readmatrix( 'testRGB (2).csv' ); % Organized test sequence.
+        
+            L = size(dataSet,1);
+        
+            % We can grab all observations in order, no matter the order of the
+            % data content.
+            
+            ii = 1;
+      
+            for i = ( 1 + D ):1:( Nr * Mr + D )
+                if ( dataSet( i, C ) == 0 )
+    
+                    dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
+                end
             end
+    
+            D = D + (Nr*Mr);
+        
+            % dataSet = readmatrix( 'randomizedPhotos.csv' ); % Random assortment of images.
+            % dataSet_ = dataSet; 
+            clear dataSet
+            % dataSet = dataSet_( 1:N * Nr * Mr, 1:C );
+    
+            % We can iterate through all class images we desire.
+            
+            % dataSet = dataSet_( 1:Nl( 1, hh ) * Nr * Mr, 1:C ); 
+
+            dataSet = dataSet_( :, 1:C ); 
+
+            cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\MATLAB Code");
+
+            dataSet = frameSieve(dataSet); skinObservation = dataSet( :, C );
+            
+            totalN = size( dataSet, 1 );     
+        
+            trainingN = floor( 0.0 * totalN ); 
+            
+            testN = floor( 1.0 * totalN );          
+            
+            [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN, testN );
+    
+            if( hh <= size( Nl, 2 ) )
+            
+                [ PREC( hh ), REC( hh ), ACC( hh ), F1( hh ) ] = fMeasure( D, E ); 
+            end
+    
+            hh = hh + 1;
         end
-
-        D = D + size(dataSet_,1);
-    
-        % dataSet = readmatrix( 'randomizedPhotos.csv' ); % Random assortment of images.
-        % dataSet_ = dataSet; 
-        clear dataSet
-        % dataSet = dataSet_( 1:N * Nr * Mr, 1:C );
-
-        % We can iterate through all class images we desire.
-        
-        dataSet = dataSet_( 1:Nl( 1, hh ) * Nr * Mr, 1:C ); 
-    
-        skinObservation = dataSet( :, C );
-        
-        totalN = size( dataSet, 1 );     
-    
-        trainingN = floor( 0.0 * totalN ); 
-        
-        testN = floor( 1.0 * totalN );
-         
-        cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\MATLAB Code");
-        
-        [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN, testN );
-
-        if( hh <= size( Nl, 2 ) )
-        
-            [ PREC( hh ), REC( hh ), ACC( hh ), F1( hh ) ] = fMeasure( D, E ); 
-        end
-
-        hh = hh + 1;        
     end
 
     uu = uu + 2; vv = vv + 2;

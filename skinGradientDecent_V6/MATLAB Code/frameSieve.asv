@@ -1,8 +1,8 @@
 function [ Y ] = frameSieve( X )
 
-    global A RA imageLength
+    global RA Nr Mr
 
-    A = 2*size(RA,3); M = imageLength;
+    A = 2 * size(RA,3); M = Nr*Mr;
 
     Y = X;
 
@@ -14,7 +14,7 @@ function [ Y ] = frameSieve( X )
     uu = 1;
     for i = 1:M:size(Y,1)
 
-        Y((uu-1)*M+1:uu*M,4) = uu; 
+        Y(,4) = uu; 
         
         uu = uu + 1;
     end

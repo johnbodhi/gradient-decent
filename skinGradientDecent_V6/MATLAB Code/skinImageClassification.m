@@ -1,6 +1,6 @@
 function [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN, testN )
     
-    global i n C imageLength imgDecision CFLAG
+    global i n A C imageLength imgDecision CFLAG
 
     CFLAG = 1;
 
@@ -8,13 +8,7 @@ function [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN
 
     ii = 1;
 
-    Nr = 25; Mr = 25;
-
-    imageLength = Nr * Mr;
-
-    
-
-    for i = trainingN+1:trainingN+testN
+    for i = trainingN+1:1:A
         
         n = skinObservation( i );
 
@@ -25,7 +19,7 @@ function [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN
 
         rgbData( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1; 
         
-        if ( size( rgbData, 1 ) == imageLength )
+        if ( size( rgbData, 1 ) == imageLength*A )
 
             rgbData = kmeans( rgbData, skinObservation ); % k-means image data set.
 
