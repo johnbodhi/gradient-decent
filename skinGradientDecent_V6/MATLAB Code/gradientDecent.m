@@ -92,4 +92,5 @@ function [ Z ] = gradientDecent( F )
 
         Z = vv;        
     end    
+    
 end

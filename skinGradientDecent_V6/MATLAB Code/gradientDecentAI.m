@@ -85,7 +85,7 @@ for k = 1:1:size(RA,3)
 
     for j = 1:1:size(X,2)
 
-        for kk = 1:(Nr*Mr):L
+        for kk = 1:imageLength:L
 
             cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Excel Data");
     
@@ -102,14 +102,14 @@ for k = 1:1:size(RA,3)
             
             ii = 1;
       
-            for i = ( 1 + D ):1:( Nr * Mr + D )
+            for i = ( 1 + D ):1:( imageLength + D )
                 if ( dataSet( i, C ) == 0 )
     
                     dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
                 end
             end
     
-            D = D + (Nr*Mr);
+            D = D + imageLength;
         
             % dataSet = readmatrix( 'randomizedPhotos.csv' ); % Random assortment of images.
             % dataSet_ = dataSet; 

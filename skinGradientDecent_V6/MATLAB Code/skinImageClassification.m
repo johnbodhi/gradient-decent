@@ -8,7 +8,7 @@ function [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN
 
     ii = 1;
 
-    for i = trainingN+1:1:A
+    for i = trainingN+1:1:imageLength * A
         
         n = skinObservation( i );
 
@@ -19,7 +19,7 @@ function [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN
 
         rgbData( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1; 
         
-        if ( size( rgbData, 1 ) == imageLength*A )
+        if ( size( rgbData, 1 ) == imageLength * A )
 
             rgbData = kmeans( rgbData, skinObservation ); % k-means image data set.
 
@@ -32,7 +32,7 @@ function [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN
 
             rgbData = 0; ii = 1;
 
-            A = [ n imgDecision D E ]; disp( A )
+            A = [ 0 imgDecision D E ]; disp( A )
         end
 
         % runningAverage( RGB ); % We can utilize non-stationary RA during classification.

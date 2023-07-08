@@ -2,7 +2,7 @@ function [ Y ] = frameSieve( X )
 
     global A RA imageLength
 
-    A = 2*size(RA,3); M = imageLength;
+    A = size(RA,1); M = imageLength;
 
     Y = X;
 
@@ -17,5 +17,5 @@ function [ Y ] = frameSieve( X )
         Y((uu-1)*M+1:uu*M,4) = uu; 
         
         uu = uu + 1;
-    end
+    end    
 end

@@ -1,24 +1,24 @@
-function [ Y ] = kmeans( X, V )
+function [ Y ] = kmeans( S, V )
 
-global imageLength classGroups C A RA
+global imageLength classGroups C A W RA X
 
     p = 2;
 
     ii = 1; jj = 1; N = 1;
     
-    while( jj < N * imageLength*A ) % Modified convergence criterion.
+    while( jj < N * imageLength * A ) % Modified convergence criterion.
 
-        if ( ii  == N * imageLength*A )
+        if ( ii  == N * imageLength * A )
 
             ii = 1;
         end
 
-        n = V( ii );
+        n = V( ii, 1 );
        
         % We need to mask the batch indexes.
 
         B = zeros(2,1);
-        for j = 0:1:size(classGroups,2)
+        for j = 0:1:A
             
             B(1,j+1) = 2*j+1;
 
@@ -48,23 +48,32 @@ global imageLength classGroups C A RA
        % We can find all 2norms with the mask...
 
         if( V ) 
-
-            for j = 1:C-1
-                for i = 1:size( X, 1 )
             
-                    if ( TA )
-            
-                        D( i, j ) = ( ( X( i, j ) - RA( 1, j, TA ) )^p )^( 1 / p );        
-                    elseif ( TB )
-            
-                        D( i, j ) = ( ( X( i, j ) - RA( 2, j, TB ) )^p )^( 1 / p );
-                    end            
+            for k = 1:1:size(X,2)
+                for j = 1:C-1
+                    for i = 1:size( S, 1 )
+                
+                        if ( TA )
+                
+                            D( i, j, k ) = ( ( S( i, j ) - RA( 1, j, TA ) )^p )^( 1 / p );        
+                        elseif ( TB )
+                
+                            D( i, j, k ) = ( ( S( i, j ) - RA( 2, j, TB ) )^p )^( 1 / p );
+                        end            
+                    end
                 end
+                
+                Ci(k,1) = W(k,1,1) * mean(D(:,1,k)); 
+                
+                Cj(k,1) = W(k,2,1) * mean(D(:,2,k)); 
+                
+                Ck(k,1) = W(k,3,1) * mean(D(:,3,k)); 
+    
+                Cn(k,:) = [ Ci(k,1) Cj(k,1) Ck(k,1) ]; 
+
             end
        
-            Ci = mean(D(:,1)); Cj = mean(D(:,2)); Ck = mean(D(:,3)); 
-    
-            Cn = [ Ci Cj Ck ]; 
+            
         else 
 
 %             for k = 1:1:size(RA,3)
@@ -86,23 +95,26 @@ global imageLength classGroups C A RA
 %        
 %             Ci = mean(D(:,1,W)); Cj = mean(D(:,2,W)); Ck = mean(D(:,3,W)); 
 %     
-%             Cn = [ Ci Cj Ck ];
-            
+%             Cn = [ Ci Cj Ck ];  
+
+        end
+        
+        for k = 1:1:size(X,2)
+            for j = 1:C-1
+                for i = 1:imageLength
+    
+                    H( i, j, k ) = ( ( S( i, j ) - Cn( k, j ) )^p )^(1/p); 
+                end
+            end   
         end
 
-        for j = 1:C-1
-            for i = 1:imageLength*A
-
-                Y( i, j ) = ( ( X( i, j ) - Cn( j ) )^p )^(1/p); 
-            end
-        end   
+        Y = H(:,:,1); Y = cat(1,Y,H(:,:,2));
 
         ii = ii + 1; jj = jj + 1;
     end
 
     for i = 1:1:imageLength*A
 
-        Y( i, 4 ) = V( i );
+        Y( i, 4 ) = V( i, 1 );
     end
-
 end
