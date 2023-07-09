@@ -1,6 +1,6 @@
 function [ Z ] = gradientDecent( F )
 
-    global W RA C imageLength classType classGroups uu vv
+    global W RA C imageLength classType classGroups A uu vv
 
     Y = F(:,1:C-1); % We can remove all labels from the data.
 
@@ -12,7 +12,7 @@ function [ Z ] = gradientDecent( F )
     for mm = 2:1:size(classGroups,2)
         for k = 2:1:size(classType,2)
             for j = 1:1:C-1
-                for i = 2:imageLength
+                for i = 2:imageLength * A
 
                     gamma( i, j, mm ) = abs( ...
                                         ( Y( i, 1 ) - Y( i-1, 1 ) ) *...
@@ -37,7 +37,7 @@ function [ Z ] = gradientDecent( F )
     for mm = 1:1:size(classGroups,2)
         for k = 1:1:size(classType,2)
             for j = 1:1:C-1
-                for i = 1:1:imageLength
+                for i = 1:1:imageLength * A
         
                     if ( RA( k, j, mm ) - Y( i, j ) > 0 )
                         while( Y( i, j ) < RA( k, j, mm ) )
@@ -92,5 +92,4 @@ function [ Z ] = gradientDecent( F )
 
         Z = vv;        
     end    
-    
 end

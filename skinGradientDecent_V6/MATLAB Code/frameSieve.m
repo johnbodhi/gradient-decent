@@ -1,21 +1,27 @@
-function [ Y ] = frameSieve( X )
+function [ Y ] = frameSieve( S )
 
-    global A RA imageLength
+    global A RA X imageLength
 
     A = size(RA,1); M = imageLength;
 
-    Y = X;
+    Y = S;
 
     for i = 1:1:A-1
         
-        Y = cat( 1, Y, X );
+        Y = cat( 1, Y, S );
     end
 
-    uu = 1;
+    cc = 1;
     for i = 1:M:size(Y,1)
 
-        Y((uu-1)*M+1:uu*M,4) = uu; 
+        if( i <= imageLength )
+
+            Y((cc-1)*M+1:cc*M,4) = X(1,1); 
+        elseif( i > imageLength )
+
+            Y((cc-1)*M+1:cc*M,4) = X(1,2); 
+        end
         
-        uu = uu + 1;
+        cc = cc + 1;
     end    
 end

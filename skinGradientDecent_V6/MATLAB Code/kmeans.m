@@ -1,10 +1,36 @@
 function [ Y ] = kmeans( S, V )
 
-global imageLength classGroups C A W RA X
+global imageLength classGroups classType GFLAG C A RA X
 
     p = 2;
 
     ii = 1; jj = 1; N = 1;
+
+    W  = zeros( size( classType, 2), 3, size( classGroups, 2) );
+
+    for kk = 1:1:size( classGroups, 2 )
+        for ii = 1:1:size(classType, 2 )
+        
+            if ( ii == 1 )
+    
+                W(ii,:,kk) = 1e1;
+            elseif ( ii == 2 )
+
+                if( GFLAG )
+    
+                    W(ii,:,kk) = 1e0;
+                elseif( ~GFLAG )
+
+                    W(ii,:,kk) = 1e2;
+                end
+
+            elseif ( ii == 3 )
+    
+                W(ii,:,kk) = 0;
+            end
+
+        end
+    end
     
     while( jj < N * imageLength * A ) % Modified convergence criterion.
 
@@ -18,7 +44,7 @@ global imageLength classGroups C A W RA X
         % We need to mask the batch indexes.
 
         B = zeros(2,1);
-        for j = 0:1:A
+        for j = 0:1:size( classGroups, 2 )-1
             
             B(1,j+1) = 2*j+1;
 
@@ -62,19 +88,20 @@ global imageLength classGroups C A W RA X
                         end            
                     end
                 end
-                
+
                 Ci(k,1) = W(k,1,1) * mean(D(:,1,k)); 
                 
                 Cj(k,1) = W(k,2,1) * mean(D(:,2,k)); 
                 
                 Ck(k,1) = W(k,3,1) * mean(D(:,3,k)); 
     
-                Cn(k,:) = [ Ci(k,1) Cj(k,1) Ck(k,1) ]; 
+                Cn(k,:) = [ Ci(k,1) Cj(k,1) Ck(k,1) ];
 
-            end
-       
+            end       
             
         else 
+
+        % We can use k-means as a classifier...
 
 %             for k = 1:1:size(RA,3)
 %                 for ii = 1:1:size(RA,1)
@@ -96,7 +123,6 @@ global imageLength classGroups C A W RA X
 %             Ci = mean(D(:,1,W)); Cj = mean(D(:,2,W)); Ck = mean(D(:,3,W)); 
 %     
 %             Cn = [ Ci Cj Ck ];  
-
         end
         
         for k = 1:1:size(X,2)
@@ -117,4 +143,5 @@ global imageLength classGroups C A W RA X
 
         Y( i, 4 ) = V( i, 1 );
     end
+
 end

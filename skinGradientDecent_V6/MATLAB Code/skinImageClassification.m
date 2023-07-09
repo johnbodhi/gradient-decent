@@ -32,7 +32,7 @@ function [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN
 
             rgbData = 0; ii = 1;
 
-            A = [ 0 imgDecision D E ]; disp( A )
+            A = [ 0 imgDecision D ]; disp( A )
         end
 
         % runningAverage( RGB ); % We can utilize non-stationary RA during classification.

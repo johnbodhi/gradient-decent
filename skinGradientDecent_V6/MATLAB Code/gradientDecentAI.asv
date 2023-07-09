@@ -83,9 +83,9 @@ for k = 1:1:size(RA,3)
 
     X = [ uu, vv ]; % Batch indexes.
 
-    GFLAG = 1;
+    for j = 1:1:size(X,2)
 
-    for j = 1:1:size(X,2)        
+        GFLAG = 1;
 
         cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Excel Data");
 

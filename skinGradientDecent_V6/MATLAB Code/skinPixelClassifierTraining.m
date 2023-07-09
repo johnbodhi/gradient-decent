@@ -21,10 +21,10 @@ global i n N W RA R G B C classGroups classType CFLAG
         
             if ( ii == 1 )
     
-                W(ii,:,kk) = 1e2;
+                W(ii,:,kk) = 1e1;
             elseif ( ii == 2 )
     
-                W(ii,:,kk) = 1e4;
+                W(ii,:,kk) = 1e3;
 
             elseif ( ii == 3 )
     
