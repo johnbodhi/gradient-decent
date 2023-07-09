@@ -89,11 +89,11 @@ for k = 1:1:size(RA,3)
 
         cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Excel Data");
 
-        % dataSet = readmatrix( 'verificationRGB.csv' ); % Organized test sequence.
+        % dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
     
-        % dataSet = readmatrix( 'testRGB (1).csv' ); % Organized test sequence.
+        % dataSet = readmatrix( 'testRGB (1).csv' ); % Supervised test sequence.
 
-        dataSet = readmatrix( 'testRGB (2).csv' ); % Organized test sequence.
+        dataSet = readmatrix( 'testRGB (2).csv' ); % Unsupervised test sequence.
     
         L = size(dataSet,1);
     
@@ -101,7 +101,7 @@ for k = 1:1:size(RA,3)
         % data content.
         
         ii = 1;      
-        for i = ( 1 + D ):1:( imageLength + D )
+        for i = ( 1 + D ):1:( imageLength + D ) % We can choose one photo per class.
             if ( dataSet( i, C ) == 0 )
 
                 dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
@@ -122,7 +122,7 @@ for k = 1:1:size(RA,3)
 
         cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\MATLAB Code");
 
-        dataSet = frameSieve(dataSet); 
+        dataSet = frameSieve(dataSet); % Duplicate and re-label each frame.
         
         skinObservation = dataSet( :, C );
         

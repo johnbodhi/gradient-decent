@@ -8,6 +8,9 @@ global imageLength classGroups classType GFLAG C A RA X
 
     W  = zeros( size( classType, 2), 3, size( classGroups, 2) );
 
+    % We need to weight our centroids, and backpropagate before the gradient
+    % for every other class in a group.
+
     for kk = 1:1:size( classGroups, 2 )
         for ii = 1:1:size(classType, 2 )
         
@@ -21,7 +24,7 @@ global imageLength classGroups classType GFLAG C A RA X
                     W(ii,:,kk) = 1e0;
                 elseif( ~GFLAG )
 
-                    W(ii,:,kk) = 1e2;
+                    W(ii,:,kk) = 1e2; % Backprop...
                 end
 
             elseif ( ii == 3 )
