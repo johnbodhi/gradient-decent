@@ -141,7 +141,7 @@ for k = 1:1:size(RA,3)
 
         hh = hh + 1; GFLAG = 0;
     end
-
+    
     uu = uu + 2; vv = vv + 2; 
 end
 
