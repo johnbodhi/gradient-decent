@@ -19,6 +19,5 @@ function [ PREC, REC, ACC, F1 ] = fMeasure( D, E )
     
     ACC  = ( TP + TN ) / ( TP + TN + FP + FN );
     
-    F1 = TP / ( TP + 0.5 * ( FP + FN ) );    
-
+    F1 = TP / ( TP + 0.5 * ( FP + FN ) );
 end
