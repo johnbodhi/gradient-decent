@@ -10,7 +10,7 @@ function [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN
 
     for i = trainingN+1:1:trainingN+testN
         
-        % n = skinObservation( i, 1 );
+        n = skinObservation( i, 1 );
 
         RGB = dataSet( i, 1:C );
         
