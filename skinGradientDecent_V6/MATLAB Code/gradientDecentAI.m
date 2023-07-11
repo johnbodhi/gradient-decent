@@ -66,9 +66,7 @@ skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN );
 % and then select out which observations to feed. Otherwise, we can
 % feed the gradient a totally random distribution of images.
 
-% In this version the classifier is fed in batches. Instead, we can
-% classify all test images without a verification stages by convolving
-% over all classes / groups within the gradient as an MLE.
+% In this version the classifier is fed in an indefinite number of batches.
 
 % Supervised Verification / Test...
 
@@ -101,7 +99,7 @@ for k = 1:1:size(RA,3)
         % data content.
         
         ii = 1;      
-        for i = ( 1 + D ):1:( imageLength + D ) % We can choose one photo per class.
+        for i = ( 1 + D ):1:( Nl(1,cc)*imageLength + D ) % We can choose one photo per class.
             if ( dataSet( i, C ) == 0 )
 
                 dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
@@ -122,7 +120,7 @@ for k = 1:1:size(RA,3)
 
         cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\MATLAB Code");
 
-        dataSet = frameSieve(dataSet); % Duplicate and re-label each frame.
+        % dataSet = frameSieve(dataSet); % Duplicate and re-label each frame.
         
         skinObservation = dataSet( :, C );
         

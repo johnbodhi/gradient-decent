@@ -10,7 +10,7 @@ function [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN
 
     for i = trainingN+1:1:trainingN+testN
         
-        n = skinObservation( 1,1 );
+        n = skinObservation( i );
 
         RGB = dataSet( i, 1:C );
         
@@ -29,10 +29,10 @@ function [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN
 
             imgDecision = imageDecision( rgbData ); D = D + 1; % Take image to classify in the gradient.
 
-            if ( imgDecision ~= skinObservation( 1, 1 ) )
+             if ( imgDecision ~= skinObservation( i ) )
 
-                E = E + 1;
-                %E = 0;
+                % E = E + 1;
+                E = 0;
              end
 
             rgbData = 0; ii = 1;
