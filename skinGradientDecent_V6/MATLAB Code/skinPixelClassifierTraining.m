@@ -6,9 +6,9 @@ global i n N W RA R G B C classGroups classType CFLAG
 
     R = zeros( N, trainingN ); 
     
-    G = zeros( N, trainingN ); 
+    %G = zeros( N, trainingN ); 
     
-    B = zeros( N, trainingN );
+    %B = zeros( N, trainingN );
 
     % Allocate for cyclic weighting / infinite parameter gain.
     
