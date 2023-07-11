@@ -10,7 +10,7 @@ function [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN
 
     for i = trainingN+1:1:trainingN+testN
         
-        n = skinObservation( 1,1 );
+        % n = skinObservation( i, 1 );
 
         RGB = dataSet( i, 1:C );
         
@@ -23,17 +23,16 @@ function [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN
 
             rgbData = frameSieve(rgbData); % Duplicate and re-label each frame.
 
-            skinObservation = rgbData(:,C);
+            skinObservation_ = rgbData(:,C);
 
-            rgbData = kmeans( rgbData, skinObservation ); % k-means image data set.
+            rgbData = kmeans( rgbData, skinObservation_ ); % k-means image data set.
 
             imgDecision = imageDecision( rgbData ); D = D + 1; % Take image to classify in the gradient.
 
-            if ( imgDecision ~= skinObservation( 1, 1 ) )
-
-                E = E + 1;
-                %E = 0;
-             end
+%             if ( imgDecision ~= skinObservation_( 1, 1 ) )
+% 
+%                 E = E + 1;
+%             end
 
             rgbData = 0; ii = 1;
 
