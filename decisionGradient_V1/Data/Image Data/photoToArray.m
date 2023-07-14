@@ -68,7 +68,6 @@ NLL = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDece
 
 NML = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\NML"; 
 
-
 % Test = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\Data\Image Data\test";
 
 % Unknown = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V3\Data\Image Data\Unknown";
