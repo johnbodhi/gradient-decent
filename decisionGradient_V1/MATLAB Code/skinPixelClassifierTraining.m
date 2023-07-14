@@ -16,6 +16,8 @@ global i n N W RA R G B C classGroups classType CFLAG
 
     W  = zeros( size( classType, 2), 3, size( classGroups, 2) );
 
+    ZA = [ RA W ];
+
     for kk = 1:1:size( classGroups, 2 )
         for ii = 1:1:size(classType, 2 )
         
@@ -40,6 +42,5 @@ global i n N W RA R G B C classGroups classType CFLAG
         RGB = dataSetRandomized( i, 1:C-3 );
         
         [ RA ] = runningAverage( RGB );
-    end
-    
+    end    
 end

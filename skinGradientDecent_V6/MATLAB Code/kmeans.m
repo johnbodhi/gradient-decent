@@ -79,7 +79,7 @@ global imageLength classGroups classType GFLAG C A RA X
         if( V ) 
             
             for k = 1:1:size(X,2)
-                for j = 1:C-1
+                for j = 1:C-3
                     for i = 1:size( S, 1 )
                 
                         if ( TA )
@@ -129,7 +129,7 @@ global imageLength classGroups classType GFLAG C A RA X
         end
         
         for k = 1:1:size(X,2)
-            for j = 1:C-1
+            for j = 1:C-3
                 for i = 1:imageLength
     
                     H( i, j, k ) = ( ( S( i, j ) - Cn( k, j ) )^p )^(1/p); 

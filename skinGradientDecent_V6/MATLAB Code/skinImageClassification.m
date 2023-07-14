@@ -12,7 +12,7 @@ function [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN
         
         n = skinObservation( i, 1 );
 
-        RGB = dataSet( i, 1:C );
+        RGB = dataSet( i, 1:C-1 );
         
         % Store an RGB pixels of contained in the image of length 
         % imageLength to pass into the Gradient.
