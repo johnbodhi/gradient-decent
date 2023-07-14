@@ -30,7 +30,6 @@ global i n N W RA R G B C classGroups classType CFLAG
     
                 W(ii,:,kk) = 0;
             end
-
         end
     end
 
@@ -38,7 +37,7 @@ global i n N W RA R G B C classGroups classType CFLAG
 
         n = skinObservation( i ); 
         
-        RGB = dataSetRandomized( i, 1:C-1 );
+        RGB = dataSetRandomized( i, 1:C-3 );
         
         [ RA ] = runningAverage( RGB );
     end
