@@ -6,9 +6,11 @@ function [ Y ] = frameSieve( S )
 
     Y = S;
 
+    Y = sort(Y);
+
     for i = 1:1:A-1
         
-        Y = cat( 1, Y, S );
+        Y = cat( 1, Y, Y );
     end
 
     cc = 1;

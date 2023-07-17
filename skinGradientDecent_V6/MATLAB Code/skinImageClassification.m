@@ -12,12 +12,12 @@ function [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN
         
         n = skinObservation( i, 1 );
 
-        RGB = dataSet( i, 1:C-1 );
+        RGB = dataSet( i, 1:C);
         
         % Store an RGB pixels of contained in the image of length 
         % imageLength to pass into the Gradient.
 
-        rgbData( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1; 
+        rgbData( ii, 1:C) = dataSet( i, 1:C); ii = ii + 1; 
         
         if ( size( rgbData, 1 ) == imageLength )
 
@@ -39,6 +39,6 @@ function [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN
             A = [ 0 imgDecision D E ]; disp( A )
         end
 
-        % runningAverage( RGB ); % We can utilize non-stationary RA during classification.
+        runningAverage( RGB ); % We can utilize non-stationary RA during classification.
     end
 end

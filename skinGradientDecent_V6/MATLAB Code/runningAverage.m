@@ -1,6 +1,6 @@
 function [ RA ] = runningAverage( RGB )
 
-global i n RA R G B W classType classGroups imgDecision CFLAG
+global i n RA R G B W classType classGroups imgDecision CFLAG RA11 RA12
 
     if( CFLAG )
 
@@ -28,6 +28,7 @@ global i n RA R G B W classType classGroups imgDecision CFLAG
                 %RA(ii,2,kk) = W(ii,2,kk) * mean( G( n, : ), 2 );
     
                 %RA(ii,3,kk) = W(ii,3,kk) * mean( B( n, : ), 2 );
+                
             end
         end
         

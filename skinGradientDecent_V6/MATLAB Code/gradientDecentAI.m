@@ -14,15 +14,11 @@ global L C X N Nl RA GFLAG classGroups classType imageLength uu vv
 
 classType = [ 1 2 ]; % Number of column-wise designations.
 
-classGroups = zeros( 1, 0.5 * size(numImages, 2) ); % Groupings for cyclic weight.
-
-classGroups(1,1:end) = size(classType,2); 
+classGroups = zeros( 1, 0.50 * size(numImages, 2) ); % Groupings for cyclic weight.
 
 Nr = 25; Mr = 25; imageLength = Nr * Mr; % Photo length, and width. 
 
 % Number of images per class to classify.
-
-N = size(classType,2)*size(classGroups,2); % Total number of classes.
 
 Nl = zeros(1,size(numImages,2));
 for j = 1:1:size(numImages,2)
@@ -42,7 +38,7 @@ L = size( dataSet, 1 ); C = size( dataSet, 2 );
 
 % dataSetRandomized = dataSetRandomized( dataSet, L, C );  % Randomize all pixels.
 
-dataSetRandomized = readmatrix('dataSetRandomized.csv'); % Only samples in train.
+dataSetRandomized = readmatrix('dataSetRandomized_0.csv'); % Only samples in train.
 
 M = 1; % Class training epochs 1-Total Photos. (Trains RA on a percentage of the pixels in M photos)
 
@@ -70,7 +66,7 @@ skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN );
 
 % Supervised Verification / Test...
 
-uu = 1; vv = 2; hh = 1; cc = 1; D = 0; GFLAG = 1;
+uu = 1; vv = 2; hh = 1; cc = 1; D = 0;
 
 for k = 1:1:size(RA,3)
 
@@ -86,6 +82,8 @@ for k = 1:1:size(RA,3)
     for j = 1:1:size(X,2)        
 
         cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Excel Data");
+
+        % Test sequences not included in training data...
 
         % dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
     

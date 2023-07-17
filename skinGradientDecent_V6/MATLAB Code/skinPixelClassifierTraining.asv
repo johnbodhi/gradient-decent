@@ -1,6 +1,6 @@
 function skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN )
 
-global i n N W RA R G B C classGroups classType CFLAG
+global i n N W RA R G B C classGroups classType CFLAG ZA
 
     CFLAG = 0;
 
@@ -43,5 +43,5 @@ global i n N W RA R G B C classGroups classType CFLAG
         [ RA ] = runningAverage( RGB );
     end
 
-    % ZA = [ RA11 RA12 ];
+    % ZA = [ RA11(:,:,1:8) RA12(:,:,9:16) ];
 end

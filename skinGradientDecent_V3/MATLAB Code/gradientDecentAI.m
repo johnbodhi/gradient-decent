@@ -47,7 +47,7 @@ for j = 1:1:size( classType, 2 )
     skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN, totalN, C );
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
+    
     cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V3\Data\Excel Data");
     
     % We can feed the gradient with organized images, or randomized images,

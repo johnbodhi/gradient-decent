@@ -35,9 +35,9 @@ global imageLength classGroups classType GFLAG C A RA X
         end
     end
     
-    while( jj < N * imageLength * A ) % Modified convergence criterion.
+    while( jj < N * imageLength*A ) % Modified convergence criterion.
 
-        if ( ii  == N * imageLength * A )
+        if ( ii  == N * imageLength*A )
 
             ii = 1;
         end
@@ -94,11 +94,13 @@ global imageLength classGroups classType GFLAG C A RA X
 
                 Ci(k,1) = W(k,1,1) * mean(D(:,1,k)); 
                 
-                Cj(k,1) = W(k,2,1) * mean(D(:,2,k)); 
+%                 Cj(k,1) = W(k,2,1) * mean(D(:,2,k)); 
+%                 
+%                 Ck(k,1) = W(k,3,1) * mean(D(:,3,k)); 
+%     
+%                 Cn(k,:) = [ Ci(k,1) Cj(k,1) Ck(k,1) ];
                 
-                Ck(k,1) = W(k,3,1) * mean(D(:,3,k)); 
-    
-                Cn(k,:) = [ Ci(k,1) Cj(k,1) Ck(k,1) ];
+                Cn(k,:) = [ Ci(k,1) ];
 
             end       
             
@@ -146,5 +148,4 @@ global imageLength classGroups classType GFLAG C A RA X
 
         Y( i, 4 ) = V( i, 1 ); % Re-append labels for completeness.
     end
-
 end
