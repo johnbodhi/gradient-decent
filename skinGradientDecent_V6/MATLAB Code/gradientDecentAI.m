@@ -2,33 +2,35 @@
 
 tic;
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data");
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionGradient_V1\Data\Image Data");
 
 photoToArray(); % Pre-process all images.
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\MATLAB Code"); 
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionGradient_V1\MATLAB Code"); 
 
 % We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
 
-global L C X N Nl RA GFLAG classGroups classType imageLength uu vv
+global L C X Nl ZA GFLAG classGroups classType numRA imageLength uu vv
 
 classType = [ 1 2 ]; % Number of column-wise designations.
 
-classGroups = zeros( 1, 0.50 * size(numImages, 2) ); % Groupings for cyclic weight.
+classGroups = zeros( 1, 2 ); % Groupings for cyclic weight. Over allocate at classGroups = 1
 
-Nr = 25; Mr = 25; imageLength = Nr * Mr; % Photo length, and width. 
+numRA = 4;
+
+Nr = 100; Mr = 100; imageLength = Nr * Mr; % Photo length, and width. 
 
 % Number of images per class to classify.
 
 Nl = zeros(1,size(numImages,2));
 for j = 1:1:size(numImages,2)
 
-    % Nl(1,j) = numImages(j); % Number of objects per class.
-    Nl(1,j) = 1; 
+    Nl(1,j) = numImages(j); % Number of objects per class.
+    % Nl(1,j) = 4; 
 end
 totalN = sum(Nl); 
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Excel Data");
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionGradient_V1\Data\Excel Data");
 
 dataSet = readmatrix( 'trainRGB.csv' ); % Samples not in test.
 
@@ -38,13 +40,13 @@ L = size( dataSet, 1 ); C = size( dataSet, 2 );
 
 % dataSetRandomized = dataSetRandomized( dataSet, L, C );  % Randomize all pixels.
 
-dataSetRandomized = readmatrix('dataSetRandomized_0.csv'); % Only samples in train.
+dataSetRandomized = readmatrix( 'dataSetRandomized.csv' ); % Only samples in train.
 
-M = 1; % Class training epochs 1-Total Photos. (Trains RA on a percentage of the pixels in M photos)
+M = 1; % Class training epochs 1-total photos. (Trains RA on a percentage of the pixels in M photos)
 
 dataSetRandomized = dataSetRandomized( 1:M * Nr * Mr, 1:C );  % Assign randomized pixels over the length of images.
 
-skinObservation = dataSetRandomized( :, C ); % Extract randmized observations for training.
+Observation = dataSetRandomized( :, C ); % Extract randmized observations for training.
 
 totalN = size( dataSetRandomized, 1 ); 
 
@@ -52,9 +54,9 @@ trainingN = floor( 0.30 * totalN );
 
 testN = floor( 0.0 * totalN );
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\MATLAB Code");
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionGradient_V1\MATLAB Code");
 
-skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN );
+pixelClassifierTraining( dataSetRandomized, Observation, trainingN );
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -68,7 +70,7 @@ skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN );
 
 uu = 1; vv = 2; hh = 1; cc = 1; D = 0;
 
-for k = 1:1:size(RA,3)
+for k = 1:1:size(ZA,3)
 
     if ( hh > size(Nl,2) )
 
@@ -81,7 +83,7 @@ for k = 1:1:size(RA,3)
 
     for j = 1:1:size(X,2)        
 
-        cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Excel Data");
+        cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionGradient_V1\Data\Excel Data");
 
         % Test sequences not included in training data...
 
@@ -116,11 +118,11 @@ for k = 1:1:size(RA,3)
 
         dataSet = dataSet_( :, 1:C ); 
 
-        cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\MATLAB Code");
+        cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionGradient_V1\MATLAB Code");
 
         % dataSet = frameSieve(dataSet); % Duplicate and re-label each frame.
         
-        skinObservation = dataSet( :, C );
+        Observation = dataSet( :, C );
         
         totalN = size( dataSet, 1 );     
     
@@ -128,7 +130,7 @@ for k = 1:1:size(RA,3)
         
         testN = floor( 1.0 * totalN );          
         
-        [ D, E ] = skinImageClassification( dataSet, skinObservation, trainingN, testN );
+        [ D, E ] = imageClassification( dataSet, Observation, trainingN, testN );
 
         if( hh <= size( Nl, 2 ) )
         

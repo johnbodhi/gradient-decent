@@ -16,7 +16,7 @@ global imageLength classGroups classType GFLAG C A RA X
         
             if ( ii == 1 )
     
-                W(ii,:,kk) = 1e1;
+                W(ii,:,kk) = 1e0;
             elseif ( ii == 2 )
 
                 if( GFLAG )
