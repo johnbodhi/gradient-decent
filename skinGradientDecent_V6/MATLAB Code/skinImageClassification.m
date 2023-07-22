@@ -23,7 +23,7 @@ function [ D, E ] = skinImageClassification( dataSet, testN, verObservation )
 
             skinObservation_ = rgbData(:,C);
 
-            RA = Q; % We need to reset RA between classes;
+            RA = Q; % We need to reset RA between classes...
 
             % We can utilize non-stationary RA during classification to
             % monitor dissimilarity between objects...
@@ -34,15 +34,18 @@ function [ D, E ] = skinImageClassification( dataSet, testN, verObservation )
 
             imgDecision = imageDecision( rgbData ); D = D + 1; % Take image to classify in the gradient.
 
-%             if ( imgDecision ~= verObservation( pp, 1 ) )
-% 
-%                 E = E + 1;
-%             end
-%             pp = pp + 1;
+            if ( imgDecision ~= verObservation( pp, 1 ) )
+
+                E = E + 1;
+            end
+            pp = pp + 1;
 
             rgbData = 0; ii = 1; 
 
-            A = [ 0 imgDecision D E ]; disp( A )
+            % Display observation type, classifier decision, cumulative decision per
+            % class, and cumulative error per class...
+
+            J = [ 0 imgDecision D E ]; disp( J )
         end
     end
 

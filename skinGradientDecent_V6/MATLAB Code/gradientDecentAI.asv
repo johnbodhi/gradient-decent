@@ -128,11 +128,13 @@ for k = 1:1:size(RA,3)
         
         % dataSet = dataSet_( 1:Nl( 1, hh ) * Nr * Mr, 1:C ); 
 
-        dataSet = dataSet_( :, 1:C ); 
+        dataSet = dataSet_( :, 1:C ); cle
         
-        clear dataSet_
+        dataset_ = 0;
 
         cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\MATLAB Code");
+
+        % dataSet = frameSieve(dataSet); % Duplicate and re-label each frame.
         
         skinObservation = dataSet( :, C );
         
