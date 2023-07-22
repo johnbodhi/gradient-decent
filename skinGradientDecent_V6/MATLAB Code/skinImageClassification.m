@@ -1,6 +1,6 @@
 function [ D, E ] = skinImageClassification( dataSet, trainingN, testN )
     
-    global i A C RA Q verObservation imageLength CFLAG pp
+    global pp A C RA Q verObservation imageLength CFLAG 
 
     CFLAG = 1;
 

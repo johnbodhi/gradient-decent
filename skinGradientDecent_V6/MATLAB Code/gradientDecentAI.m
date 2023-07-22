@@ -1,4 +1,4 @@
-% clear all; close all; clc; 
+clear all; close all; clc; 
 
 tic;
 
@@ -22,11 +22,11 @@ Nr = 25; Mr = 25; imageLength = Nr * Mr; % Photo length, and width.
 
 % Number of images per class to classify.
 
-Nl = zeros(1,size(numImages,2));
-for j = 1:1:size(Nl,2)
+Nl = zeros(size(numImages,2),1);
+for i = 1:1:size(Nl,1)
 
-    Nl(1,j) = numImages(j); % Number of objects per class.
-    % Nl(1,j) = 2; 
+    % Nl(i,1) = numImages(i); % Number of objects per class.
+    Nl(i,1) = 10; 
 end
 totalN = sum(Nl); 
 
@@ -34,8 +34,8 @@ totalN = sum(Nl);
 % with unsupervised data...
 
 ii = 1; jj = 1; kk = 1; pp = 1;
-for i = 1:Nl(ii):totalN
-    while ( jj <= Nl(1,ii) )
+for i = 1:Nl(ii,1):totalN
+    while ( jj <= Nl(ii,1) )
         verObservation(kk,1) = ii;
         jj = jj + 1; kk = kk + 1;
     end
@@ -82,7 +82,7 @@ uu = 1; vv = 2; hh = 1; cc = 1; D = 0;
 
 for k = 1:1:size(RA,3)
 
-    if ( hh > size(Nl,2) )
+    if ( hh > size(Nl,1) )
 
         break; % End test sequence.
     end
@@ -111,13 +111,13 @@ for k = 1:1:size(RA,3)
         % data content.
         
         ii = 1;      
-        for i = ( 1 + D ):1:( Nl(1,cc)*imageLength + D ) % We can choose one photo per class.
+        for i = ( 1 + D ):1:( Nl(cc,1)*imageLength + D ) % We can choose one photo per class.
             if ( dataSet( i, C ) == 0 )
 
                 dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
             end
         end    
-        D = D + Nl(1,cc)*imageLength; cc = cc + 1;
+        D = D + Nl(cc,1)*imageLength; cc = cc + 1;
     
         % dataSet = readmatrix( 'randomizedPhotos.csv' ); % Random assortment of images.
         % dataSet_ = dataSet; 
@@ -144,7 +144,7 @@ for k = 1:1:size(RA,3)
         
         [ D, E ] = skinImageClassification( dataSet, trainingN, testN );
 
-        if( hh <= size( Nl, 2 ) )
+        if( hh <= size( Nl, 1 ) )
         
             [ PREC( hh ), REC( hh ), ACC( hh ), F1( hh ) ] = fMeasure( D, E ); 
         end
