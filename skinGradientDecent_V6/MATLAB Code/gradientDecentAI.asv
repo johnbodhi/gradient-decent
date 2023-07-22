@@ -10,7 +10,7 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_
 
 % We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
 
-global L C X N Nl RA GFLAG classGroups classType imageLength verObservation uu vv pp
+global L C X N Nl RA GFLAG classGroups classType imageLength verObservation uu vv
 
 classType = [ 1 2 ]; % Number of column-wise designations.
 
@@ -30,13 +30,10 @@ for j = 1:1:size(Nl,2)
 end
 totalN = sum(Nl); 
 
-% We can generate an objective label vector to keep track of our errors
-% with unsupervised data...
-
-ii = 1; jj = 1; kk = 1; pp = 1;
+ii = 1; jj = 1; kk = 1;
 for i = 1:Nl(ii):totalN
     while ( jj <= Nl(1,ii) )
-        verObservation(kk,1) = ii;
+        verObservation(kk,1) = Nl(1,ii);
         jj = jj + 1; kk = kk + 1;
     end
     ii = ii + 1; jj = 1;

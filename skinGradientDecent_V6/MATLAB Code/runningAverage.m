@@ -1,6 +1,6 @@
 function [ RA ] = runningAverage( RGB, rgbData, skinObservation )
 
-global i n RA R G B W X classType classGroups CFLAG
+global RA R G B W X classType classGroups CFLAG
 
     if( CFLAG )
 

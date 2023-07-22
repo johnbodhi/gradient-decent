@@ -1,6 +1,6 @@
 function [ D, E ] = skinImageClassification( dataSet, trainingN, testN )
     
-    global i A C RA Q verObservation imageLength CFLAG pp
+    global i A C RA Q imageLength verObservation CFLAG
 
     CFLAG = 1;
 
@@ -33,12 +33,12 @@ function [ D, E ] = skinImageClassification( dataSet, trainingN, testN )
 
             imgDecision = imageDecision( rgbData ); D = D + 1; % Take image to classify in the gradient.
 
-            if ( imgDecision ~= verObservation( pp, 1 ) )
+            if ( imgDecision ~=  )
 
                 E = E + 1;
             end
 
-            rgbData = 0; ii = 1; pp = pp + 1;
+            rgbData = 0; ii = 1;
 
             A = [ 0 imgDecision D E ]; disp( A )
         end

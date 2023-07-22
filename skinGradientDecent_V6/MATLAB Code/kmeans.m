@@ -35,9 +35,9 @@ global imageLength classGroups classType GFLAG C A RA X
         end
     end
     
-    while( jj < N * imageLength*A ) % Modified convergence criterion.
+    while( jj < N*imageLength*A ) % Modified convergence criterion.
 
-        if ( ii  == N * imageLength*A )
+        if ( ii  == N*imageLength*A )
 
             ii = 1;
         end
