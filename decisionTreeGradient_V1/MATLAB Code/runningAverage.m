@@ -1,4 +1,4 @@
-function [ ZA ] = runningAverage( RGB )
+function [ ZA ] = runningAverage( RGB, rgbData, skinObservation )
 
 global i n ZA R G B W classType classGroups imgDecision CFLAG
 

@@ -23,9 +23,11 @@ function [ D, E ] = skinImageClassification( dataSet, trainingN, testN )
 
             skinObservation_ = rgbData(:,C);
 
-            % We can utilize non-stationary RA during classification. (Monitor dissimilarity in RA...)
+
+            % We can utilize non-stationary RA during classification.
 
             runningAverage( RGB, rgbData, skinObservation_ ); 
+
 
             rgbData = kmeans( rgbData, skinObservation_ ); % k-means image data set.
 

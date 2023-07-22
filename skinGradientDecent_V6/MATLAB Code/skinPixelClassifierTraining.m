@@ -1,14 +1,14 @@
 function skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN )
 
-global i n N W RA R G B C classGroups classType CFLAG
+global i n W RA R G B C Nl classGroups classType CFLAG
 
     CFLAG = 0;
 
-    R = zeros( 2, trainingN ); 
+    R = zeros( size(Nl,2), trainingN ); 
     
-    %G = zeros( 2, trainingN ); 
+    %G = zeros( size(Nl,2), trainingN ); 
     
-    %B = zeros( 2, trainingN );
+    %B = zeros( size(Nl,2), trainingN );
 
     % Allocate for cyclic weighting / infinite parameter gain.
     
@@ -36,12 +36,11 @@ global i n N W RA R G B C classGroups classType CFLAG
 
     for i = 1:trainingN                    
 
-        n = skinObservation( i ); 
+        n = skinObservation( i );
         
         RGB = dataSetRandomized( i, 1:C-1 );
         
         [ RA ] = runningAverage( RGB );
     end
 
-    % ZA = [ RA11 RA12 ];
 end
