@@ -24,6 +24,5 @@ function [ X ] = dataSetRandomized(dataSet,L,C)
             writematrix(dataSetRandomized,'dataSetRandomized.csv');
 
             X = dataSetRandomized;
-
     end    
 end

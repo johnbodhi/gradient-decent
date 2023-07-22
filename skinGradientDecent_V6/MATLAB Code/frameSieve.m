@@ -4,9 +4,7 @@ function [ Y ] = frameSieve( S )
 
     A = size(RA,1); M = imageLength;
 
-    Y = S;
-
-    Y = sort(Y);
+    Y = S; Y = sort(Y);
 
     for i = 1:1:A-1
         

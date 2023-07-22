@@ -1,12 +1,12 @@
 function skinPixelClassifierTraining( dataSetRandomized, skinObservation, trainingN )
 
-global i n W RA Q R G B C Nl classGroups classType CFLAG
+global RA W Q R G B Nl classGroups classType CFLAG
 
     CFLAG = 0;
 
     R = zeros( size(Nl,2), trainingN ); 
     
-    %G = zeros( size(Nl,2), trainingN ); 
+    %G = zeros( size(Nl,2), trainingN );
     
     %B = zeros( size(Nl,2), trainingN );
 
@@ -30,7 +30,6 @@ global i n W RA Q R G B C Nl classGroups classType CFLAG
     
                 W(ii,:,kk) = 0;
             end
-
         end
     end        
         
@@ -38,5 +37,5 @@ global i n W RA Q R G B C Nl classGroups classType CFLAG
     
     [ RA ] = runningAverage( RGB, [], skinObservation );
 
-    Q = RA; % This is a redundant RA for resetting the average to RA_0...
+    Q = RA; % This is a redundant RA for resetting the average during classification.
 end

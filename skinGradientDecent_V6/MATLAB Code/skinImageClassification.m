@@ -1,6 +1,6 @@
-function [ D, E ] = skinImageClassification( dataSet, trainingN, testN )
+function [ D, E ] = skinImageClassification( dataSet, testN, verObservation )
     
-    global pp A C RA Q verObservation imageLength CFLAG 
+    global pp A C RA Q imageLength CFLAG 
 
     CFLAG = 1;
 
@@ -8,9 +8,9 @@ function [ D, E ] = skinImageClassification( dataSet, trainingN, testN )
 
     ii = 1;
 
-    for i = trainingN+1:1:trainingN+testN
+    for i = 1:1:testN
 
-        RGB = dataSet( i, 1:C);
+        RGB = dataSet( i, 1:C );
 
         % Store an RGB pixels of contained in the image of length 
         % imageLength to pass into the Gradient.
@@ -23,9 +23,10 @@ function [ D, E ] = skinImageClassification( dataSet, trainingN, testN )
 
             skinObservation_ = rgbData(:,C);
 
-            RA = Q; % We need to reset RA;
+            RA = Q; % We need to reset RA between classes;
 
-            % We can utilize non-stationary RA during classification. (Monitor dissimilarity in RA...)
+            % We can utilize non-stationary RA during classification to
+            % monitor dissimilarity between objects...
 
             runningAverage( RGB, rgbData, skinObservation_ ); 
 
@@ -33,14 +34,16 @@ function [ D, E ] = skinImageClassification( dataSet, trainingN, testN )
 
             imgDecision = imageDecision( rgbData ); D = D + 1; % Take image to classify in the gradient.
 
-            if ( imgDecision ~= verObservation( pp, 1 ) )
+%             if ( imgDecision ~= verObservation( pp, 1 ) )
+% 
+%                 E = E + 1;
+%             end
+%             pp = pp + 1;
 
-                E = E + 1;
-            end
-
-            rgbData = 0; ii = 1; pp = pp + 1;
+            rgbData = 0; ii = 1; 
 
             A = [ 0 imgDecision D E ]; disp( A )
         end
     end
+
 end

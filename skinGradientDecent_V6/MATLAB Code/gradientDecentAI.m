@@ -10,7 +10,7 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_
 
 % We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
 
-global L C X N Nl RA GFLAG classGroups classType imageLength verObservation uu vv pp
+global L C X N Nl RA GFLAG classGroups classType imageLength uu vv pp
 
 classType = [ 1 2 ]; % Number of column-wise designations.
 
@@ -25,8 +25,8 @@ Nr = 25; Mr = 25; imageLength = Nr * Mr; % Photo length, and width.
 Nl = zeros(size(numImages,2),1);
 for i = 1:1:size(Nl,1)
 
-    % Nl(i,1) = numImages(i); % Number of objects per class.
-    Nl(i,1) = 10; 
+    Nl(i,1) = numImages(i); % Number of objects per class.
+    %Nl(i,1) = 5; 
 end
 totalN = sum(Nl); 
 
@@ -111,7 +111,7 @@ for k = 1:1:size(RA,3)
         % data content.
         
         ii = 1;      
-        for i = ( 1 + D ):1:( Nl(cc,1)*imageLength + D ) % We can choose one photo per class.
+        for i = ( 1 + D ):1:( Nl(cc,1)*imageLength + D ) % We can choose more than one photo per class.
             if ( dataSet( i, C ) == 0 )
 
                 dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
@@ -142,7 +142,7 @@ for k = 1:1:size(RA,3)
         
         testN = floor( 1.0 * totalN );          
         
-        [ D, E ] = skinImageClassification( dataSet, trainingN, testN );
+        [ D, E ] = skinImageClassification( dataSet, testN, verObservation );
 
         if( hh <= size( Nl, 1 ) )
         

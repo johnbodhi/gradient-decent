@@ -30,11 +30,11 @@ Fil = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDece
  
 Fll = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\Fll";
 
-% Fml = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\Data\Image Data\test\Fml"; 
+Fml = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\Data\Image Data\test\Fml"; 
 
 Gal = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\Gal";
 
-% Gbl = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\Data\Image Data\test\Gbl"; 
+Gbl = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\Data\Image Data\test\Gbl"; 
 
 Gcl = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\Gcl";
 
