@@ -1,64 +1,64 @@
-function [ ZA ] = runningAverage( RGB, rgbData, skinObservation )
+function [ RA ] = runningAverage( RGB, rgbData, skinObservation )
 
-global i n ZA R G B W classType classGroups imgDecision CFLAG
+global i n RA R G B W X classType classGroups CFLAG
 
     if( CFLAG )
 
-        % During classification we can update ZA with the decisions made
+        % During classification we can update RA with the decisions made
         % by the gradient.
 
-        R( imgDecision, i ) = RGB( 1, 1 ); 
-        G( imgDecision, i ) = RGB( 1, 2 ); 
-        B( imgDecision, i ) = RGB( 1, 3 );
+        jj = 1;
+        for ii = 1:1:size(rgbData,1)
+
+            R(skinObservation(ii,1),jj) = rgbData(ii,1); 
+            G(skinObservation(ii,1),jj) = rgbData(ii,2); 
+            B(skinObservation(ii,1),jj) = rgbData(ii,3); 
+
+            jj = jj + 1;
+        end
+
+        uu = 1;        
+        for kk = 1:1:size(classGroups,2)
+            for jj = 1:1:size(classType,2)  
+                for ii = 1:1:size(rgbData,1)
+                
+                    if ( uu == skinObservation(ii,1) )
+        
+                        RA(jj,1,kk) = W(jj,1,kk) * mean( R( skinObservation(ii,1), : ), 2 );
+            
+                        RA(jj,2,kk) = W(jj,2,kk) * mean( G(skinObservation(ii,1), 2 );
+            
+                        RA(1,jj,3,kk) = W(jj,3,kk) * mean( B(skinObservation(ii,1), 2 ); 
+                    end
+                end
+            end
+            
+            uu = uu + 1;
+        end
+
     else
 
         R( n, i ) = RGB( 1, 1 ); 
-        G( n, i ) = RGB( 1, 2 ); 
-        B( n, i ) = RGB( 1, 3 );
-    end
+        %G( n, i ) = RGB( 1, 2 ); 
+        %B( n, i ) = RGB( 1, 3 );
 
-    
-    if( CFLAG )
-
-        uu = 1; M = 1;
+        uu = 1;
         for kk = 1:1:size(classGroups,2)
-            for jj = 1:1:size(ZA,2)
-                for ii = 1:1:size(classType,2)  
-                    
-                    if ( uu == imgDecision )
+            for ii = 1:1:size(classType,2)  
+                
+                if ( uu == n )
+    
+                    RA(ii,1,kk) = W(ii,1,kk) * mean( R( n, : ), 2 );
         
-                        ZA(ii,1*jj*M,kk) = W(ii,1*jj*M,kk) * mean( R( imgDecision, : ), 2 );
-            
-                        ZA(ii,2*jj*M,kk) = W(ii,2*jj*M,kk) * mean( G( imgDecision, : ), 2 );
-            
-                        ZA(ii,3*jj*M,kk) = W(ii,3*jj*M,kk) * mean( B( imgDecision, : ), 2 );
-                    end
+                    %RA(ii,2,kk) = W(ii,2,kk) * mean( G( n, : ), 2 );
+        
+                    %RA(ii,3,kk) = W(ii,3,kk) * mean( B( n, : ), 2 );
+                    
                 end
             end
-    
-            uu = uu + 1; M = M + 3;
-        end
-
-    else
-
-        uu = 1; M = 1;
-        for kk = 1:1:size(classGroups,2)
-            for jj = 1:1:size(ZA,2)/3
-                for ii = 1:1:size(classType,2)  
-                    
-                    if ( uu == n )
-        
-                        ZA(ii,1*jj*M,kk) = W(ii,1*jj*M,kk) * mean( R( n, : ), 2 );
             
-                        ZA(ii,2*jj*M,kk) = W(ii,2*jj*M,kk) * mean( G( n, : ), 2 );
-            
-                        ZA(ii,3*jj*M,kk) = W(ii,3*jj*M,kk) * mean( B( n, : ), 2 );
-                    end
-                end
-            end
-    
-            uu = uu + 1;  M = M + 3;
-        end
+            uu = uu + 1;
+        end    
     end
-
+    
 end

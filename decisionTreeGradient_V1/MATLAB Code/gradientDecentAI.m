@@ -23,7 +23,7 @@ Nr = 25; Mr = 25; imageLength = Nr * Mr; % Photo length, and width.
 % Number of images per class to classify.
 
 Nl = zeros(1,size(numImages,2));
-for j = 1:1:size(numImages,2)
+for j = 1:1:size(Nl,2)
 
     % Nl(1,j) = numImages(j); % Number of objects per class.
     Nl(1,j) = 1; 

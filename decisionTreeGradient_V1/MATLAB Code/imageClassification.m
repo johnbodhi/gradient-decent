@@ -1,6 +1,6 @@
 function [ D, E ] = imageClassification( dataSet, trainingN, testN )
     
-    global i n A C imageLength imgDecision CFLAG
+    global i A C imageLength CFLAG
 
     CFLAG = 1;
 
@@ -10,18 +10,22 @@ function [ D, E ] = imageClassification( dataSet, trainingN, testN )
 
     for i = trainingN+1:1:trainingN+testN
 
-        RGB = dataSet( i, 1:C-1 );
+        RGB = dataSet( i, 1:C);
         
         % Store an RGB pixels of contained in the image of length 
         % imageLength to pass into the Gradient.
 
-        rgbData( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1; 
+        rgbData( ii, 1:C) = dataSet( i, 1:C); ii = ii + 1; 
         
         if ( size( rgbData, 1 ) == imageLength )
 
             rgbData = frameSieve(rgbData); % Duplicate and re-label each frame.
 
-            Observation_ = rgbData(:,C);
+            skinObservation_ = rgbData(:,C);
+
+            % We can utilize non-stationary RA during classification. (Monitor dissimilarity in RA...)
+
+            runningAverage( RGB, rgbData, skinObservation_ ); 
 
             rgbData = kmeans( rgbData, skinObservation_ ); % k-means image data set.
 
@@ -36,7 +40,5 @@ function [ D, E ] = imageClassification( dataSet, trainingN, testN )
 
             A = [ 0 imgDecision D E ]; disp( A )
         end
-
-        runningAverage( RGB ); % We can utilize non-stationary RA during classification.
     end
 end

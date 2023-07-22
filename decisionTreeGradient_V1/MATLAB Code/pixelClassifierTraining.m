@@ -1,14 +1,14 @@
 function pixelClassifierTraining( dataSetRandomized, Observation, trainingN )
 
-global i n R G B ZA W C classGroups classType numRA CFLAG
+global i n R G B Nl ZA W C classGroups classType numRA CFLAG
 
     CFLAG = 0;
 
-    R = zeros( 2, trainingN ); 
+    R = zeros( size(Nl,2), trainingN ); 
     
-    G = zeros( 2, trainingN ); 
+    G = zeros( size(Nl,2), trainingN ); 
     
-    B = zeros( 2, trainingN );
+    B = zeros( size(Nl,2), trainingN );
 
     % Allocate for cyclic weighting / infinite parameter gain.
 
@@ -24,7 +24,7 @@ global i n R G B ZA W C classGroups classType numRA CFLAG
                 W(ii,:,kk) = 1e1;
             elseif ( ii == 2 )
     
-                W(ii,:,kk) = 1e3;
+                W(ii,:,kk) = 1e2;
 
             elseif ( ii == 3 )
     
