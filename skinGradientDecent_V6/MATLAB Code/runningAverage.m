@@ -1,6 +1,6 @@
 function [ RA ] = runningAverage( RGB )
 
-global i n RA R G B W classType classGroups imgDecision CFLAG RA11 RA12
+global i n RA R G B W classType classGroups imgDecision CFLAG
 
     if( CFLAG )
 

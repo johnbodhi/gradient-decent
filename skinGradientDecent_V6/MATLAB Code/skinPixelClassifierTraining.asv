@@ -4,15 +4,15 @@ global i n N W RA R G B C classGroups classType CFLAG
 
     CFLAG = 0;
 
-    R = zeros( 2, trainingN ); 
+    R = zeros( N, trainingN ); 
     
-    %G = zeros( 2, trainingN ); 
+    %G = zeros( N, trainingN ); 
     
-    %B = zeros( 2, trainingN );
+    %B = zeros( N, trainingN );
 
     % Allocate for cyclic weighting / infinite parameter gain.
     
-    RA = zeros( size( classType, 2), 3, size( classGroups, 2) ); 
+    RA = zeros( size( classType, 2), , size( classGroups, 2) ); 
 
     W  = zeros( size( classType, 2), 3, size( classGroups, 2) );
 
