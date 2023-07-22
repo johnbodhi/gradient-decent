@@ -1,6 +1,6 @@
 function [ D, E ] = skinImageClassification( dataSet, trainingN, testN )
     
-    global i A C imageLength CFLAG
+    global i A C RA Q imageLength CFLAG
 
     CFLAG = 1;
 
@@ -11,7 +11,7 @@ function [ D, E ] = skinImageClassification( dataSet, trainingN, testN )
     for i = trainingN+1:1:trainingN+testN
 
         RGB = dataSet( i, 1:C);
-        
+
         % Store an RGB pixels of contained in the image of length 
         % imageLength to pass into the Gradient.
 
@@ -22,6 +22,8 @@ function [ D, E ] = skinImageClassification( dataSet, trainingN, testN )
             rgbData = frameSieve(rgbData); % Duplicate and re-label each frame.
 
             skinObservation_ = rgbData(:,C);
+
+            RA = Q;
 
             % We can utilize non-stationary RA during classification. (Monitor dissimilarity in RA...)
 

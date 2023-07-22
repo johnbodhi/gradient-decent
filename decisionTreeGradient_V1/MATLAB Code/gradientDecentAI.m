@@ -14,9 +14,9 @@ global L C X Nl RA GFLAG classGroups classType numRA imageLength uu vv
 
 classType = [ 1 2 ]; % Number of column-wise designations.
 
-classGroups = zeros( 1, 0.5 * size(numImages, 2) ); % Groupings for cyclic weight.
+classGroups = zeros( 1, 0.50 * size(numImages, 2) ); % Groupings for cyclic weight.
 
-numRA = 4;
+numRA = 5; % The number of RA tensors to train.
 
 Nr = 25; Mr = 25; imageLength = Nr * Mr; % Photo length, and width. 
 
@@ -26,7 +26,7 @@ Nl = zeros(1,size(numImages,2));
 for j = 1:1:size(Nl,2)
 
     % Nl(1,j) = numImages(j); % Number of objects per class.
-    Nl(1,j) = 1; 
+    Nl(1,j) = 2; 
 end
 totalN = sum(Nl); 
 

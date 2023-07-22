@@ -1,6 +1,6 @@
 function [ RA ] = runningAverage( RGB, rgbData, skinObservation )
 
-global i n RA R G B W X classType classGroups CFLAG
+global i n RA R G B W classType classGroups CFLAG
 
     if( CFLAG )
 
@@ -24,11 +24,11 @@ global i n RA R G B W X classType classGroups CFLAG
                 
                     if ( uu == skinObservation(ii,1) )
         
-                        RA(jj,1,kk) = W(jj,1,kk) * mean( R( skinObservation(ii,1), : ), 2 );
+                        RA(jj,1,kk) = W(jj,1,kk) * mean( R(skinObservation(ii,1), : ), 2 );
             
-                        RA(jj,2,kk) = W(jj,2,kk) * mean( G(skinObservation(ii,1), 2 );
+                        RA(jj,2,kk) = W(jj,2,kk) * mean( G(skinObservation(ii,1), : ), 2 );
             
-                        RA(1,jj,3,kk) = W(jj,3,kk) * mean( B(skinObservation(ii,1), 2 ); 
+                        RA(jj,3,kk) = W(jj,3,kk) * mean( B(skinObservation(ii,1), : ), 2 ); 
                     end
                 end
             end
@@ -39,8 +39,8 @@ global i n RA R G B W X classType classGroups CFLAG
     else
 
         R( n, i ) = RGB( 1, 1 ); 
-        %G( n, i ) = RGB( 1, 2 ); 
-        %B( n, i ) = RGB( 1, 3 );
+        G( n, i ) = RGB( 1, 2 ); 
+        B( n, i ) = RGB( 1, 3 );
 
         uu = 1;
         for kk = 1:1:size(classGroups,2)
@@ -50,9 +50,9 @@ global i n RA R G B W X classType classGroups CFLAG
     
                     RA(ii,1,kk) = W(ii,1,kk) * mean( R( n, : ), 2 );
         
-                    %RA(ii,2,kk) = W(ii,2,kk) * mean( G( n, : ), 2 );
+                    RA(ii,2,kk) = W(ii,2,kk) * mean( G( n, : ), 2 );
         
-                    %RA(ii,3,kk) = W(ii,3,kk) * mean( B( n, : ), 2 );
+                    RA(ii,3,kk) = W(ii,3,kk) * mean( B( n, : ), 2 );
                     
                 end
             end

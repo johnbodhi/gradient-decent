@@ -1,6 +1,6 @@
 function [ D, E ] = imageClassification( dataSet, trainingN, testN )
     
-    global i A C imageLength CFLAG
+    global i A C RA imageLength CFLAG
 
     CFLAG = 1;
 
@@ -8,9 +8,13 @@ function [ D, E ] = imageClassification( dataSet, trainingN, testN )
 
     ii = 1;
 
+    G = RA;
+
     for i = trainingN+1:1:trainingN+testN
 
         RGB = dataSet( i, 1:C);
+
+        RA = G;
         
         % Store an RGB pixels of contained in the image of length 
         % imageLength to pass into the Gradient.
