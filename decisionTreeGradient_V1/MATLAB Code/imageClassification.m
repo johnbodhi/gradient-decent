@@ -1,4 +1,4 @@
-function [ D, E ] = imageClassification( dataSet, Observation, trainingN, testN )
+function [ D, E ] = imageClassification( dataSet, trainingN, testN )
     
     global i n A C imageLength imgDecision CFLAG
 
@@ -9,8 +9,6 @@ function [ D, E ] = imageClassification( dataSet, Observation, trainingN, testN 
     ii = 1;
 
     for i = trainingN+1:1:trainingN+testN
-        
-        % n = Observation( i, 1 );
 
         RGB = dataSet( i, 1:C-1 );
         

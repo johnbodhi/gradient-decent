@@ -2,128 +2,47 @@ clear all; close all; clc;
 
 % Training sequences...
 
-% The first five images are exclusive from the test images in Derm7pt.
+A1l = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\Data\Derm7pt\A1l"; 
 
-A1l = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionGradient_V1\Data\Data\Derm7pt\A1l"; 
+A2l = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\Data\Derm7pt\A2l"; 
 
-A2l = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionDecent_V1\Data\Data\Derm7pt\A2l"; 
+Cancerous = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\breast_xrays\Cancerous"; 
 
-Cancerous = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionGradient_V1\Data\breast_xrays\Cancerous"; 
+nonCancerous = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\breast_xrays\nonCancerous"; 
 
-nonCancerous = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionGradient_V1\Data\breast_xrays\nonCancerous"; 
+Pneumonia = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\chest_xray\train\PNEUMONIA";  
 
-Pneumonia = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionGradient_V1\Data\chest_xray\train\PNEUMONIA";  
+Normal = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\chest_xray\train\NORMAL"; 
 
-Normal = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionGradient_V1\Data\chest_xray\train\NORMAL"; 
+Fractured = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\ "; 
 
-Fractured = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionGradient_V1\Data\ "; 
+nonFractured = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\ "; 
 
-nonFractured = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionGradient_V1\Data\ "; 
+melanoma = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\MedNode\train\melanoma"; 
+
+naevus = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\MedNode\train\naevus"; 
 
 % Test sequences...
 
-% A1l = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Data\Derm7pt\test\A1l";
+% A1l = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\Data\Derm7pt\test\A1l";
 % 
-% A2l = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Data\Derm7pt\test\A2l";  
+% A2l = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\Data\Derm7pt\test\A2l";  
 % 
-% Cancerous = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionGradient_V1\Data\breast_xrays\Cancerous"; 
+% Cancerous = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\breast_xrays\Cancerous"; 
 % 
-% nonCancerous = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionGradient_V1\Data\\breast_xrays\nonCancerous"; 
+% nonCancerous = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\\breast_xrays\nonCancerous"; 
 % 
-% Pneumonia = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionGradient_V1\Data\chest_xray\test\PNEUMONIA";  
+% Pneumonia = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\chest_xray\test\PNEUMONIA";  
 % 
-% Normal = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\chest_xray\test\NORMAL"; 
+% Normal = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\chest_xray\test\NORMAL"; 
 % 
-% Fractured = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Data\Derm7pt\A1l"; 
+% Fractured = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\Data\Derm7pt\A1l"; 
 % 
-% nonFractured = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Data\Derm7pt\A2l"; 
-
-
-% A1l = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\A1l";
+% nonFractured = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\Data\Derm7pt\A2l"; 
 % 
-% A2l = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\A2l";  
-%
-% A3l = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\A3l";
+% melanoma = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\MedNode\test\melanoma"; 
 % 
-% Adl = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\Adl"; 
-% 
-% Ael = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\Ael";
-% 
-% FAL = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\FAL"; 
-%   
-% FBL = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\FBL";
-% 
-% FCL = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\FCL"; 
-% 
-% FDL = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\FDL";
-% 
-% FEL = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\FEL"; 
-% 
-% FFL = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\FFL";
-% 
-% Fgl = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\Fgl";  
-%  
-% Fhl = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\Fhl";
-% 
-% Fil = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\Fil"; 
-%  
-% Fll = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\Fll";
-
-% Fml = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\Data\Image Data\test\Fml"; 
-
-% Gal = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\Gal";
-
-% Gbl = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\Data\Image Data\test\Gbl"; 
-
-% Gcl = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\Gcl";
-% 
-% Gdl = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\Gdl"; 
-% 
-% Ggl = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\Ggl";
-% 
-% Gzl = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\Gzl";  
-% 
-% NAL = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\NAL";
-% 
-% NBL = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\NBL"; 
-% 
-% NCL = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\NCL";
-% 
-% NDL = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\NDL"; 
-%   
-% NEL = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\NEL";
-% 
-% New = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\New"; 
-%   
-% NFL = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\NFL";
-% 
-% NGL = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\NGL"; 
-% 
-% NHL = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\NHL";
-% 
-% NIL = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\NIL"; 
-% 
-% NLL = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\NLL";
-% 
-% NML = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Image Data\test\NML"; 
-
-% Test = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V5\Data\Image Data\test";
-
-% Unknown = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V3\Data\Image Data\Unknown";
-
-% directoryArr = [ A1l A2l A3l Adl Ael FAL ...
-%                  FBL FCL FDL FEL FFL Fgl ...
-%                  Fhl Fil Fll Gal Gcl Gdl ...
-%                  Ggl Gzl NAL NBL NCL NDL ...
-%                  NEL New NFL NGL NHL NIL ...
-%                  NLL NML ];
-% 
-% str1_ = [ "A1l (" "A2l (" "A3l (" "Adl (" "Ael (" "FAL (" ...
-%           "FBL (" "FCL (" "FDL (" "FEL (" "FFL (" "Fgl (" ...
-%           "Fhl (" "Fil (" "Fll (" "Gal (" "Gcl (" "Gdl (" ...
-%           "Ggl (" "Gzl (" "NAL (" "NBL (" "NCL (" "NDL (" ...
-%           "NEL (" "New (" "NFL (" "NGL (" "NHL (" "NIL (" ...
-%           "NLL (" "NML (" ];
+% naevus = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\MedNode\test\naevus"; 
 
 directoryArr = [ A1l A2l...
                  melanoma naevus...

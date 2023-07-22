@@ -1,8 +1,8 @@
 function [ Y ] = frameSieve( S )
 
-    global A RA X imageLength
+    global A ZA X imageLength
 
-    A = size(RA,1); M = imageLength;
+    A = size(ZA,1); M = imageLength;
 
     Y = S; Y = sort(Y);
 

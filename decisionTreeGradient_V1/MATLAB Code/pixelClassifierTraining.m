@@ -1,33 +1,20 @@
 function pixelClassifierTraining( dataSetRandomized, Observation, trainingN )
 
-global i n W RA R G B C M classGroups classType CFLAG ZA RA11 RA12 RA13 RA14
+global i n R G B ZA W C classGroups classType numRA CFLAG
 
     CFLAG = 0;
 
-    R = zeros( N, trainingN ); 
+    R = zeros( 2, trainingN ); 
     
-    G = zeros( N, trainingN ); 
+    G = zeros( 2, trainingN ); 
     
-    B = zeros( N, trainingN );
+    B = zeros( 2, trainingN );
 
     % Allocate for cyclic weighting / infinite parameter gain.
 
-    ZA = zeros( size( classType, 2), size(ZA,2), size( classGroups, 2) ); 
+    ZA = zeros( size( classType, 2), 3*numRA, size( classGroups, 2) ); 
 
-    W  = zeros( size( classType, 2), size(ZA,2), size( classGroups, 2) );
-
-%     RA = zeros( size( classType, 2), 3, size( classGroups, 2) );  
-%     W  = zeros( size( classType, 2), 3, size( classGroups, 2) );
-
-%     RA11 = zeros( size( classType, 2), 3, size( classGroups, 2) ); 
-% 
-%     RA12 = zeros( size( classType, 2), 3, size( classGroups, 2) ); 
-% 
-%     RA13 = zeros( size( classType, 2), 3, size( classGroups, 2) ); 
-% 
-%     RA14 = zeros( size( classType, 2), 3, size( classGroups, 2) ); 
-%
-%     W    = zeros( size( classType, 2), 3, size( classGroups, 2) );
+    W  = zeros( size( classType, 2), 3*numRA, size( classGroups, 2) );
 
     for kk = 1:1:size( classGroups, 2 )
         for ii = 1:1:size(classType, 2 )

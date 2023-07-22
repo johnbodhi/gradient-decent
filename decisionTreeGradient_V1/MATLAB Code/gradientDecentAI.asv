@@ -10,13 +10,11 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradien
 
 % We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
 
-global L C X Nl RA GFLAG classGroups classType numRA imageLength uu vv
+global L C X Nl RA GFLAG classGroups classType imageLength uu vv
 
 classType = [ 1 2 ]; % Number of column-wise designations.
 
 classGroups = zeros( 1, 0.5 * size(numImages, 2) ); % Groupings for cyclic weight.
-
-numRA = 4;
 
 Nr = 25; Mr = 25; imageLength = Nr * Mr; % Photo length, and width. 
 

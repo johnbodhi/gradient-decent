@@ -20,12 +20,12 @@ global i n ZA R G B W classType classGroups imgDecision CFLAG
     
     if( CFLAG )
 
-        uu = 1; M = 1;
+        uu = 1; M = 1;;
         for kk = 1:1:size(classGroups,2)
-            for jj = 1:1:size(ZA,2)
+            for jj = 1:1:size(ZA,2)/3
                 for ii = 1:1:size(classType,2)  
                     
-                    if ( uu == imgDecision )
+                    if ( uu == n )
         
                         ZA(ii,1*jj*M,kk) = W(ii,1*jj*M,kk) * mean( R( imgDecision, : ), 2 );
             
@@ -41,23 +41,24 @@ global i n ZA R G B W classType classGroups imgDecision CFLAG
 
     else
 
-        uu = 1; M = 1;
-        for kk = 1:1:size(classGroups,2)
-            for jj = 1:1:size(ZA,2)/3
-                for ii = 1:1:size(classType,2)  
-                    
-                    if ( uu == n )
-        
-                        ZA(ii,1*jj*M,kk) = W(ii,1*jj*M,kk) * mean( R( n, : ), 2 );
+            uu = 1; M = 1;
+            for kk = 1:1:size(classGroups,2)
+                for jj = 1:1:size(ZA,2)/3
+                    for ii = 1:1:size(classType,2)  
+                        
+                        if ( uu == n )
             
-                        ZA(ii,2*jj*M,kk) = W(ii,2*jj*M,kk) * mean( G( n, : ), 2 );
-            
-                        ZA(ii,3*jj*M,kk) = W(ii,3*jj*M,kk) * mean( B( n, : ), 2 );
+                            ZA(ii,1*jj*M,kk) = W(ii,1*jj*M,kk) * mean( R( n, : ), 2 );
+                
+                            ZA(ii,2*jj*M,kk) = W(ii,2*jj*M,kk) * mean( G( n, : ), 2 );
+                
+                            ZA(ii,3*jj*M,kk) = W(ii,3*jj*M,kk) * mean( B( n, : ), 2 );
+                        end
                     end
                 end
+        
+                uu = uu + 1;  M = M + 3;
             end
-    
-            uu = uu + 1;  M = M + 3;
         end
     end
 
