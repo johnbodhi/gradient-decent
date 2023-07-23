@@ -16,7 +16,7 @@ classType = [ 1 2 ]; % Number of column-wise designations.
 
 classGroups = zeros( 1, 0.50 * size( numImages, 2 ) ); % Groupings for cyclic weight. Over allocate at classGroups = 1
 
-% N = size(numImages,2);
+N = size(numImages,2);
 
 Nr = 25; Mr = 25; imageLength = Nr * Mr; % Photo length, and width. 
 
@@ -35,10 +35,14 @@ totalN = sum(Nl);
 
 ii = 1; jj = 1; kk = 1; pp = 1;
 for i = 1:Nl(ii,1):2*totalN
+
     while ( jj <= Nl(ii,1) )
+
         verObservation(kk,1) = ii;
+
         jj = jj + 1; kk = kk + 1;
     end
+
     ii = ii + 1; jj = 1;
 
     if ( size(verObservation,1) >= totalN )
