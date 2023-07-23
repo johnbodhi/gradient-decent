@@ -33,13 +33,20 @@ totalN = sum(Nl);
 % We can generate an objective label vector to keep track of our errors
 % with unsupervised data...
 
+
+
 ii = 1; jj = 1; kk = 1; pp = 1;
-for i = 1:Nl(ii,1):totalN
+for i = 1:Nl(ii,1):2*totalN
     while ( jj <= Nl(ii,1) )
         verObservation(kk,1) = ii;
         jj = jj + 1; kk = kk + 1;
     end
     ii = ii + 1; jj = 1;
+
+    if ( size(verObservation,1) >= totalN )
+
+        break;
+    end
 end
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\skinGradientDecent_V6\Data\Excel Data");
