@@ -14,10 +14,6 @@ Pneumonia = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTr
 
 Normal = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\chest_xray\train\NORMAL"; 
 
-Fractured = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\ "; 
-
-nonFractured = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\ "; 
-
 melanoma = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\MedNode\train\melanoma"; 
 
 naevus = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\MedNode\train\naevus"; 
@@ -35,11 +31,7 @@ naevus = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeG
 % Pneumonia = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\chest_xray\test\PNEUMONIA";  
 % 
 % Normal = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\chest_xray\test\NORMAL"; 
-% 
-% Fractured = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\Data\Derm7pt\A1l"; 
-% 
-% nonFractured = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\Data\Derm7pt\A2l"; 
-% 
+%
 % melanoma = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\MedNode\test\melanoma"; 
 % 
 % naevus = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\MedNode\test\naevus"; 
@@ -47,13 +39,12 @@ naevus = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeG
 directoryArr = [ A1l A2l...
                  melanoma naevus...
                  Cancerous nonCancerous...
-                 Pneumonia Normal...
-                 Fractured nonFractured ];
+                 Pneumonia Normal ];
 
 str1_ = [ "A1l (" "A2l ("...
+          "melanoma (" "naevus ("...
           "Cancerous (" "nonCancerous ("...
-          "Pneumonia (" "Normal ("...
-          "Fractured (" "nonFractured (" ];
+          "Pneumonia (" "Normal ("  ];
 
 for j = 1:size(str1_,2)
     cd( directoryArr( j ) );
@@ -67,7 +58,7 @@ for j = 1:size(str1_,2)
     end    
 end
 
-Nr = 100; Mr = 100;
+Nr = 40; Mr = 40;
 
 NN = 0; sampleSize = Nr * Mr; l = 1;
 

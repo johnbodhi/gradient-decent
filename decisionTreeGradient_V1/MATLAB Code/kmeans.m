@@ -31,6 +31,7 @@ global imageLength classGroups classType GFLAG C A RA X
     
                 W(ii,:,kk) = 0;
             end
+
         end
     end
     
@@ -58,7 +59,8 @@ global imageLength classGroups classType GFLAG C A RA X
 
                 if( n ~= B(i,j) )
                     B(i,j) = 0;
-                end                
+                end
+                
             end
         end
 
@@ -97,6 +99,8 @@ global imageLength classGroups classType GFLAG C A RA X
                 Ck(k,1) = W(k,3,1) * mean(D(:,3,k)); 
     
                 Cn(k,:) = [ Ci(k,1) Cj(k,1) Ck(k,1) ];
+                
+                % Cn(k,:) = [ Ci(k,1) ];
 
             end       
             
@@ -106,7 +110,7 @@ global imageLength classGroups classType GFLAG C A RA X
 
 %             for k = 1:1:size(RA,3)
 %                 for ii = 1:1:size(RA,1)
-%                     for j = 1:C-1                  
+%                     for j = 1:C-1                    
 %                         for i = 1:size( X, 1 )
 %         
 %                             D( i, j, ii, k ) = ( ( X( i, j ) - RA( ii, j, k ) )^p )^( 1 / p );  
@@ -144,5 +148,4 @@ global imageLength classGroups classType GFLAG C A RA X
 
         Y( i, 4 ) = V( i, 1 ); % Re-append labels for completeness.
     end
-
 end

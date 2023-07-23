@@ -1,12 +1,10 @@
-function [ Z ] = gradientDecent( F, G )
+function [ Z ] = gradientDecent( F )
 
-    global W C imageLength classType classGroups A uu vv
+    global W C RA imageLength classType classGroups A uu vv
 
     Y = F(:,1:C-1); % We can remove all labels from the data.
 
     eps = 1e1; ii = 0;
-
-    RA = G;
 
     % We need to generate the learning rate, and find the gradient. This
     % gradient is modified for infinite convolutional locii...
@@ -94,5 +92,4 @@ function [ Z ] = gradientDecent( F, G )
 
         Z = vv;        
     end    
-    
 end

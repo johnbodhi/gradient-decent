@@ -1,14 +1,14 @@
 function [ Y ] = frameSieve( S )
 
-    global A ZA X imageLength
+    global A RA X imageLength
 
-    A = size(ZA,1); M = imageLength;
+    A = size(RA,1); M = imageLength;
 
     Y = S; Y = sort(Y);
 
     for i = 1:1:A-1
         
-        Y = cat( 1, Y, S );
+        Y = cat( 1, Y, Y );
     end
 
     cc = 1;
