@@ -33,8 +33,6 @@ totalN = sum(Nl);
 % We can generate an objective label vector to keep track of our errors
 % with unsupervised data...
 
-
-
 ii = 1; jj = 1; kk = 1; pp = 1;
 for i = 1:Nl(ii,1):2*totalN
     while ( jj <= Nl(ii,1) )
