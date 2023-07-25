@@ -146,7 +146,7 @@ for k = 1:1:size(RA,3)
 
         L = size(dataSet_,1); C = size(dataSet_,2); N = Nl(cc,1); cc = cc + 1;
 
-        % dataSet_ = randomizeClass( dataSet_, Nr, Mr, L, C, N );
+        dataSet_ = randomizeClass( dataSet_, Nr, Mr, L, C, N );
 
         clear dataSet
 
