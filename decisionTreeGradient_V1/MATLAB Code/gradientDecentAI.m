@@ -140,17 +140,19 @@ for k = 1:1:size(RA,3)
                 dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
             end
         end    
-        T = T + Nl(cc,1)*imageLength; cc = cc + 1;
+        T = T + Nl(cc,1)*imageLength; 
 
         % We can randomize all data frames within each scoop...        
 
-        L = size(dataSet_,1); C = size(dataSet_,2); N = Nl(cc,1);
+        L = size(dataSet_,1); C = size(dataSet_,2); N = Nl(cc,1); cc = cc + 1;
 
         dataSet_ = randomizeClass( dataSet_, Nr, Mr, L, C, N );
 
         clear dataSet
 
-        dataSet = dataSet_( :, 1:C ); testObservation = dataSet( :, C );
+        dataSet = dataSet_( :, 1:C ); 
+        
+        % testObservation = dataSet( :, C ); % Supervised observations.
         
         clear dataSet_
 
