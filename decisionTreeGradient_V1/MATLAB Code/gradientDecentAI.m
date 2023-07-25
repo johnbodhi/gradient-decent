@@ -115,7 +115,7 @@ for k = 1:1:size(RA,3)
         L = size(dataSet,1); C = size(dataSet,2);
 
         dataSet = randomizedPhotos( dataSet, Nr, Mr, L, C, Nl ); % Randomize all photos.
-    
+
         % We can grab all observations in order, no matter the order of the
         % data content. The scoop.
 
@@ -140,7 +140,6 @@ for k = 1:1:size(RA,3)
         end    
         T = T + Nl(cc,1)*imageLength; cc = cc + 1;
     
-        % dataSet = readmatrix( 'randomizedPhotos.csv' ); % Random assortment of images.
         % dataSet_ = dataSet; 
         clear dataSet
         % dataSet = dataSet_( 1:N * Nr * Mr, 1:C );

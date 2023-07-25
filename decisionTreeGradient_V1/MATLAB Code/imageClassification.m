@@ -57,5 +57,4 @@ function [ D, E ] = imageClassification( dataSet, testObservation, testN, verObs
             J = [ 0 imgDecision D E ]; disp( J )
         end
     end
-
 end
