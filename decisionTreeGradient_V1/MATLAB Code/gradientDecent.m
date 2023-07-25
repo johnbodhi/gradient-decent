@@ -85,13 +85,13 @@ function [ Z ] = gradientDecent( F )
 
     [ ~, Z ] = min( S( uu:vv, 1 ) ); % Decisions are constrained to groups.
 
-    % [ ~, Z ] = min( S( :, 1 ) ); % Decisions are not constrained to groups.
-
     if( Z == 1 )
 
         Z = uu;
     elseif ( Z == 2 )
 
         Z = vv;        
-    end    
+    end
+
+    [ ~, Z ] = min( S( :, 1 ) ); % Decisions are not constrained to groups.
 end
