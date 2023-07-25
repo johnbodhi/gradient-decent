@@ -1,10 +1,12 @@
 
 
+dataSet = pixels;
+
 for i = 1:1:size(dataSet,1)
     for j = 1:1:size(dataSet,2)
         if( dataSet(i,j) == 0 )
     
-            dataSet(i,j) = 5;
+            dataSet(i,j) = 1;
         end
     end
 end
