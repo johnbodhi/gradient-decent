@@ -25,8 +25,8 @@ global RA R G B W X classType classGroups CFLAG
                     if ( uu == skinObservation(ii,1) && uu == X(1,jj) )
         
                         RA(jj,1,kk) = W(jj,1,kk) * mean( R( skinObservation(ii,1), : ), 2 );            
-                        RA(jj,2,kk) = W(jj,2,kk) * mean( G(skinObservation(ii,1), 2 );            
-                        RA(jj,3,kk) = W(jj,3,kk) * mean( B(skinObservation(ii,1), 2 ); 
+                        RA(jj,2,kk) = W(jj,2,kk) * mean( G( skinObservation(ii,1), : ), 2 );            
+                        RA(jj,3,kk) = W(jj,3,kk) * mean( B( skinObservation(ii,1), : ), 2 ); 
                         
                     end
                 end

@@ -12,7 +12,7 @@ function [ Z ] = gradientDecent( F )
     for mm = 2:1:size(classGroups,2)
         for k = 2:1:size(classType,2)
             for j = 1:1:C-1
-                for i = 2:imageLength*A
+                for i = 2:imageLength*A % We process the entire split frame at once.
 
                     gamma( i, j, mm ) = abs( ...
                                         ( Y( i, 1 ) - Y( i-1, 1 ) ) *...
@@ -29,7 +29,7 @@ function [ Z ] = gradientDecent( F )
         for j = 1:1:C-1
             for i = 1:1:size(classType,2)
                 
-                eps( i, j, mm ) = RA( i, j, mm ) / W( i, j, mm );
+                eps( i, j, mm ) = RA( i, j, mm ) / W( i, j, mm ); % Constant step size.
             end
         end
     end
@@ -81,7 +81,7 @@ function [ Z ] = gradientDecent( F )
     end
 
     % We can implement segmentation in the classification process by
-    % classifying only class groups at a time.
+    % classifying only single groups at a time.
 
     [ ~, Z ] = min( S( uu:vv, 1 ) );
 

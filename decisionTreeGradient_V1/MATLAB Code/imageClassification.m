@@ -1,4 +1,4 @@
-function [ D, E ] = imageClassification( dataSet, testN, verObservation )
+function [ D, E ] = imageClassification( dataSet, testObservation, testN, verObservation )
     
     global pp C RA Q imageLength CFLAG 
 
@@ -33,6 +33,15 @@ function [ D, E ] = imageClassification( dataSet, testN, verObservation )
             rgbData = kmeans( rgbData, skinObservation_ ); % k-means image data set.
 
             imgDecision = imageDecision( rgbData ); D = D + 1; % Take image to classify in the gradient.
+
+            % Supervised Error
+            
+%             if ( imgDecision ~= testObservation( i, 1 ) )
+% 
+%                 E = E + 1;
+%             end
+
+            % Unsupervised Error...
 
             if ( imgDecision ~= verObservation( pp, 1 ) )
 

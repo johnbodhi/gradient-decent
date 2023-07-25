@@ -10,11 +10,13 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradien
 
 % We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
 
-global L C X N Nl RA GFLAG classGroups classType imageLength uu vv pp
+global L C X N Nl RA GFLAG classGroups classType numRA imageLength uu vv pp
 
 classType = [ 1 2 ]; % Number of column-wise designations.
 
-classGroups = zeros( 1, 0.50 * size( numImages, 2 ) ); % Groupings for cyclic weight. Over allocate at classGroups = 1
+numRA = 4;
+
+classGroups = zeros( 1, numRA );
 
 N = size(numImages,2);
 
@@ -25,8 +27,8 @@ Nr = 40; Mr = 40; imageLength = Nr * Mr; % Photo length, and width.
 Nl = zeros(size(numImages,2),1);
 for i = 1:1:size(Nl,1)
 
-    Nl(i,1) = numImages(i); % Number of objects per class.
-    % Nl(i,1) = 1; 
+    % Nl(i,1) = numImages(i); % Number of objects per class.
+    Nl(i,1) = 5; 
 end
 totalN = sum(Nl); 
 
@@ -107,17 +109,27 @@ for k = 1:1:size(RA,3)
         % Test sequences not included in training data...
 
         % dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
-    
-        % dataSet = readmatrix( 'testRGB (1).csv' ); % Supervised test sequence.
 
-        dataSet = readmatrix( 'testRGB (2).csv' ); % Unsupervised test sequence.        
+        dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence.   
 
-        % dataSet = randomizedPhotos( dataSet, Nr, Mr, L, C, Nl ); % Randomize all photos.
+        L = size(dataSet,1); C = size(dataSet,2);
 
-        L = size(dataSet,1);
+        dataSet = randomizedPhotos( dataSet, Nr, Mr, L, C, Nl ); % Randomize all photos.
     
         % We can grab all observations in order, no matter the order of the
         % data content. The scoop.
+
+        % Supervised verification scoop.
+
+%         ii = 1;      
+%         for i = 1:1:L % We can choose more than one photo per class.
+%             if ( dataSet( i, C ) == X(1,j) )
+% 
+%                 dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
+%             end
+%         end    
+
+        % Unsupervised test scoop.
         
         ii = 1;      
         for i = ( 1 + T ):1:( Nl(cc,1)*imageLength + T ) % We can choose more than one photo per class.
@@ -143,7 +155,7 @@ for k = 1:1:size(RA,3)
 
         cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\MATLAB Code");
         
-        skinObservation = dataSet( :, C );
+        testObservation = dataSet( :, C );
         
         totalN = size( dataSet, 1 );     
     
@@ -151,7 +163,7 @@ for k = 1:1:size(RA,3)
         
         testN = floor( 1.0 * totalN );          
         
-        [ D, E ] = imageClassification( dataSet, testN, verObservation );
+        [ D, E ] = imageClassification( dataSet, testObservation, testN, verObservation );
 
         if( hh <= size( Nl, 1 ) )
         

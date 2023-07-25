@@ -27,11 +27,7 @@ global imageLength classGroups classType GFLAG C A RA X
                     W(ii,:,kk) = 1e2; % Backprop...
                 end
 
-            elseif ( ii == 3 )
-    
-                W(ii,:,kk) = 0;
             end
-
         end
     end
     

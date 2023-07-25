@@ -6,9 +6,9 @@ global RA W Q R G B Nl classGroups classType CFLAG
 
     R = zeros( size(Nl,2), trainingN ); 
     
-    %G = zeros( size(Nl,2), trainingN );
+    G = zeros( size(Nl,2), trainingN );
     
-    %B = zeros( size(Nl,2), trainingN );
+    B = zeros( size(Nl,2), trainingN );
 
     % Allocate for cyclic weighting / infinite parameter gain.
     
