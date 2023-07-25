@@ -22,7 +22,7 @@ function [ Y ] = randomizeClass( dataSet, Nr, Mr, L, C, N )
         B( : , :, k)  = A( :, :, i( k ) );
     end        
 
-    for k = 2:2:N         
+    for k = 2:1:N         
         Y((k-2)*Nr*Mr+1:k*Nr*Mr,1:C) = cat( 1, B( :, :, k-1 ), B( :, :, k ) );
     end  
 end
