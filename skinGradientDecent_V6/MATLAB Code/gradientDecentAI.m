@@ -118,6 +118,16 @@ for k = 1:1:size(RA,3)
     
         % We can grab all observations in order, no matter the order of the
         % data content. The scoop.
+
+        % Supervised verification scoop.
+
+%         ii = 1;      
+%         for i = 1:1:L % We can choose more than one photo per class.
+%             if ( dataSet( i, C ) == X(1,j) )
+% 
+%                 dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
+%             end
+%         end    
         
         ii = 1;      
         for i = ( 1 + T ):1:( Nl(cc,1)*imageLength + T ) % We can choose more than one photo per class.
