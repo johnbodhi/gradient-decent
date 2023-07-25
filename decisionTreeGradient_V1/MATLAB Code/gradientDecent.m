@@ -85,7 +85,7 @@ function [ Z ] = gradientDecent( F )
 
     [ ~, Z ] = min( S( uu:vv, 1 ) ); % Decisions are constrained to groups.
 
-    % [ ~, Z ] = min( S( :, 1 ) ); % Decisions are not constrained to groups. (Necessary for random data frames.)
+    % [ ~, Z ] = min( S( :, 1 ) ); % Decisions are not constrained to groups.
 
     if( Z == 1 )
 
