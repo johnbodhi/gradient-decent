@@ -10,7 +10,7 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradien
 
 % We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
 
-global L C X N Nl RA GFLAG classGroups classType numRA imageLength uu vv pp
+global L C X Nl RA GFLAG classGroups classType numRA imageLength uu vv pp
 
 classType = [ 1 2 ]; % Number of column-wise designations.
 
@@ -18,7 +18,7 @@ numRA = 4;
 
 classGroups = zeros( 1, numRA );
 
-N = size(numImages,2);
+% N = size(numImages,2);
 
 Nr = 40; Mr = 40; imageLength = Nr * Mr; % Photo length, and width. 
 
@@ -112,9 +112,11 @@ for k = 1:1:size(RA,3)
 
         dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence.   
 
-        L = size(dataSet,1); C = size(dataSet,2);
+        % We can randomize all data frames over all groups.
 
-        dataSet = randomizedPhotos( dataSet, Nr, Mr, L, C, Nl ); % Randomize all photos.
+        % L = size(dataSet,1); C = size(dataSet,2);
+
+        % dataSet = randomizePhotos( dataSet, Nr, Mr, L, C, Nl ); % Randomize all photos.
 
         % We can grab all observations in order, no matter the order of the
         % data content. The scoop.
@@ -127,7 +129,7 @@ for k = 1:1:size(RA,3)
 % 
 %                 dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
 %             end
-%         end    
+%         end
 
         % Unsupervised test scoop.
         
@@ -139,22 +141,20 @@ for k = 1:1:size(RA,3)
             end
         end    
         T = T + Nl(cc,1)*imageLength; cc = cc + 1;
-    
-        % dataSet_ = dataSet; 
+
+        % We can randomize all data frames within each scoop...        
+
+        L = size(dataSet_,1); C = size(dataSet_,2); N = Nl(cc,1);
+
+        dataSet_ = randomizeClass( dataSet_, Nr, Mr, L, C, N );
+
         clear dataSet
-        % dataSet = dataSet_( 1:N * Nr * Mr, 1:C );
 
-        % We can iterate through all class images we desire.
-        
-        % dataSet = dataSet_( 1:Nl( 1, hh ) * Nr * Mr, 1:C ); 
-
-        dataSet = dataSet_( :, 1:C ); 
+        dataSet = dataSet_( :, 1:C ); testObservation = dataSet( :, C );
         
         clear dataSet_
 
         cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\MATLAB Code");
-        
-        testObservation = dataSet( :, C );
         
         totalN = size( dataSet, 1 );     
     

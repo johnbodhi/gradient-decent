@@ -83,9 +83,9 @@ function [ Z ] = gradientDecent( F )
     % We can implement segmentation in the classification process by
     % classifying only single groups at a time.
 
-    %[ ~, Z ] = min( S( uu:vv, 1 ) );
+    [ ~, Z ] = min( S( uu:vv, 1 ) ); % Decisions are constrained to groups.
 
-    [ ~, Z ] = min( S( :, 1 ) );
+    % [ ~, Z ] = min( S( :, 1 ) ); % Decisions are not constrained to groups. (Necessary for random data frames.)
 
     if( Z == 1 )
 

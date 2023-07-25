@@ -1,9 +1,9 @@
-function [ Y ] = randomizedPhotos( dataSet, Nr, Mr, L, C, N )
+function [ Y ] = randomizePhotos( dataSet, Nr, Mr, L, C, N )
 
     M = 0;
-    for i = 1:1:size(N,1)
+    for j = 1:1:size(N,2)
 
-        M = M + N(i,1);
+        M = M + N(1,j);
     end
     N = M;
 
@@ -36,9 +36,11 @@ function [ Y ] = randomizedPhotos( dataSet, Nr, Mr, L, C, N )
         end        
 
         for k = 2:2:N         
-            Y((k-2)*Nr*Mr+1:k*Nr*Mr,1:C) = cat( 1, B( :, :, k-1 ), B( :, :, k ) );
+            Z((k-2)*Nr*Mr+1:k*Nr*Mr,1:C) = cat( 1, B( :, :, k-1 ), B( :, :, k ) );
         end
 
-        writematrix( Y, 'randomizedPhotos.csv' );               
+        randomizedPhotos = Z; Y = randomizedPhotos;   
+                
+        writematrix( randomizedPhotos, 'randomizedPhotos.csv' );               
     end    
 end
