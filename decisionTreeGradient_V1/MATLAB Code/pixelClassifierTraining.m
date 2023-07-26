@@ -25,10 +25,6 @@ global RA W Q R G B Nl classGroups classType CFLAG
             elseif ( ii == 2 )
     
                 W(ii,:,kk) = 1e2;
-
-            elseif ( ii == 3 )
-    
-                W(ii,:,kk) = 0;
             end
         end
     end        

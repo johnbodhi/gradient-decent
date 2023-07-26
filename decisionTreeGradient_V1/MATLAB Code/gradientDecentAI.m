@@ -49,7 +49,7 @@ for i = 1:Nl(ii,1):2*totalN
 
     ii = ii + 1; jj = 1;
 
-    if ( size(verObservation,1) >= totalN )
+    if ( size(verObservation,1) >= totalN ) % Unsupervised observations.
 
         break;
     end
@@ -57,13 +57,13 @@ end
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\Excel Data");
 
-dataSet = readmatrix( 'trainRGB.csv' ); % Samples not in test.
+dataSet = readmatrix( 'trainRGB.csv' ); % Training data.
 
 L = size( dataSet, 1 ); C = size( dataSet, 2 );
 
-% dataSetRandomized = dataSetRandomized( dataSet, L, C );  % Randomize all pixels.
+% dataSetRandomized = dataSetRandomized( dataSet, L, C );  % Randomized training data.
 
-dataSetRandomized = readmatrix( 'dataSetRandomized.csv' ); % Only samples in train.
+dataSetRandomized = readmatrix( 'dataSetRandomized.csv' );
 
 M = 1; % Class training epochs 1-total photos. (Trains RA on a percentage of the pixels in M photos)
 
@@ -144,7 +144,7 @@ for k = 1:1:size(RA,3)
         end    
         T = T + Nl(cc,1)*imageLength; 
 
-        % We can randomize all data frames within each scoop...        
+        % We can randomize all frames within each scoop...        
 
         L = size(dataSet_,1); C = size(dataSet_,2); N = Nl(cc,1); cc = cc + 1;
 
