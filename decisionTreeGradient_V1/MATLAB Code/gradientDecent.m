@@ -2,7 +2,7 @@ function [ Z ] = gradientDecent( F )
 
     global W C RA imageLength classType classGroups A uu vv
 
-    Y = F(:,1:C-1); % We can remove all labels from the data.
+    Y = F(:,1:C-3); % We can remove all labels from the data.
 
     eps = 1e1; ii = 0;
 

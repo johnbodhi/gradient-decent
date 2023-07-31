@@ -69,7 +69,7 @@ M = 1; % Class training epochs 1-total photos. (Trains RA on a percentage of the
 
 dataSetRandomized = dataSetRandomized( 1:M * Nr * Mr, 1:C );  % Assign randomized pixels over the length of images.
 
-skinObservation = dataSetRandomized( :, C ); % Extract randmized observations for training.
+Observation = dataSetRandomized( :, C ); % Extract randmized observations for training.
 
 totalN = size( dataSetRandomized, 1 ); 
 
@@ -79,7 +79,7 @@ testN = floor( 0.0 * totalN );
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\MATLAB Code");
 
-pixelClassifierTraining( dataSetRandomized, skinObservation, trainingN );
+pixelClassifierTraining( dataSetRandomized, Observation, trainingN );
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -123,8 +123,6 @@ for k = 1:1:size(RA,3)
         % We can grab all observations in order, no matter the order of the
         % data content. The scoop.
 
-
-
         % Supervised verification scoop.
 
 %         ii = 1;      
@@ -134,7 +132,6 @@ for k = 1:1:size(RA,3)
 %                 dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
 %             end
 %         end
-
 
         % Unsupervised test scoop.
         
@@ -151,9 +148,10 @@ for k = 1:1:size(RA,3)
 
         L = size(dataSet_,1); C = size(dataSet_,2); N = Nl(cc,1); cc = cc + 1;
 
-        dataSet_ = randomizeClass( dataSet_, Nr, Mr, L, C, N );
+        dataSet_ = randomizeClass( dataSet_, Nr, Mr, L, C, N ); % We can randomize all frames in each class.
 
-%         dataSet_ = randomizeGroup( dataSet_, Nr, Mr, L, C, N );
+%         dataSet_ = randomizeGroup( dataSet_, Nr, Mr, L, C, N ); % We can
+%         randomize all frames in each group.
 
         clear dataSet
 

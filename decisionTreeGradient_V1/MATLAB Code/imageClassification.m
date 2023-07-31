@@ -10,8 +10,6 @@ function [ D, E ] = imageClassification( dataSet, testObservation, testN, verObs
 
     for i = 1:1:testN
 
-        RGB = dataSet( i, 1:C );
-
         % Store an RGB pixels of contained in the image of length 
         % imageLength to pass into the Gradient.
 
@@ -28,7 +26,7 @@ function [ D, E ] = imageClassification( dataSet, testObservation, testN, verObs
             % We can utilize non-stationary RA during classification to
             % monitor dissimilarity between objects...
 
-            runningAverage( RGB, rgbData, skinObservation_ ); 
+            runningAverage( rgbData, skinObservation_ ); 
 
             rgbData = kmeans( rgbData, skinObservation_ ); % k-means image data set.
 
