@@ -110,7 +110,7 @@ for k = 1:1:size(RA,3)
 
         % Test sequences not included in training data...
 
-%         dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
+        % dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
 
         dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence.   
 
@@ -123,6 +123,8 @@ for k = 1:1:size(RA,3)
         % We can grab all observations in order, no matter the order of the
         % data content. The scoop.
 
+
+
         % Supervised verification scoop.
 
 %         ii = 1;      
@@ -132,6 +134,7 @@ for k = 1:1:size(RA,3)
 %                 dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
 %             end
 %         end
+
 
         % Unsupervised test scoop.
         
