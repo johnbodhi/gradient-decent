@@ -116,9 +116,9 @@ for k = 1:1:size(RA,3)
 
         % We can randomize all data frames over all groups.
 
-%         L = size(dataSet,1); C = size(dataSet,2);
-% 
-%         dataSet = randomizeAll( dataSet, Nr, Mr, L, C, Nl ); % Randomize all photos.
+        % L = size(dataSet,1); C = size(dataSet,2);
+
+        % dataSet = randomizeAll( dataSet, Nr, Mr, L, C, Nl ); % Randomize all photos.
 
         % We can grab all observations in order, no matter the order of the
         % data content. The scoop.
