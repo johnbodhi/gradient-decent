@@ -110,7 +110,7 @@ for k = 1:1:size(RA,3)
 
         % Test sequences not included in training data...
 
-        % dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
+%         dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
 
         dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence.   
 
@@ -118,7 +118,7 @@ for k = 1:1:size(RA,3)
 
 %         L = size(dataSet,1); C = size(dataSet,2);
 % 
-%         dataSet = randomizePhotos( dataSet, Nr, Mr, L, C, Nl ); % Randomize all photos.
+%         dataSet = randomizeAll( dataSet, Nr, Mr, L, C, Nl ); % Randomize all photos.
 
         % We can grab all observations in order, no matter the order of the
         % data content. The scoop.
@@ -135,7 +135,7 @@ for k = 1:1:size(RA,3)
 
         % Unsupervised test scoop.
         
-        ii = 1;      
+        ii = 1;
         for i = ( 1 + T ):1:( Nl(cc,1)*imageLength + T ) % We can choose more than one photo per class.
             if ( dataSet( i, C ) == 0 )
 
@@ -148,7 +148,9 @@ for k = 1:1:size(RA,3)
 
         L = size(dataSet_,1); C = size(dataSet_,2); N = Nl(cc,1); cc = cc + 1;
 
-        % dataSet_ = randomizeClass( dataSet_, Nr, Mr, L, C, N );
+        dataSet_ = randomizeClass( dataSet_, Nr, Mr, L, C, N );
+
+%         dataSet_ = randomizeGroup( dataSet_, Nr, Mr, L, C, N );
 
         clear dataSet
 

@@ -135,11 +135,11 @@ for k = 1:1:size(RA,3)
 
         % Unsupervised test scoop.
         
-        ii = 1;      
-        for i = ( 1 + T ):1:( Nl(cc,1)*imageLength + T ) % We can choose more than one photo per class.
+        ii = 1; aa = 1;    
+        for i = ( 1 + T ):1:( Nl(aa:aa+1,1)*imageLength + T ) % We can choose more than one photo per class.
             if ( dataSet( i, C ) == 0 )
 
-                dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
+                dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;aa = aa + 1;
             end
         end    
         T = T + Nl(cc,1)*imageLength; 
@@ -149,6 +149,8 @@ for k = 1:1:size(RA,3)
         L = size(dataSet_,1); C = size(dataSet_,2); N = Nl(cc,1); cc = cc + 1;
 
         % dataSet_ = randomizeClass( dataSet_, Nr, Mr, L, C, N );
+
+        dataSet_ = randomizeGroup( dataSet_, Nr, Mr, L, C, N );
 
         clear dataSet
 

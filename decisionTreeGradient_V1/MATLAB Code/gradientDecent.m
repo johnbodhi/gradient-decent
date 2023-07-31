@@ -93,5 +93,5 @@ function [ Z ] = gradientDecent( F )
         Z = vv;        
     end
 
-    % [ ~, Z ] = min( S( :, 1 ) ); % Decisions are not constrained to groups.
+%      [ ~, Z ] = min( S( :, 1 ) ); % Decisions are not constrained to groups.
 end

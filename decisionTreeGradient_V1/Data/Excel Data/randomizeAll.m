@@ -1,4 +1,4 @@
-function [ Y ] = randomizePhotos( dataSet, Nr, Mr, L, C, N )
+function [ Y ] = randomizeAll( dataSet, Nr, Mr, L, C, N )
 
     M = 0;
     for i = 1:1:size(N,1)
