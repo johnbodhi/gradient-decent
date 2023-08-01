@@ -29,8 +29,8 @@ Nr = 40; Mr = 40; imageLength = Nr * Mr; % Photo length, and width.
 Nl = zeros(size(numImages,2),1);
 for i = 1:1:size(Nl,1)
 
-      Nl(i,1) = numImages(i); % Number of objects per class.
-%     Nl(i,1) = 5; 
+%      Nl(i,1) = numImages(i); % Number of objects per class.
+     Nl(i,1) = 5; 
 end
 totalN = sum(Nl); 
 

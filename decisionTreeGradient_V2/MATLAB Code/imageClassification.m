@@ -1,6 +1,6 @@
 function [ D, E ] = imageClassification( dataSet, testObservation, testN, verObservation )
     
-    global pp C RA Q imageLength CFLAG hh
+    global pp C RA Q imageLength CFLAG
 
     CFLAG = 1;
 
@@ -32,7 +32,7 @@ function [ D, E ] = imageClassification( dataSet, testObservation, testN, verObs
 
             imgDecision = imageDecision( rgbData ); D = D + 1; % Take image to classify in the gradient.
 
-            % Supervised Error
+            % Supervised Error...
             
 %             if ( imgDecision ~= testObservation( i, 1 ) )
 % 
@@ -53,7 +53,6 @@ function [ D, E ] = imageClassification( dataSet, testObservation, testN, verObs
             pp = pp + 1;
             
             J = [ 0 imgDecision D E ]; disp( J )
-            
 
             rgbData = 0; ii = 1;
         end
