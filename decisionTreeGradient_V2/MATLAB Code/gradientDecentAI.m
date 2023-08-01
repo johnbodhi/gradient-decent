@@ -2,21 +2,21 @@ clear all; close all; clc;
 
 tic;
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\Image Data");
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\Data\Image Data");
 
 photoToArray(); % Pre-process all images.
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\MATLAB Code"); 
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\MATLAB Code"); 
 
 % We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
 
 global L C X Nl RA GFLAG classGroups classType imageLength uu vv pp
 
-Classes = 4; % Classes per group...
+Classes = 2; % Classes per group...
 
 classType = zeros( 1, Classes ); 
 
-Groups = 2; % Groups per classification...
+Groups = 4; % Groups per classification...
 
 classGroups = zeros( 1, Groups );
 
@@ -29,8 +29,8 @@ Nr = 40; Mr = 40; imageLength = Nr * Mr; % Photo length, and width.
 Nl = zeros(size(numImages,2),1);
 for i = 1:1:size(Nl,1)
 
-    % Nl(i,1) = numImages(i); % Number of objects per class.
-    Nl(i,1) = 5; 
+      Nl(i,1) = numImages(i); % Number of objects per class.
+%     Nl(i,1) = 5; 
 end
 totalN = sum(Nl); 
 
@@ -46,30 +46,29 @@ for i = 1:Nl(ii,1):2*totalN
 
         jj = jj + 1; kk = kk + 1;
     end
-
     ii = ii + 1; jj = 1;
 
-    if ( size(verObservation,1) >= totalN )
+    if ( size(verObservation,1) >= totalN ) % Unsupervised observations.
 
         break;
     end
 end
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\Excel Data");
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\Data\Excel Data");
 
-dataSet = readmatrix( 'trainRGB.csv' ); % Samples not in test.
+dataSet = readmatrix( 'trainRGB.csv' ); % Training data.
 
 L = size( dataSet, 1 ); C = size( dataSet, 2 );
 
-% dataSetRandomized = dataSetRandomized( dataSet, L, C );  % Randomize all pixels.
+% dataSetRandomized = dataSetRandomized( dataSet, L, C );  % Randomized training data.
 
-dataSetRandomized = readmatrix( 'dataSetRandomized.csv' ); % Only samples in train.
+dataSetRandomized = readmatrix( 'dataSetRandomized.csv' );
 
 M = 1; % Class training epochs 1-total photos. (Trains RA on a percentage of the pixels in M photos)
 
 dataSetRandomized = dataSetRandomized( 1:M * Nr * Mr, 1:C );  % Assign randomized pixels over the length of images.
 
-skinObservation = dataSetRandomized( :, C ); % Extract randmized observations for training.
+Observation = dataSetRandomized( :, C ); % Extract randmized observations for training.
 
 totalN = size( dataSetRandomized, 1 ); 
 
@@ -77,9 +76,9 @@ trainingN = floor( 0.30 * totalN );
 
 testN = floor( 0.0 * totalN );
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\MATLAB Code");
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\MATLAB Code");
 
-pixelClassifierTraining( dataSetRandomized, skinObservation, trainingN );
+pixelClassifierTraining( dataSetRandomized, Observation, trainingN );
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -104,21 +103,21 @@ for k = 1:1:size(RA,3)
 
     GFLAG = 1;
 
-    for j = 1:1:size(RA,2)        
+    for j = 1:1:size(X,2)        
 
-        cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\Data\Excel Data");
+        cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\Data\Excel Data");
 
         % Test sequences not included in training data...
 
-        % dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
+%         dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
 
-        dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence.   
+         dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence.   
 
         % We can randomize all data frames over all groups.
 
-%         L = size(dataSet,1); C = size(dataSet,2);
-% 
-%         dataSet = randomizePhotos( dataSet, Nr, Mr, L, C, Nl ); % Randomize all photos.
+%         L = size(dataSet,1); C = size(dataSet,2); N = sum(Nl_);
+
+%         dataSet = randomizeAll( dataSet, Nr, Mr, L, C, N ); % Randomize all photos.
 
         % We can grab all observations in order, no matter the order of the
         % data content. The scoop.
@@ -135,22 +134,22 @@ for k = 1:1:size(RA,3)
 
         % Unsupervised test scoop.
         
-        ii = 1; aa = 1;    
-        for i = ( 1 + T ):1:( Nl(aa:aa+1,1)*imageLength + T ) % We can choose more than one photo per class.
+        ii = 1;
+        for i = ( 1 + T ):1:( Nl(cc,1)*imageLength + T ) % We can choose more than one frame per class.
             if ( dataSet( i, C ) == 0 )
 
-                dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;aa = aa + 1;
+                dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
             end
         end    
         T = T + Nl(cc,1)*imageLength; 
 
-        % We can randomize all data frames within each scoop...        
+       % We can randomize all frames within each scoop for N > 1...        
 
-        L = size(dataSet_,1); C = size(dataSet_,2); N = Nl(cc,1); cc = cc + 1;
+       L = size(dataSet_,1); C = size(dataSet_,2); N = Nl(cc,1); cc = cc + 1;
 
-        % dataSet_ = randomizeClass( dataSet_, Nr, Mr, L, C, N );
-
-        dataSet_ = randomizeGroup( dataSet_, Nr, Mr, L, C, N );
+       dataSet_ = randomizeClass( dataSet_, Nr, Mr, L, C, N ); % We can randomize all frames in each class.
+% 
+%         dataSet_ = randomizeGroup( dataSet_, Nr, Mr, L, C, N ); % We can randomize all frames in each group.
 
         clear dataSet
 
@@ -158,14 +157,14 @@ for k = 1:1:size(RA,3)
         
         clear dataSet_
 
-        cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V1\MATLAB Code");
+        cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\MATLAB Code");
         
         totalN = size( dataSet, 1 );     
     
         trainingN = floor( 0.0 * totalN ); 
         
-        testN = floor( 1.0 * totalN );          
-        
+        testN = floor( 1.0 * totalN );     
+
         [ D, E ] = imageClassification( dataSet, testObservation, testN, verObservation );
 
         if( hh <= size( Nl, 1 ) )

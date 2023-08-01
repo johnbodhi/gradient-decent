@@ -1,4 +1,4 @@
-function pixelClassifierTraining( dataSetRandomized, skinObservation, trainingN )
+function pixelClassifierTraining( dataSetRandomized, Observation, trainingN )
 
 global RA W Q R G B Nl classGroups classType CFLAG
 
@@ -21,7 +21,7 @@ global RA W Q R G B Nl classGroups classType CFLAG
         
             if ( ii == 1 )
     
-                W(ii,:,kk) = 1e0;
+                W(ii,:,kk) = 1e1;
             elseif ( ii == 2 )
     
                 W(ii,:,kk) = 1e2;
@@ -29,9 +29,9 @@ global RA W Q R G B Nl classGroups classType CFLAG
         end
     end        
         
-    RGB = dataSetRandomized;
+    rgbData = dataSetRandomized;
     
-    [ RA ] = runningAverage( RGB, [], skinObservation );
+    [ RA ] = runningAverage( rgbData, Observation );
 
     Q = RA; % This is a redundant RA for resetting the average during classification.
 end

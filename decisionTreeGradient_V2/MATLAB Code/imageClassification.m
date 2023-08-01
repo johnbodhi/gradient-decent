@@ -1,6 +1,6 @@
 function [ D, E ] = imageClassification( dataSet, testObservation, testN, verObservation )
     
-    global pp C RA Q imageLength CFLAG 
+    global pp C RA Q imageLength CFLAG hh
 
     CFLAG = 1;
 
@@ -9,8 +9,6 @@ function [ D, E ] = imageClassification( dataSet, testObservation, testN, verObs
     ii = 1;
 
     for i = 1:1:testN
-
-        RGB = dataSet( i, 1:C );
 
         % Store an RGB pixels of contained in the image of length 
         % imageLength to pass into the Gradient.
@@ -21,16 +19,16 @@ function [ D, E ] = imageClassification( dataSet, testObservation, testN, verObs
 
             rgbData = frameSieve(rgbData); % Duplicate and re-label each frame.
 
-            skinObservation_ = rgbData(:,C);
+            Observation_ = rgbData(:,C);
 
             RA = Q; % We need to reset RA between classes...
 
             % We can utilize non-stationary RA during classification to
             % monitor dissimilarity between objects...
 
-            runningAverage( RGB, rgbData, skinObservation_ ); 
+            runningAverage( rgbData, Observation_ ); 
 
-            rgbData = kmeans( rgbData, skinObservation_ ); % k-means image data set.
+            rgbData = kmeans( rgbData, Observation_ ); % k-means image data set.
 
             imgDecision = imageDecision( rgbData ); D = D + 1; % Take image to classify in the gradient.
 
@@ -40,6 +38,11 @@ function [ D, E ] = imageClassification( dataSet, testObservation, testN, verObs
 % 
 %                 E = E + 1;
 %             end
+% 
+%             % Display observation type, classifier decision, cumulative decision per
+%             % class, and cumulative error per class...
+% 
+%             J = [ testObservation(i,1) imgDecision D E ]; disp( J )
 
             % Unsupervised Error...
 
@@ -48,13 +51,11 @@ function [ D, E ] = imageClassification( dataSet, testObservation, testN, verObs
                 E = E + 1;
             end
             pp = pp + 1;
-
-            rgbData = 0; ii = 1; 
-
-            % Display observation type, classifier decision, cumulative decision per
-            % class, and cumulative error per class...
-
+            
             J = [ 0 imgDecision D E ]; disp( J )
+            
+
+            rgbData = 0; ii = 1;
         end
     end
 end

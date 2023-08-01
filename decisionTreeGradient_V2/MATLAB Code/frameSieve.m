@@ -24,4 +24,22 @@ function [ Y ] = frameSieve( S )
         
         cc = cc + 1;
     end    
+
+%     ii = 1; jj = 1; kk = 1;
+%     for i = 1:M:A*M
+% 
+%         while ( jj <= M )
+%     
+%             Y(kk,4) = ii;
+%     
+%             jj = jj + 1; kk = kk + 1;
+%         end    
+%         ii = ii + 1; jj = 1;
+%     
+%         if ( size(Y,1) >= A*M ) % Unsupervised observations.
+%     
+%             break;
+%         end
+%     end
+    
 end
