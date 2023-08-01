@@ -48,8 +48,8 @@ str1_ = [ "A1l (" "A2l ("...
 
 for j = 1:size(str1_,2)
     cd( directoryArr( j ) );
-    Images = dir('*.jpg'); numImages( j ) = 5;
-    for i = 1:1:5
+    Images = dir('*.jpg'); numImages( j ) = numel( Images );
+    for i = 1:1:numImages( j )
         str1 = str1_( j );  
         str2 = num2str( i ); 
         str3 = ").jpg";
@@ -66,7 +66,7 @@ end
 % 
 %      cd( directoryArr( p ) )
 %     
-%     for k = 1:5
+%     for k = 1:numImages( p )
 %     
 % %         RGB = imread( IMAGES( k, p ) ); 
 % %     
