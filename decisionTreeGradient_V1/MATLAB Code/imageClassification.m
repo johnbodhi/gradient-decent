@@ -1,6 +1,6 @@
 function [ D, E ] = imageClassification( dataSet, testObservation, testN, verObservation )
     
-    global pp C RA Q imageLength CFLAG 
+    global pp C RA Q imageLength CFLAG hh
 
     CFLAG = 1;
 
@@ -42,7 +42,7 @@ function [ D, E ] = imageClassification( dataSet, testObservation, testN, verObs
             % Display observation type, classifier decision, cumulative decision per
             % class, and cumulative error per class...
 
-            J = [ testObservation(i,1) imgDecision D E ]; disp( J )
+            J = [ testObservation(i,1) imgDecision hh E ]; disp( J )
 
             % Unsupervised Error...
 
