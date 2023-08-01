@@ -16,9 +16,9 @@ function [ Y ] = randomizeAll( dataSet, Nr, Mr, L, C, N )
         end
     end     
 
-    if ( isfile( 'randomizedPhotos.csv' ) )
+    if ( isfile( 'randomizedFrames.csv' ) )
     
-        Y = readmatrix('randomizedPhotos.csv');
+        Y = readmatrix('randomizedFrames.csv');
     
     else
     
@@ -39,6 +39,6 @@ function [ Y ] = randomizeAll( dataSet, Nr, Mr, L, C, N )
             Y((k-2)*Nr*Mr+1:k*Nr*Mr,1:C) = cat( 1, B( :, :, k-1 ), B( :, :, k ) );
         end 
                 
-        writematrix( Y, 'randomizedPhotos.csv' );               
+%         writematrix( Y, 'randomizedFrames.csv' );               
     end    
 end

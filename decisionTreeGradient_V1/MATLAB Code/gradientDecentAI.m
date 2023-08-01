@@ -29,8 +29,8 @@ Nr = 40; Mr = 40; imageLength = Nr * Mr; % Photo length, and width.
 Nl = zeros(size(numImages,2),1);
 for i = 1:1:size(Nl,1)
 
-    % Nl(i,1) = numImages(i); % Number of objects per class.
-    Nl(i,1) = 5; 
+    Nl_(i,1) = numImages(i); % Number of objects per class.
+    Nl(i,1) = 1; 
 end
 totalN = sum(Nl); 
 
@@ -110,15 +110,15 @@ for k = 1:1:size(RA,3)
 
         % Test sequences not included in training data...
 
-        % dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
+        dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
 
-        dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence.   
+%         dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence.   
 
         % We can randomize all data frames over all groups.
 
-        % L = size(dataSet,1); C = size(dataSet,2);
+        L = size(dataSet,1); C = size(dataSet,2); N = sum(Nl_);
 
-        % dataSet = randomizeAll( dataSet, Nr, Mr, L, C, Nl ); % Randomize all photos.
+        dataSet = randomizeAll( dataSet, Nr, Mr, L, C, N ); % Randomize all photos.
 
         % We can grab all observations in order, no matter the order of the
         % data content. The scoop.
@@ -135,23 +135,34 @@ for k = 1:1:size(RA,3)
 
         % Unsupervised test scoop.
         
-        ii = 1;
-        for i = ( 1 + T ):1:( Nl(cc,1)*imageLength + T ) % We can choose more than one photo per class.
-            if ( dataSet( i, C ) == 0 )
+%         ii = 1;
+%         for i = ( 1 + T ):1:( Nl(cc,1)*imageLength + T ) % We can choose more than one photo per class.
+%             if ( dataSet( i, C ) == 0 )
+% 
+%                 dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
+%             end
+%         end    
+%         T = T + Nl(cc,1)*imageLength; 
 
-                dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
-            end
-        end    
-        T = T + Nl(cc,1)*imageLength; 
 
-        % We can randomize all frames within each scoop...        
+        % Supervised or unsupervised randomized scoop.
 
-        L = size(dataSet_,1); C = size(dataSet_,2); N = Nl(cc,1); cc = cc + 1;
+        ii = 1;      
+        for i = 1:1:imageLength % We can choose one image per randomization.
 
-        dataSet_ = randomizeClass( dataSet_, Nr, Mr, L, C, N ); % We can randomize all frames in each class.
+            dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
+        end
 
-%         dataSet_ = randomizeGroup( dataSet_, Nr, Mr, L, C, N ); % We can
-%         randomize all frames in each group.
+       % We can randomize all frames within each scoop for N > 1...        
+
+       L = size(dataSet_,1); C = size(dataSet_,2); N = Nl(cc,1); cc = cc + 1;
+
+       if( N > 1 )
+
+%         dataSet_ = randomizeClass( dataSet_, Nr, Mr, L, C, N ); % We can randomize all frames in each class.
+% 
+%         dataSet_ = randomizeGroup( dataSet_, Nr, Mr, L, C, N ); % We can randomize all frames in each group.
+       end
 
         clear dataSet
 
@@ -165,8 +176,8 @@ for k = 1:1:size(RA,3)
     
         trainingN = floor( 0.0 * totalN ); 
         
-        testN = floor( 1.0 * totalN );          
-        
+        testN = floor( 1.0 * totalN );     
+
         [ D, E ] = imageClassification( dataSet, testObservation, testN, verObservation );
 
         if( hh <= size( Nl, 1 ) )
