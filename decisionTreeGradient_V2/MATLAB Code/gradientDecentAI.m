@@ -30,7 +30,7 @@ Nl = zeros(size(numImages,2),1);
 for i = 1:1:size(Nl,1)
 
 %      Nl(i,1) = numImages(i); % Number of objects per class.
-     Nl(i,1) = 5; 
+     Nl(i,1) = 1; 
 end
 totalN = sum(Nl); 
 
@@ -109,7 +109,7 @@ for k = 1:1:size(RA,3)
 
         % Test sequences not included in training data...
 
-%         dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
+%          dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
 
          dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence.   
 
@@ -147,9 +147,9 @@ for k = 1:1:size(RA,3)
 
        L = size(dataSet_,1); C = size(dataSet_,2); N = Nl(cc,1); cc = cc + 1;
 
-       dataSet_ = randomizeClass( dataSet_, Nr, Mr, L, C, N ); % We can randomize all frames in each class.
+%        dataSet_ = randomizeClass( dataSet_, Nr, Mr, L, C, N ); % We can randomize all frames in each class.
 % 
-%         dataSet_ = randomizeGroup( dataSet_, Nr, Mr, L, C, N ); % We can randomize all frames in each group.
+%        dataSet_ = randomizeGroup( dataSet_, Nr, Mr, L, C, N ); % We can randomize all frames in each group.
 
         clear dataSet
 
