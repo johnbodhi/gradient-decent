@@ -46,12 +46,13 @@ function [ RA ] = runningAverage( dataSet )
                     V  = [ A(ii,:,k); A(E(j,k),:,k) ];
                     V_ = sum(V,1)/2;
         
-                    F(i,:,k) = V_; 
+                    F(ii,:,k) = V_; 
                     
                     A(E(j,k),:,k) = NaN; E(j,k) = NaN;   
     
                     ii = ii + 1;
                 end
+                ii = 1;
             end
         
             % We need a recusion on F to reduce the number of histograms to the
@@ -81,13 +82,20 @@ function [ RA ] = runningAverage( dataSet )
                 W(k) = min(E(:,k),[],1);
             end
         
+            ii = 1;
             for k = 1:1:size(F,3)
-            
-                F(i,:,k) = ( F(i,:,k) + F_(W(k),:,k) ) / 2; 
+                for j = 1:1:size(F,1)
+
+                    V  = [ F(ii,:,k); F(E(j,k),:,k) ];
+                    V_ = sum(V,1)/2;
                 
-                A(W(k),:,k) = 0; 
-                
-                F(W(k),:,k) = 0;
+                    F(ii,:,k) = V_;
+                    
+                    A(W(k),:,k) = NaN; F(W(k),:,k) = NaN;
+    
+                    ii = ii + 1;
+                end
+                ii = 1;
             end
         
              ll = ll + 1;
