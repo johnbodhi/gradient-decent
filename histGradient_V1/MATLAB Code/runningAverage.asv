@@ -46,7 +46,7 @@ function [ RA ] = runningAverage( dataSet )
     
                 F(i,:,k) = ( A(i,:,k) + A(V(j,k),:,k) ) / 2; 
                 
-                A(V(j,k),:,k) = 0; V(j,k) = 0;   
+                A(E(i,j,k),:,k) = 0; V(j,k) = 0;   
             end
         end
     end
@@ -55,7 +55,7 @@ function [ RA ] = runningAverage( dataSet )
     % number of classes being evaluated...
 
 
-    ll = 0; % Resize accumulator.
+    ll = 0;
 
     for k = 1:1:C-1
         for ii = 1:1:size(A,1)
@@ -97,13 +97,17 @@ function [ RA ] = runningAverage( dataSet )
          for j = 1:1:size(F,2)
             for i = 1:1:size(F,1)-ll
 
-                if ( F(i,j,k) ~= 0 )
-                    X(i,j,k) = F(i,j,k);
-                end
+                X(i,j,k) = F()
+
             end
          end
      end
-     F = 0; F = X;
+
+
+
+
+
+
 
 
     

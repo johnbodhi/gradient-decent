@@ -17,18 +17,18 @@ function [ D, E ] = imageClassification( dataSet, testObservation, testN, verObs
         
         if ( size( rgbData, 1 ) == imageLength )
 
-            rgbData = frameSieve(rgbData); % Duplicate and re-label each frame.
+            % rgbData = frameSieve(rgbData); % Duplicate and re-label each frame.
 
-            Observation_ = rgbData(:,C);
+            % Observation_ = rgbData(:,C);
 
-            RA = Q; % We need to reset RA between classes...
+            % RA = Q; % We need to reset RA between classes...
 
             % We can utilize non-stationary RA during classification to
             % monitor dissimilarity between objects...
 
-            runningAverage( rgbData, Observation_ ); 
+            % runningAverage( rgbData, Observation_ ); 
 
-            rgbData = kmeans( rgbData, Observation_ ); % k-means image data set.
+            % rgbData = kmeans( rgbData, Observation_ ); % k-means image data set.
 
             imgDecision = imageDecision( rgbData ); D = D + 1; % Take image to classify in the gradient.
 
