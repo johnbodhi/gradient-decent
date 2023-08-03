@@ -1,43 +1,43 @@
 function [ Z ] = gradientDecent( F )
 
-    global W RA C A imageLength classType classGroups uu vv
+    global RA classType classGroups
 
-    Y = F(:,1:C-1); % We can remove all labels from the data.
+    Y = F(:,:,1:size(F,2)-1); % We can remove all labels from the data.
 
     eps = 1e1; ii = 0;
 
     % We need to generate the learning rate, and find the gradient. This
     % gradient is modified for infinite convolutional locii...
 
-    for mm = 2:1:size(classGroups,2)
-        for k = 2:1:size(classType,2)
-            for j = 1:1:C-1
-                for i = 2:imageLength*A % We process the entire split frame at once.
+   
+    for k = 2:1:size(RA,3)
+        for j = 1:1:size(Y,2)
+            for i = 2:size(Y,1) % We process the entire split frame at once.
 
-                    gamma( i, j, mm ) = abs( ...
-                                        ( Y( i, 1 ) - Y( i-1, 1 ) ) *...
-                                        ( RA( k, j, mm ) - RA( k-1, j, mm-1 ) ) + eps ) /...
-                                        ( abs( RA( k, j, mm ) - RA( k-1, j, mm-1 ) ) + eps )^2;
-                end
+                gamma( i, j ) = abs( ...
+                                    ( Y( i, 1 ) - Y( i-1, 1 ) ) *...
+                                    ( RA( k, j ) - RA( k-1, j ) ) + eps ) /...
+                                    ( abs( RA( k, j ) - RA( k-1, j) ) + eps )^2;
             end
-
-            Y = F(:,1:C-1);
         end
+
+        Y = F(:,:,1:size(F,2)-1);
     end
 
+
     for mm = 1:1:size(classGroups,2)
-        for j = 1:1:C-1
+        for j = 1:1:size(Y,2)
             for i = 1:1:size(classType,2)
                 
-                eps( i, j, mm ) = RA( i, j, mm ) / W( i, j, mm ); % Constant step size.
+                eps( i, j, mm ) = RA( i, j, mm ); % Constant step size.
             end
         end
     end
     
     for mm = 1:1:size(classGroups,2)
         for k = 1:1:size(classType,2)
-            for j = 1:1:C-1
-                for i = 1:1:imageLength*A
+            for j = 1:1:size(Y,2)
+                for i = 1:1:size(Y,1)
         
                     if ( RA( k, j, mm ) - Y( i, j ) > 0 )
                         while( Y( i, j ) < RA( k, j, mm ) )
@@ -49,7 +49,7 @@ function [ Z ] = gradientDecent( F )
                         iiVec( i, j, k, mm ) = ii; ii = 0;
                     end
     
-                    Y = F(:,1:C-1); 
+                    Y = F(:,:,1:size(F,2)-1); 
                     
                     if ( RA( k, j, mm ) - Y( i, j ) < 0 )
                         while( Y( i, j ) > RA( k, j, mm ) )
@@ -64,10 +64,10 @@ function [ Z ] = gradientDecent( F )
                 end   
             end
 
-            Y = F(:,1:C-1);        
+            Y = F(:,:,1:size(F,2)-1);        
         end
 
-        Y = F(:,1:C-1);
+        Y = F(:,:,1:size(F,2)-1);
     end
 
     cc = 1;
@@ -80,18 +80,5 @@ function [ Z ] = gradientDecent( F )
         end
     end
 
-    % We can implement segmentation in the classification process by
-    % classifying only single groups at a time.
-
-%     [ ~, Z ] = min( S( uu:vv, 1 ) ); % Decisions are constrained to groups.
-% 
-%     if( Z == 1 )
-% 
-%         Z = uu;
-%     elseif ( Z == 2 )
-% 
-%         Z = vv;        
-%     end
-
-     [ ~, Z ] = min( S( :, 1 ) ); % Decisions are not constrained to groups.
+    [ ~, Z ] = min( S( :, 1 ) ); % Decisions are not constrained to groups.
 end

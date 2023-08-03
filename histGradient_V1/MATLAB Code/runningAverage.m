@@ -2,7 +2,7 @@ function [ RA ] = runningAverage( dataSet )
 
     global classType classGroups imageLength
 
-    N = size(classType,2)*size(classGroups,2); N = M;
+    N = size(classType,2)*size(classGroups,2);
     
     % Unsupervised training.
 
@@ -13,7 +13,7 @@ function [ RA ] = runningAverage( dataSet )
         end
     end
 
-    while ( size(A,1) > N && size(A,2) > M )
+    while ( size(F,1) > N )
 
         for k = 1:1:size(A,3)        
             for j = 1:1:size(A,1)

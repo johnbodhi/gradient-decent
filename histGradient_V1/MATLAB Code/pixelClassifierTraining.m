@@ -1,12 +1,8 @@
 function pixelClassifierTraining( dataSet )
 
-global RA Q CFLAG
-
-    CFLAG = 0;
-
-    % Allocate for cyclic weighting / infinite parameter gain.
+    global RA Q 
     
-    RA = zeros( size( classType, 2), 30, size( classGroups, 2) ); 
+    RA = zeros( 8, 10, 3 ); 
     
     [ RA ] = runningAverage( dataSet );
 

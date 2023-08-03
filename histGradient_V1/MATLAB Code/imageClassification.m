@@ -1,8 +1,6 @@
 function [ D, E ] = imageClassification( dataSet, testObservation, verObservation )
     
-    global pp C RA Q imageLength CFLAG
-
-    CFLAG = 1;
+    global RA Q pp
 
     D = 0; E = 0; 
 
@@ -13,9 +11,9 @@ function [ D, E ] = imageClassification( dataSet, testObservation, verObservatio
         % Store an RGB pixels of contained in the image of length 
         % imageLength to pass into the Gradient.
 
-        rgbData( ii, 1:C) = dataSet( i, 1:C); ii = ii + 1; 
+        rgbData( ii, 1:size(dataSet,2)) = dataSet( i, 1:size(dataSet,2)); ii = ii + 1; 
         
-        if ( size( rgbData, 1 ) == imageLength )
+        if ( size( rgbData, 1 ) == size( dataSet, 2 ) )
 
             % rgbData = frameSieve(rgbData); % Duplicate and re-label each frame.
 

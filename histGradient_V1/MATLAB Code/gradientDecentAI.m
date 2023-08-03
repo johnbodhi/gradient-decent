@@ -58,43 +58,11 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradien
 
 % dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
 
-dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence.   
+dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence. 
 
-% We can randomize all data frames over all groups.
+dataSet_ = histogramization( dataSet );
 
 % dataSet = randomizeAll( dataSet, Np, Mp, N ); % Randomize all photos.
-
-% We can grab all observations in order, no matter the order of the
-% data content. The scoop.
-
-% Supervised verification scoop.
-
-%         ii = 1;      
-%         for i = 1:1:L % We can choose more than one photo per class.
-%             if ( dataSet( i, C ) == X(1,j) )
-% 
-%                 dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
-%             end
-%         end
-
-% Unsupervised test scoop.
-
-ii = 1;
-for i = ( 1 + T ):1:( N(cc,1)*imageLength + T ) % We can choose more than one frame per class.
-    if ( dataSet( i, C ) == 0 )
-
-        dataSet_( ii, 1:C ) = dataSet( i, 1:size(dataSet,2) ); ii = ii + 1;
-    end
-end    
-T = T + N(cc,1)*imageLength; 
-
-% We can randomize all frames within each scoop for N > 1...        
-
-M = N(cc,1); cc = cc + 1;
-
-%        dataSet_ = randomizeClass( dataSet_, Np, Mp, L, C, M ); % We can randomize all frames in each class.
-% 
-%        dataSet_ = randomizeGroup( dataSet_, Np, Mp, L, C, M ); % We can randomize all frames in each group.
 
 clear dataSet
 
