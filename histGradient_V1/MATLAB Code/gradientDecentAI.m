@@ -2,11 +2,11 @@ clear all; close all; clc;
 
 tic;
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\Data\Image Data");
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data");
 
 photoToArray(); % Pre-process all images.
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\MATLAB Code"); 
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code"); 
 
 % We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
 
@@ -38,11 +38,11 @@ totalN = sum(N);
 
 verObservation = verificationList( N, totalN );
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\Data\Excel Data");
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
 
 dataSet = readmatrix( 'trainRGB.csv' );   % Supervised training data.
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\MATLAB Code");
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
 
 pixelClassifierTraining( dataSet );
 
@@ -52,7 +52,7 @@ pixelClassifierTraining( dataSet );
 
 hh = 1; cc = 1; T = 0;       
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\Data\Excel Data");
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
 
 % Test sequences not included in training data...
 
@@ -72,7 +72,7 @@ testObservation = dataSet( :, size(dataSet,2) ); % Supervised observations.
 
 clear dataSet_
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\MATLAB Code");    
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");    
 
 [ D, E ] = imageClassification( dataSet, testObservation, verObservation );
 

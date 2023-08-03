@@ -1,8 +1,10 @@
 function pixelClassifierTraining( dataSet )
 
-    global RA Q 
+    global RA W Q 
     
     RA = zeros( 8, 10, 3 ); 
+
+    W  = zeros( 8, 10, 3 ); 
     
     [ RA ] = runningAverage( dataSet );
 

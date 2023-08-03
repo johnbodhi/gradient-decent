@@ -1,6 +1,6 @@
 function [ Z ] = gradientDecent( F )
 
-    global RA classType classGroups
+    global RA
 
     Y = F(:,:,1:size(F,2)-1); % We can remove all labels from the data.
 
@@ -15,69 +15,62 @@ function [ Z ] = gradientDecent( F )
             for i = 2:size(Y,1) % We process the entire split frame at once.
 
                 gamma( i, j ) = abs( ...
-                                    ( Y( i, 1 ) - Y( i-1, 1 ) ) *...
-                                    ( RA( k, j ) - RA( k-1, j ) ) + eps ) /...
-                                    ( abs( RA( k, j ) - RA( k-1, j) ) + eps )^2;
+                                    ( Y( i, j ) - Y( i-1, j ) ) *...
+                                    ( RA( i, j, k ) - RA( i-1, j, k-1 ) ) + eps ) /...
+                                    ( abs( RA( i, j, k ) - RA( i-1, j, k-1 ) ) + eps )^2;
             end
         end
 
         Y = F(:,:,1:size(F,2)-1);
     end
 
-
-    for mm = 1:1:size(classGroups,2)
+    for k = 1:1:size(RA,3)
         for j = 1:1:size(Y,2)
-            for i = 1:1:size(classType,2)
+            for i = 1:1:size(Y,1)
                 
-                eps( i, j, mm ) = RA( i, j, mm ); % Constant step size.
+                eps( i, j, k ) = RA( i, j, k ) / W( i, j, k); % Constant step size.
             end
         end
     end
     
-    for mm = 1:1:size(classGroups,2)
-        for k = 1:1:size(classType,2)
-            for j = 1:1:size(Y,2)
-                for i = 1:1:size(Y,1)
-        
-                    if ( RA( k, j, mm ) - Y( i, j ) > 0 )
-                        while( Y( i, j ) < RA( k, j, mm ) )
-                            Y( i, j ) = Y( i, j ) + ( gamma( i, j, k ) * RA( k, j, mm ) +...
-                                eps( k, j, mm ) );
-                            ii = ii + 1;
-                        end 
+    for k = 1:1:size(RA,3)
+        for j = 1:1:size(Y,2)
+            for i = 1:1:size(Y,1)
+    
+                if ( RA( i, j, k ) - Y( i, j ) > 0 )
+                    while( Y( i, j ) < RA( i, j, k ) )
+                        Y( i, j ) = Y( i, j ) + ( gamma( i, j ) * RA( i, j, k ) +...
+                            eps( i, j, k ) );
+                        ii = ii + 1;
+                    end 
 
-                        iiVec( i, j, k, mm ) = ii; ii = 0;
+                    iiVec( i, j, k ) = ii; ii = 0;
+                end
+
+                Y = F(:,:,1:size(F,2)-1); 
+                
+                if ( RA( i, j, k ) - Y( i, j ) < 0 )
+                    while( Y( i, j ) > RA( i, j, k ) )
+                        Y( i, j ) = Y( i, j ) - ( gamma( i, j ) * RA( i, j, k ) +...
+                            eps( i, j ,k ) );
+                        ii = ii + 1;
                     end
-    
-                    Y = F(:,:,1:size(F,2)-1); 
-                    
-                    if ( RA( k, j, mm ) - Y( i, j ) < 0 )
-                        while( Y( i, j ) > RA( k, j, mm ) )
-                            Y( i, j ) = Y( i, j ) - ( gamma( i, j, k ) * RA( k, j, mm ) +...
-                                eps( k, j, mm ) );
-                            ii = ii + 1;
-                        end
 
-                        iiVec( i, j, k, mm ) = ii; ii = 0;
-                    end      
-    
-                end   
-            end
+                    iiVec( i, j, k ) = ii; ii = 0;
+                end      
 
-            Y = F(:,:,1:size(F,2)-1);        
+            end   
         end
 
-        Y = F(:,:,1:size(F,2)-1);
+        Y = F(:,:,1:size(F,2)-1);        
     end
 
     cc = 1;
-    for mm = 1:1:size(iiVec,4)
-        for k = 1:1:size(iiVec,3)
-    
-            S( cc, 1 ) = sum(sum(iiVec(:,:,k,mm)));
+    for k = 1:1:size(iiVec,3)
 
-            cc = cc + 1;
-        end
+        S( cc, 1 ) = sum(sum(iiVec(:,:,k )));
+
+        cc = cc + 1;
     end
 
     [ ~, Z ] = min( S( :, 1 ) ); % Decisions are not constrained to groups.
