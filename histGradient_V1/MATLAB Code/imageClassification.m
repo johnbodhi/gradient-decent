@@ -1,4 +1,4 @@
-function [ D, E ] = imageClassification( dataSet, testObservation, testN, verObservation )
+function [ D, E ] = imageClassification( dataSet, testObservation, verObservation )
     
     global pp C RA Q imageLength CFLAG
 
@@ -8,7 +8,7 @@ function [ D, E ] = imageClassification( dataSet, testObservation, testN, verObs
 
     ii = 1;
 
-    for i = 1:1:testN
+    for i = 1:1:size(dataSet,1)
 
         % Store an RGB pixels of contained in the image of length 
         % imageLength to pass into the Gradient.

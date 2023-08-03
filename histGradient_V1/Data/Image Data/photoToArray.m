@@ -58,9 +58,9 @@ for j = 1:size(str1_,2)
     end    
 end
 
-% Nr = 40; Mr = 40;
+% Np = 40; Mp = 40;
 % 
-% NN = 0; sampleSize = Nr * Mr; l = 1;
+% NN = 0; sampleSize = Np * Mp; l = 1;
 % 
 % for p = 1:size( IMAGES, 2 )
 % 
@@ -70,7 +70,7 @@ end
 %     
 % %         RGB = imread( IMAGES( k, p ) ); 
 % %     
-% %         RGB = imresize( RGB, [ Nr, Mr ] ); 
+% %         RGB = imresize( RGB, [ Np, Mp ] ); 
 % % 
 % %         I = rgb2gray(RGB);
 % %     
@@ -82,8 +82,8 @@ end
 %     
 %         % Resized RGB vector...
 %        
-%         for j = 1:Nr
-%             for i = 1:Mr          
+%         for j = 1:Np
+%             for i = 1:Mp          
 %                 pixels( l, 1:3 ) = getPixelValue( im, i, j );
 %                 pixels( l, 4:4 ) = p;
 %                 l = l + 1;

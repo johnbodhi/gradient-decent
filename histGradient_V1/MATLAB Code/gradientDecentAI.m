@@ -10,7 +10,7 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradien
 
 % We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
 
-global L C X Nl RA GFLAG classGroups classType imageLength uu vv pp
+global classType classGroups imageLength
 
 Classes = 2; % Classes per group...
 
@@ -20,96 +20,54 @@ Groups = 4; % Groups per classification...
 
 classGroups = zeros( 1, Groups );
 
-% N = size(numImages,2);
-
-Nr = 40; Mr = 40; imageLength = Nr*Mr; % Photo length, and width. 
+Np = 40; Mp = 40; imageLength = Np*Mp; % Photo length, and width. 
 
 % Number of images per class to classify.
 
-Nl = zeros(size(numImages,2),1);
-for i = 1:1:size(Nl,1)
+N = zeros(size(numImages,2),1);
 
-%      Nl(i,1) = numImages(i); % Number of objects per class.
-     Nl(i,1) = 5; 
+for i = 1:1:size(N,1)
+
+    % N(i,1) = numImages(i); % Number of objects per class.
+    N(i,1) = 5; 
 end
-totalN = sum(Nl); 
+totalN = sum(N); 
 
 % We can generate an objective label vector to keep track of our errors
 % with unsupervised data...
 
-ii = 1; jj = 1; kk = 1; pp = 1;
-for i = 1:Nl(ii,1):2*totalN
-
-    while ( jj <= Nl(ii,1) )
-
-        verObservation(kk,1) = ii;
-
-        jj = jj + 1; kk = kk + 1;
-    end
-    ii = ii + 1; jj = 1;
-
-    if ( size(verObservation,1) >= totalN ) % Unsupervised observations.
-        break;
-    end
-end
+verObservation = verificationList( N, totalN );
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\Data\Excel Data");
 
-% dataSet = readmatrix( 'supTrainRGB.csv' );   % Supervised training data.
-
-% dataSet = readmatrix( 'unSupTrainRGB.csv' ); % Unsupervised training data.
-
-L = size( dataSet, 1 ); C = size( dataSet, 2 );
-
-M = 1; % Class training epochs.
+dataSet = readmatrix( 'trainRGB.csv' );   % Supervised training data.
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\MATLAB Code");
 
 pixelClassifierTraining( dataSet );
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-% We can feed the gradient with organized images, or randomized images,
-% and then select out which observations to feed. Otherwise, we can
-% feed the gradient a totally random distribution of images.
-
-% In this version the classifier is fed in an indefinite number of batches.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Verification / Test...
 
-uu = 1; vv = 2; hh = 1; cc = 1; T = 0;
+hh = 1; cc = 1; T = 0;       
 
-for k = 1:1:size(RA,3)
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\Data\Excel Data");
 
-    if ( hh > size(Nl,1) )
+% Test sequences not included in training data...
 
-        break; % End test sequence.
-    end
+% dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
 
-    X = [ uu, vv ]; % Batch indexes.
+dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence.   
 
-    GFLAG = 1;
+% We can randomize all data frames over all groups.
 
-    for j = 1:1:size(X,2)        
+% dataSet = randomizeAll( dataSet, Np, Mp, N ); % Randomize all photos.
 
-        cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\Data\Excel Data");
+% We can grab all observations in order, no matter the order of the
+% data content. The scoop.
 
-        % Test sequences not included in training data...
-
-%          dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
-
-         dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence.   
-
-        % We can randomize all data frames over all groups.
-
-%         L = size(dataSet,1); C = size(dataSet,2); N = sum(Nl_);
-
-%         dataSet = randomizeAll( dataSet, Nr, Mr, L, C, N ); % Randomize all photos.
-
-        % We can grab all observations in order, no matter the order of the
-        % data content. The scoop.
-
-        % Supervised verification scoop.
+% Supervised verification scoop.
 
 %         ii = 1;      
 %         for i = 1:1:L % We can choose more than one photo per class.
@@ -119,51 +77,43 @@ for k = 1:1:size(RA,3)
 %             end
 %         end
 
-        % Unsupervised test scoop.
-        
-        ii = 1;
-        for i = ( 1 + T ):1:( Nl(cc,1)*imageLength + T ) % We can choose more than one frame per class.
-            if ( dataSet( i, C ) == 0 )
+% Unsupervised test scoop.
 
-                dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
-            end
-        end    
-        T = T + Nl(cc,1)*imageLength; 
+ii = 1;
+for i = ( 1 + T ):1:( N(cc,1)*imageLength + T ) % We can choose more than one frame per class.
+    if ( dataSet( i, C ) == 0 )
 
-       % We can randomize all frames within each scoop for N > 1...        
-
-       L = size(dataSet_,1); C = size(dataSet_,2); N = Nl(cc,1); cc = cc + 1;
-
-%        dataSet_ = randomizeClass( dataSet_, Nr, Mr, L, C, N ); % We can randomize all frames in each class.
-% 
-%        dataSet_ = randomizeGroup( dataSet_, Nr, Mr, L, C, N ); % We can randomize all frames in each group.
-
-        clear dataSet
-
-        dataSet = dataSet_( :, 1:C ); testObservation = dataSet( :, C ); % Supervised observations.
-        
-        clear dataSet_
-
-        cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\MATLAB Code");
-        
-        totalN = size( dataSet, 1 );     
-    
-        trainingN = floor( 0.0 * totalN ); 
-        
-        testN = floor( 1.0 * totalN );     
-
-        [ D, E ] = imageClassification( dataSet, testObservation, testN, verObservation );
-
-        if( hh <= size( Nl, 1 ) )
-        
-            [ PREC( hh ), REC( hh ), ACC( hh ), F1( hh ) ] = fMeasure( D, E ); 
-        end
-
-        hh = hh + 1; GFLAG = 0;
+        dataSet_( ii, 1:C ) = dataSet( i, 1:size(dataSet,2) ); ii = ii + 1;
     end
-    
-    uu = uu + 2; vv = vv + 2; 
+end    
+T = T + N(cc,1)*imageLength; 
+
+% We can randomize all frames within each scoop for N > 1...        
+
+M = N(cc,1); cc = cc + 1;
+
+%        dataSet_ = randomizeClass( dataSet_, Np, Mp, L, C, M ); % We can randomize all frames in each class.
+% 
+%        dataSet_ = randomizeGroup( dataSet_, Np, Mp, L, C, M ); % We can randomize all frames in each group.
+
+clear dataSet
+
+dataSet = dataSet_( :, 1:size(dataSet,2) ); 
+
+testObservation = dataSet( :, size(dataSet,2) ); % Supervised observations.
+
+clear dataSet_
+
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\decisionTreeGradient_V2\MATLAB Code");    
+
+[ D, E ] = imageClassification( dataSet, testObservation, verObservation );
+
+if( hh <= size( Nl, 1 ) )
+
+    [ PREC( hh ), REC( hh ), ACC( hh ), F1( hh ) ] = fMeasure( D, E ); 
 end
+
+hh = hh + 1;    
 
 AVE = [ mean(PREC) mean(REC) mean(ACC) mean(F1) ];
 
