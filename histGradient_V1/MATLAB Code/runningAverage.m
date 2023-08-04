@@ -1,10 +1,10 @@
-function [ RA ] = runningAverage( dataSet, Sup, verObservation )
+function [ RA ] = runningAverage( dataSet, verObservation )
 
-    global classType classGroups imageLength
+    global classType classGroups imageLength Supervision
 
     N = size(classType,2)*size(classGroups,2); M = 0;
 
-    if ( ~Sup )
+    if ( ~Supervision )
     
 %         % Unsupervised training...
     
@@ -48,9 +48,7 @@ function [ RA ] = runningAverage( dataSet, Sup, verObservation )
     
         RA = RA ./ SEGMENTS;
 
-          writematrix( RA(:,:,1), 'unSupRA.csv' ); 
-
-    elseif( Sup )
+    elseif( Supervision )
         
         for k = 1:1:size(dataSet,2)-1
             for i = 1:1:size(dataSet,1)/(imageLength)
@@ -95,8 +93,6 @@ function [ RA ] = runningAverage( dataSet, Sup, verObservation )
         end
     end
 
-    RA = RA ./ SEGMENTS;
-
-    writematrix( RA(:,:,1), 'supRA.csv' ); 
+    RA = RA ./ SEGMENTS; 
 end
    

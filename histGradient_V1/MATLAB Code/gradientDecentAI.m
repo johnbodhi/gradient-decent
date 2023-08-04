@@ -10,7 +10,7 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MAT
 
 % We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
 
-global classType classGroups imageLength
+global classType classGroups imageLength Supervision
 
 Classes = 8; % Classes per group...
 
@@ -40,7 +40,7 @@ verObservation = verificationList( N, totalN );
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
 
-Sup = 0; % Supervision
+Supervision = 1; % Supervision
 
 if ( Sup )
 
@@ -55,7 +55,7 @@ end
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
 
-pixelClassifierTraining( dataSet, Sup, verObservation );
+pixelClassifierTraining( dataSet, verObservation );
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -69,7 +69,7 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Dat
 
 dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence. 
 
-%dataSet = randomizeAll( dataSet, N ); % Randomize all photos.
+% dataSet = randomizeAll( dataSet, N ); % Randomize all photos.
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
 
@@ -77,7 +77,7 @@ dataSet_ = histogramization( dataSet );
 
 clear dataSet
 
-dataSet = dataSet_( :, 1:size(dataSet,2) ); 
+dataSet = dataSet_( :, 1:size(dataSet,2)-1 ); 
 
 testObservation = dataSet( :, size(dataSet,2) ); % Supervised observations.
 

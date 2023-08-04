@@ -32,25 +32,25 @@ function [ D, E ] = imageClassification( dataSet, testObservation, verObservatio
 
             % Supervised Error...
             
-            if ( imgDecision ~= testObservation( i, 1 ) )
-
-                E = E + 1;
-            end
-
-            % Display observation type, classifier decision, cumulative decision per
-            % class, and cumulative error per class...
-
-            J = [ testObservation(i,1) imgDecision D E ]; disp( J )
-
-            % Unsupervised Error...
-
-%             if ( imgDecision ~= verObservation( pp, 1 ) )
+%             if ( imgDecision ~= testObservation( i, 1 ) )
 % 
 %                 E = E + 1;
 %             end
-%             pp = pp + 1;
-%             
-%             J = [ 0 imgDecision D E ]; disp( J )
+% 
+%             % Display observation type, classifier decision, cumulative decision per
+%             % class, and cumulative error per class...
+% 
+%             J = [ testObservation(i,1) imgDecision D E ]; disp( J )
+
+            % Unsupervised Error...
+
+            if ( imgDecision ~= verObservation( pp, 1 ) )
+
+                E = E + 1;
+            end
+            pp = pp + 1;
+            
+            J = [ 0 imgDecision D E ]; disp( J )
 
             histData = 0; ii = 1;
         end
