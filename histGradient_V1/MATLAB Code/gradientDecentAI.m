@@ -12,15 +12,15 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MAT
 
 global classType classGroups imageLength
 
-Classes = 2; % Classes per group...
+Classes = 8; % Classes per group...
 
 classType = zeros( 1, Classes ); 
 
-Groups = 4; % Groups per classification...
+Groups  = 1; % Groups per classification...
 
 classGroups = zeros( 1, Groups );
 
-Np = 40; Mp = 40; imageLength = Np*Mp; % Photo length, and width. 
+Np = 40; Mp = 40; imageLength = Np * Mp; % Photo length, and width. 
 
 % Number of images per class to classify.
 
