@@ -60,9 +60,11 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Dat
 
 dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence. 
 
-dataSet_ = histogramization( dataSet );
-
 % dataSet = randomizeAll( dataSet, Np, Mp, N ); % Randomize all photos.
+
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
+
+dataSet_ = histogramization( dataSet );
 
 clear dataSet
 

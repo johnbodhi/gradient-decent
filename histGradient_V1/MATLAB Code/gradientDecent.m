@@ -11,7 +11,7 @@ function [ Z ] = gradientDecent( F )
 
    
     for k = 2:1:size(RA,3)
-        for j = 1:1:M*size(Y,2)
+        for j = 1:1:ceil(M*size(Y,2))
             for i = 2:size(Y,1) % We process the entire split frame at once.
 
                 gamma( i, j ) = abs( ...
@@ -25,16 +25,16 @@ function [ Z ] = gradientDecent( F )
     end
 
     for k = 1:1:size(RA,3)
-        for j = 1:1:M*size(Y,2)
+        for j = 1:1:ceil(M*size(Y,2))
             for i = 1:1:size(Y,1)
                 
-                eps( i, j, k ) = RA( i, j, k ) / W( i, j, k); % Constant step size.
+                eps( i, j, k ) = ceil(min(RA( i, :, k ))); % Constant step size.
             end
         end
     end
     
     for k = 1:1:size(RA,3)
-        for j = 1:1:M*size(Y,2)
+        for j = 1:1:ceil(M*size(Y,2))
             for i = 1:1:size(Y,1)
     
                 if ( RA( i, j, k ) - Y( i, j ) > 0 )
