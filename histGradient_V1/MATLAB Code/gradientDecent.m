@@ -9,7 +9,6 @@ function [ Z ] = gradientDecent( F )
     % We need to generate the learning rate, and find the gradient. This
     % gradient is modified for infinite convolutional locii...
 
-   
     for k = 2:1:size(RA,3)
         for j = 1:1:ceil(M*size(Y,2))
             for i = 2:size(Y,1) % We process the entire split frame at once.
