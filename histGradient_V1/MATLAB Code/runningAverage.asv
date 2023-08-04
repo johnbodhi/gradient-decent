@@ -44,6 +44,7 @@ function [ RA ] = runningAverage( dataSet )
         end
     end
 
-    RA = RA ./ SEGMENTS;
+    RA = mean(RA)
+
 end
    
