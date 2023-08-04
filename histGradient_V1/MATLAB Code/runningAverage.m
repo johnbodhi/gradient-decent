@@ -4,7 +4,7 @@ function [ RA ] = runningAverage( dataSet )
 
     N = size(classType,2)*size(classGroups,2);
     
-    % Unsupervised training.
+    % Unsupervised training...
 
     for k = 1:1:size(dataSet,2)-1
         for i = 1:1:size(dataSet,1)/(imageLength)
@@ -40,7 +40,7 @@ function [ RA ] = runningAverage( dataSet )
                 jj = jj + 1;
             end
             jj = 1;
-            
+
         end
     end
 
