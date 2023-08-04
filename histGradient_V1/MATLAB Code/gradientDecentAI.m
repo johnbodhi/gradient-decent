@@ -1,4 +1,4 @@
-clear all; close all; clc; 
+%clear all; close all; clc; 
 
 tic;
 
@@ -40,17 +40,26 @@ verObservation = verificationList( N, totalN );
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
 
-dataSet = readmatrix( 'trainRGB.csv' );   % Supervised training data.
+Sup = 1; % Supervision in ON.
+
+if ( Sup )
+
+    dataSet = readmatrix( 'supTrainRGB.csv' );   % Supervised training data.
+
+else
+
+    dataSet = readmatrix( 'unSupTrainRGB.csv' );   % Unsupervised training data.
+end
+
+% dataSet = randomizeAll( dataSet, N ); % Randomize all frames.
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
 
-pixelClassifierTraining( dataSet );
+pixelClassifierTraining( dataSet, Sup, verObservation );
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Verification / Test...
-
-hh = 1; cc = 1; T = 0;       
+% Verification / Test...      
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
 
@@ -60,7 +69,7 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Dat
 
 dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence. 
 
-% dataSet = randomizeAll( dataSet, Np, Mp, N ); % Randomize all photos.
+%dataSet = randomizeAll( dataSet, N ); % Randomize all photos.
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
 
@@ -78,12 +87,10 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MAT
 
 [ D, E ] = imageClassification( dataSet, testObservation, verObservation );
 
-if( hh <= size( Nl, 1 ) )
+if( hh <= size( N, 1 ) )
 
     [ PREC( hh ), REC( hh ), ACC( hh ), F1( hh ) ] = fMeasure( D, E ); 
-end
-
-hh = hh + 1;    
+end  
 
 AVE = [ mean(PREC) mean(REC) mean(ACC) mean(F1) ];
 

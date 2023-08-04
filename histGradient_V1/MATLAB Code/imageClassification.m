@@ -11,24 +11,24 @@ function [ D, E ] = imageClassification( dataSet, testObservation, verObservatio
         % Store an RGB pixels of contained in the image of length 
         % imageLength to pass into the Gradient.
 
-        rgbData( ii, 1:size(dataSet,2)) = dataSet( i, 1:size(dataSet,2)); ii = ii + 1; 
+        histData( ii, 1:size(dataSet,2)) = dataSet( i, 1:size(dataSet,2)); ii = ii + 1; 
         
-        if ( size( rgbData, 1 ) == size( dataSet, 2 ) )
+        if ( size( histData, 1 ) == size( dataSet, 2 ) )
 
-            rgbData = frameSieve(rgbData); % Duplicate and re-label each frame.
+            histData = frameSieve(histData); % Duplicate and re-label each frame.
 
-            Observation_ = rgbData(:,C);
+            Observation_ = histData(:,C);
 
             RA = Q; % We need to reset RA between classes...
 
             % We can utilize non-stationary RA during classification to
             % monitor dissimilarity between objects...
 
-            runningAverage( rgbData, Observation_ ); 
+            runningAverage( histData, Observation_ ); 
 
-            rgbData = kmeans( rgbData, Observation_ ); % k-means image data set.
+            histData = kmeans( histData, Observation_ ); % k-means image data set.
 
-            imgDecision = imageDecision( rgbData ); D = D + 1; % Take image to classify in the gradient.
+            imgDecision = imageDecision( histData ); D = D + 1; % Take image to classify in the gradient.
 
             % Supervised Error...
             
@@ -52,7 +52,7 @@ function [ D, E ] = imageClassification( dataSet, testObservation, verObservatio
             
             J = [ 0 imgDecision D E ]; disp( J )
 
-            rgbData = 0; ii = 1;
+            histData = 0; ii = 1;
         end
     end
 end

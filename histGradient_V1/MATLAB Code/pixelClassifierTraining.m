@@ -1,10 +1,8 @@
-function pixelClassifierTraining( dataSet )
+function pixelClassifierTraining( dataSet, Sup, verObservation )
 
-    global RA Q 
+    global RA Q  
     
-    RA = zeros( 8, 10, 3 );  
-    
-    [ RA ] = runningAverage( dataSet );
+    [ RA ] = runningAverage( dataSet, Sup, verObservation );
 
     Q = RA; % Resetting RA during classification.
 end
