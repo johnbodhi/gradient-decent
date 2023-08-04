@@ -4,14 +4,14 @@ function [ Z ] = gradientDecent( F )
 
     Y = F(:,:,1:size(F,2)-1); % We can remove all labels from the data.
 
-    eps = 1e1; ii = 0; M = 0.50;
+    eps = 1e1; ii = 0;
 
     % We need to generate the learning rate, and find the gradient. This
     % gradient is modified for infinite convolutional locii...
 
    
     for k = 2:1:size(RA,3)
-        for j = 1:1:M*size(Y,2)
+        for j = 1:1:size(Y,2)
             for i = 2:size(Y,1) % We process the entire split frame at once.
 
                 gamma( i, j ) = abs( ...
@@ -25,7 +25,7 @@ function [ Z ] = gradientDecent( F )
     end
 
     for k = 1:1:size(RA,3)
-        for j = 1:1:M*size(Y,2)
+        for j = 1:1:size(Y,2)
             for i = 1:1:size(Y,1)
                 
                 eps( i, j, k ) = RA( i, j, k ) / W( i, j, k); % Constant step size.
