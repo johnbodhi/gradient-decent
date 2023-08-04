@@ -42,11 +42,11 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Dat
 
 Supervision = 1; % Supervision
 
-if ( Sup )
+if ( Supervision )
 
     dataSet = readmatrix( 'supTrainRGB.csv' );   % Supervised training data.
 
-elseif( ~Sup )
+elseif( ~Supervision )
 
     dataSet = readmatrix( 'unSupTrainRGB.csv' );   % Unsupervised training data.
 end
