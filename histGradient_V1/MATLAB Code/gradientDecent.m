@@ -4,7 +4,7 @@ function [ Z ] = gradientDecent( F )
 
     Y = F(:,:,1:size(F,2)-1); % We can remove all labels from the data.
 
-    eps = 1e1; ii = 0; M = 0.50;
+    eps = 1e1; ii = 0; M = 1.00;
 
     % We need to generate the learning rate, and find the gradient. This
     % gradient is modified for infinite convolutional locii...
@@ -28,7 +28,7 @@ function [ Z ] = gradientDecent( F )
         for j = 1:1:ceil(M*size(Y,2))
             for i = 1:1:size(Y,1)
                 
-                eps( i, j, k ) = ceil(min(RA( i, :, k ))); % Constant step size.
+                eps( i, j, k ) = min(RA( i, :, k )); % Constant step size.
             end
         end
     end

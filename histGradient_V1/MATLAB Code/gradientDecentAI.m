@@ -1,4 +1,4 @@
-%clear all; close all; clc; 
+clear all; close all; clc; 
 
 tic;
 
@@ -40,13 +40,13 @@ verObservation = verificationList( N, totalN );
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
 
-Sup = 1; % Supervision in ON.
+Sup = 0; % Supervision
 
 if ( Sup )
 
     dataSet = readmatrix( 'supTrainRGB.csv' );   % Supervised training data.
 
-else
+elseif( ~Sup )
 
     dataSet = readmatrix( 'unSupTrainRGB.csv' );   % Unsupervised training data.
 end

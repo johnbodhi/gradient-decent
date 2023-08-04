@@ -6,7 +6,7 @@ function [ RA ] = runningAverage( dataSet, Sup, verObservation )
 
     if ( ~Sup )
     
-        % Unsupervised training...
+%         % Unsupervised training...
     
         for k = 1:1:size(dataSet,2)-1
             for i = 1:1:size(dataSet,1)/(imageLength)
@@ -28,7 +28,6 @@ function [ RA ] = runningAverage( dataSet, Sup, verObservation )
             end
         end
         
-    %     [ B, I ] = sort(B,1);
         [ ~, I ] = sort(B,2);
     
         RA = zeros(size(classType,2),size(A,2),size(A,3)); jj = 1;
@@ -49,6 +48,8 @@ function [ RA ] = runningAverage( dataSet, Sup, verObservation )
     
         RA = RA ./ SEGMENTS;
 
+          writematrix( RA(:,:,1), 'unSupRA.csv' ); 
+
     elseif( Sup )
         
         for k = 1:1:size(dataSet,2)-1
@@ -57,6 +58,10 @@ function [ RA ] = runningAverage( dataSet, Sup, verObservation )
                 A(i,:,k) = hist(dataSet((i-1)*imageLength+1:i*imageLength,k),20);
             end
         end
+
+        EIGEN_FRAMES = size(A,1);
+    
+        SEGMENTS     = EIGEN_FRAMES / size(classType,2) + M;
 
         A = cat(2,A,zeros(size(A,1),1,size(A,3)));
 
@@ -67,21 +72,31 @@ function [ RA ] = runningAverage( dataSet, Sup, verObservation )
             end
         end
 
+        RA = zeros(size(classType,2),size(A,2)-1,size(A,3)); 
+        ii = 1; jj = 1; kk = 1;
+
         for k = 1:1:size(A,3)
-            for j = 1:1:size(A,2)
+
+            while ( jj <= size(classType,2) )
+
+                for i = 1:1:size(A,1)
                 
-                if( A() == )
+                    if( A(i,size(A,2),k) == verObservation(kk,1) && ii <= SEGMENTS )
+    
+                        RA(jj,:,k) = RA(jj,:,k) + A(i,1:end-1,k); 
 
-                    RA(,j,k) = mean(A)
-
-                end
-            end
+                        ii = ii + 1; kk = kk + 1;
+                    end    
+                    
+                end   
+                jj = jj + 1; ii = 1;
+            end   
+            jj = 1; kk = 1;
         end
-
-        
     end
 
+    RA = RA ./ SEGMENTS;
 
-
+    writematrix( RA(:,:,1), 'supRA.csv' ); 
 end
    
