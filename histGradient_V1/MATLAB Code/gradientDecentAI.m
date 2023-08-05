@@ -20,7 +20,7 @@ Groups  = 1; % Groups per classification...
 
 classGroups = zeros( 1, Groups );
 
-Np = 40; Mp = 40; imageLength = Np * Mp; % Photo length, and width. 
+Np = 100; Mp = 100; imageLength = Np * Mp; % Photo length, and width. 
 
 % Number of images per class to classify.
 
@@ -28,8 +28,7 @@ N = zeros(size(numImages,2),1);
 
 for i = 1:1:size(N,1)
 
-    % N(i,1) = numImages(i); % Number of objects per class.
-    N(i,1) = 5; 
+    N(i,1) = numImages(i); % Number of objects per class. 
 end
 totalN = sum(N); 
 
@@ -44,11 +43,11 @@ Supervision = 1; % Supervision
 
 if ( Supervision )
 
-    dataSet = readmatrix( 'supTrainRGB.csv' );   % Supervised training data.
+    dataSet = readmatrix( 'trainRGB (1).csv' );   % Supervised training data.
 
 elseif( ~Supervision )
 
-    dataSet = readmatrix( 'unSupTrainRGB.csv' );   % Unsupervised training data.
+    dataSet = readmatrix( 'trainRGB (2).csv' );   % Unsupervised training data.
 end
 
 % dataSet = randomizeAll( dataSet, N ); % Randomize all frames.
