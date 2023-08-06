@@ -11,7 +11,7 @@ function [ Z ] = gradientDecent( F )
 
     for k = 2:1:size(RA,3)
         for j = 1:1:ceil(M*size(Y,2))
-            for i = 2:size(Y,1) % We process the entire split frame at once.
+            for i = 2:size(Y,1)
 
                 gamma( i, j ) = abs( ...
                                     ( Y( i, j ) - Y( i-1, j ) ) *...

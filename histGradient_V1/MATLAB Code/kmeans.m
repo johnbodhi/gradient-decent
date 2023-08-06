@@ -2,18 +2,11 @@ function [ Y ] = kmeans( S, V )
 
 global imageLength RA
 
-    p = 2;
-
     ii = 1; jj = 1;  
 
     W = [ 1e0 1e1 1e2 ]; 
 
     while( jj < imageLength ) % Modified convergence criterion.
-
-        if ( ii == imageLength )
-
-            ii = 1;
-        end
             
         for k = 1:1:size(RA,3)
             for j = 1:1:size(S,2)-1
