@@ -1,11 +1,13 @@
-function [ Y ] = randomizeGroup( dataSet, Nr, Mr, L, C, N )
+function [ Y ] = randomizeGroup( dataSet, N )
 
-    A = zeros( Nr * Mr, C, N ); Y = zeros( L, C );
+    global imageLength
+
+    A = zeros( imageLength, size(dataSet,2), N ); 
 
     ii = 1;
     for k = 1:N
-        for i = 1:( Nr * Mr )
-            A( i,1:C, k ) = dataSet( ii,1:C ); ii = ii + 1;
+        for i = 1:( imageLength )
+            A( i,1:size(dataSet,2), k ) = dataSet( ii,1:size(dataSet,2) ); ii = ii + 1;
         end
     end     
     
@@ -23,6 +25,6 @@ function [ Y ] = randomizeGroup( dataSet, Nr, Mr, L, C, N )
     end        
 
     for k = 2:1:N         
-        Y((k-2)*Nr*Mr+1:k*Nr*Mr,1:C) = cat( 1, B( :, :, k-1 ), B( :, :, k ) );
+        Y((k-2)*imageLength+1:k*imageLength,1:C) = cat( 1, B( :, :, k-1 ), B( :, :, k ) );
     end  
 end

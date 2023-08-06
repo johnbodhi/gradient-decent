@@ -41,6 +41,6 @@ function [ Y ] = randomizeAll( dataSet, N )
             Y((k-2)*imageLength+1:k*imageLength,1:size(dataSet,2)) = cat( 1, B( :, :, k-1 ), B( :, :, k ) );
         end 
                 
-%         writematrix( Y, 'randomizedFrames.csv' );               
+         writematrix( Y, 'randomizedFrames.csv' );               
     end    
 end

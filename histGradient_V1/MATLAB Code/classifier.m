@@ -1,4 +1,4 @@
-function [ D, E ] = imageClassification( dataSet, testObservation, verObservation )
+function [ D, E ] = classifier( dataSet, testObservation, verObservation )
     
     global RA Q pp
 

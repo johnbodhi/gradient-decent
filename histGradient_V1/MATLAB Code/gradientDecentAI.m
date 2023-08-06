@@ -39,7 +39,7 @@ verObservation = verificationList( N, totalN );
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
 
-Supervision = 0; % Supervision
+Supervision = 0; % Supervision...
 
 if ( Supervision )
 
@@ -54,7 +54,7 @@ end
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
 
-pixelClassifierTraining( dataSet, verObservation );
+classifierTraining( dataSet, verObservation );
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

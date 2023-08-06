@@ -1,4 +1,4 @@
-function pixelClassifierTraining( dataSet, verObservation )
+function classifierTraining( dataSet, verObservation )
 
     global RA Q  
     
