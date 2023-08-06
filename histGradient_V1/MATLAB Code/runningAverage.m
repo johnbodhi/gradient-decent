@@ -30,7 +30,7 @@ function [ RA ] = runningAverage( dataSet, verObservation )
         end        
         % [ ~, I ] = sort(B,2);
 
-        C = combinations( I, SEGMENTS );
+        I = combinations( I, SEGMENTS );
         
         RA = zeros(size(classType,2),size(A,2),size(A,3)); jj = 1;
     
