@@ -43,7 +43,7 @@ function [ RA ] = runningAverage( dataSet, verObservation )
                 
                     RA(i,:,k) = RA(i,:,k) + A(I(ii,jj,i),:,k);
     
-                    if( ii >= 1 )
+                    if( ii >= size(I,1) )
 
                         ii = 0; jj = jj + 1;
                     end
@@ -53,9 +53,10 @@ function [ RA ] = runningAverage( dataSet, verObservation )
             end
         end
     
-        RA = RA ./ SEGMENTS;
-
-        A
+        RA = RA ./ size(I,1); 
+        
+        % The per element histogram magnitude ratios appear to be identical 
+        % bewteen the supervised and unsupervised cases for each group.
 
     elseif( Supervision )
         
