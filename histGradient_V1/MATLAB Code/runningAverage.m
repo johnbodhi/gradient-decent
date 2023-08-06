@@ -1,8 +1,6 @@
 function [ RA ] = runningAverage( dataSet, Observation )
 
-    global classType classGroups imageLength Supervision
-
-    N = size(classType,2)*size(classGroups,2); M = 0;
+    global classType imageLength RA BINS Supervision Train
 
     if ( ~Supervision )
     
@@ -11,13 +9,13 @@ function [ RA ] = runningAverage( dataSet, Observation )
         for k = 1:1:size(dataSet,2)-1
             for i = 1:1:size(dataSet,1)/(imageLength)
     
-                A(i,:,k) = hist(dataSet((i-1)*imageLength+1:i*imageLength,k),20);
+                A(i,:,k) = hist(dataSet((i-1)*imageLength+1:i*imageLength,k),BINS);
             end
         end
     
         EIGEN_FRAMES = size(A,1);
     
-        SEGMENTS     = EIGEN_FRAMES / size(classType,2) + M;
+        SEGMENTS     = EIGEN_FRAMES / size(classType,2);
     
         for k = 1:1:size(A,3)      
             for j = 1:1:size(A,1)
@@ -58,30 +56,35 @@ function [ RA ] = runningAverage( dataSet, Observation )
         % bewteen the supervised and unsupervised cases for each group.
 
     elseif( Supervision )
+
+        if ( Train )
         
-        for k = 1:1:size(dataSet,2)-1
-            for i = 1:1:size(dataSet,1)/(imageLength)
-    
-                A(i,:,k) = hist(dataSet((i-1)*imageLength+1:i*imageLength,k),20);
+            for k = 1:1:size(dataSet,2)-1
+                for i = 1:1:size(dataSet,1)/(imageLength)
+        
+                    A(i,:,k) = hist(dataSet((i-1)*imageLength+1:i*imageLength,k),BINS);
+                end
             end
+
+            A = cat(2,A,zeros(size(A,1),1,size(A,3)));
+
+            for k = 1:1:size(A,3)
+                for i = 1:1:size(A,1)
+    
+                    A(i,size(A,2),k) = Observation(i,1);
+                end
+            end
+
+        else
+            
+            A = dataSet;
         end
 
         EIGEN_FRAMES = size(A,1);
     
-        SEGMENTS     = EIGEN_FRAMES / size(classType,2) + M;
-
-        A = cat(2,A,zeros(size(A,1),1,size(A,3)));
-
-        for k = 1:1:size(A,3)
-            for i = 1:1:size(A,1)
-
-                A(i,size(A,2),k) = Observation(i,1);
-            end
-        end
-
-        RA = zeros(size(classType,2),size(A,2)-1,size(A,3)); 
+        SEGMENTS     = EIGEN_FRAMES / size(classType,2);
+ 
         ii = 1; jj = 1; kk = 1;
-
         for k = 1:1:size(A,3)
 
             while ( jj <= size(classType,2) )
@@ -101,8 +104,13 @@ function [ RA ] = runningAverage( dataSet, Observation )
             jj = 1; kk = 1;
         end
 
-        RA = RA ./ SEGMENTS; 
+        if ( Train )
+
+            RA = RA ./ SEGMENTS; 
+        else
+
+            RA = RA ./ size(RA,1); 
+        end
     end
 
-end
-   
+end   

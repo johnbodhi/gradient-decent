@@ -1,8 +1,12 @@
-function classifierTraining( dataSet, verObservation )
+function classifierTraining( dataSet, Observation )
 
-    global RA Q  
+    global RA Q classType BINS classGroups Train
+
+    Train = 1;
+
+    RA = zeros(size(classType,2),BINS,size(classGroups,2));
     
-    [ RA ] = runningAverage( dataSet, verObservation );
+    [ RA ] = runningAverage( dataSet, Observation );
 
     Q = RA; % Resetting RA during classification.
 end

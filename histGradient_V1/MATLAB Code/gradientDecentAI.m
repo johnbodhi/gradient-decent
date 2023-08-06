@@ -10,17 +10,19 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MAT
 
 % We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
 
-global classType classGroups imageLength Supervision
+global classType classGroups imageLength BINS Supervision
 
 Classes = 8; % Classes per group...
 
 classType = zeros( 1, Classes ); 
 
-Groups  = 1; % Groups per classification...
+Groups  = 3; % Groups per classification...
 
 classGroups = zeros( 1, Groups );
 
 Np = 100; Mp = 100; imageLength = Np * Mp; % Photo length, and width. 
+
+BINS = 20; % Histogram bins...
 
 % Number of images per class to classify.
 
@@ -39,7 +41,7 @@ Observation = verificationList( N, totalN );
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
 
-Supervision = 0; % Supervision...
+Supervision = 1; % Supervision...
 
 if ( Supervision )
 

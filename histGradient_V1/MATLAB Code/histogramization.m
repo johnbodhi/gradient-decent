@@ -1,11 +1,11 @@
 function [ F ] = histogramization( X, Y )
 
-    global imageLength
+    global imageLength BINS
 
     for k = 1:1:size(X,2)-1
         for i = 1:1:size(X,1)/(imageLength)
 
-            F(i,:,k) = hist(X((i-1)*imageLength+1:i*imageLength,k),20);
+            F(i,:,k) = hist(X((i-1)*imageLength+1:i*imageLength,k),BINS);
         end
     end
 

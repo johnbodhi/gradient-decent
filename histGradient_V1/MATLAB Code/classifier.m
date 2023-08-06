@@ -1,6 +1,8 @@
-function [ D, E ] = classifier( dataSet, testObservation, verObservation )
+function [ D, E ] = classifier( dataSet, Observation )
     
-    global RA Q pp
+    global RA Q Train
+
+    Train = 0;
 
     D = 0; E = 0; 
 
@@ -11,11 +13,11 @@ function [ D, E ] = classifier( dataSet, testObservation, verObservation )
         % Store an RGB pixels of contained in the image of length 
         % imageLength to pass into the Gradient.
 
-        histData( ii, 1:size(dataSet,2)) = dataSet( i, 1:size(dataSet,2)); ii = ii + 1; 
+        histData(ii, 1:size(dataSet,2),:) = dataSet(i,1:size(dataSet,2),:); ii = ii + 1; 
 
         histData = frameSieve(histData); % Duplicate and re-label each frame.
 
-        Observation_ = testObservation(:,1);
+        Observation_ = histData(:,size(dataSet,2));
 
         RA = Q; % We need to reset RA between classes...
 
@@ -30,7 +32,7 @@ function [ D, E ] = classifier( dataSet, testObservation, verObservation )
 
         % Supervised Error...
         
-        if ( imgDecision ~= testObservation( i, 1 ) )
+        if ( imgDecision ~= Observation( i, 1 ) )
 
             E = E + 1;
         end
@@ -38,11 +40,11 @@ function [ D, E ] = classifier( dataSet, testObservation, verObservation )
         % Display observation type, classifier decision, cumulative decision per
         % class, and cumulative error per class...
 
-        J = [ testObservation(i,1) imgDecision D E ]; disp( J )
+        J = [ Observation(i,1) imgDecision D E ]; disp( J )
 
         % Unsupervised Error...
 
-%             if ( imgDecision ~= verObservation( pp, 1 ) )
+%             if ( imgDecision ~= Observation( pp, 1 ) )
 % 
 %                 E = E + 1;
 %             end
