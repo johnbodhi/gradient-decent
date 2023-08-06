@@ -24,12 +24,14 @@ function [ RA ] = runningAverage( dataSet, verObservation )
                 for i = 1:1:size(A,1)
     
                     B(i,j,k) = norm( ( A(j,:,k) - A(i,:,k) ), Inf );
+                    I(i,1,1) = i;
                 end
             end
-        end
+        end        
+        % [ ~, I ] = sort(B,2);
+
+        C = combinations( I, SEGMENTS );
         
-        [ ~, I ] = sort(B,2);
-    
         RA = zeros(size(classType,2),size(A,2),size(A,3)); jj = 1;
     
         for k = 1:1:size(A,3)
