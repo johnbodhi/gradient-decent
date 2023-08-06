@@ -4,16 +4,14 @@ function [ D, E ] = classifier( dataSet, Observation )
 
     Train = 0;
 
-    D = 0; E = 0; 
-
-    ii = 1;
+    D = 0; E = 0;
 
     for i = 1:1:size(dataSet,1)
 
         % Store an RGB pixels of contained in the image of length 
         % imageLength to pass into the Gradient.
 
-        histData(ii, 1:size(dataSet,2),:) = dataSet(i,1:size(dataSet,2),:); ii = ii + 1; 
+        histData(1,1:size(dataSet,2),:) = dataSet(i,1:size(dataSet,2),:);  
 
         histData = frameSieve(histData); % Duplicate and re-label each frame.
 
@@ -32,7 +30,7 @@ function [ D, E ] = classifier( dataSet, Observation )
 
         % Supervised Error...
         
-        if ( imgDecision ~= Observation( i, 1 ) )
+        if ( imgDecision ~= Observation(i,1) )
 
             E = E + 1;
         end
@@ -52,6 +50,6 @@ function [ D, E ] = classifier( dataSet, Observation )
 %             
 %             J = [ 0 imgDecision D E ]; disp( J )
 
-        histData = 0; ii = 1;
+        histData = zeros(1,size(dataSet,2),size(dataSet,3));
     end
 end

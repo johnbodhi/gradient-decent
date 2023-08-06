@@ -16,6 +16,5 @@ function [ F ] = histogramization( X, Y )
 
             F(i,size(F,2),k) = Y(i,1);
         end
-    end
-    
+    end    
 end

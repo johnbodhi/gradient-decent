@@ -1,8 +1,8 @@
 function [ Z ] = gradientDecent( F )
 
-    global RA
+    global RA W
 
-    Y = F(:,:,1:size(F,2)-1); % We can remove all labels from the data.
+    Y = F(:,1:size(F,2)-1,:); % We can remove all labels from the data.
 
     eps = 1e1; ii = 0; M = 1.00;
 
@@ -13,21 +13,21 @@ function [ Z ] = gradientDecent( F )
         for j = 1:1:ceil(M*size(Y,2))
             for i = 2:size(Y,1)
 
-                gamma( i, j ) = abs( ...
-                                    ( Y( i, j ) - Y( i-1, j ) ) *...
+                gamma( i, j, k ) = abs( ...
+                                    ( Y( i, j, k ) - Y( i-1, j, k-1 ) ) *...
                                     ( RA( i, j, k ) - RA( i-1, j, k-1 ) ) + eps ) /...
                                     ( abs( RA( i, j, k ) - RA( i-1, j, k-1 ) ) + eps )^2;
             end
         end
 
-        Y = F(:,:,1:size(F,2)-1);
+        Y = F(:,1:size(F,2)-1,:);
     end
 
     for k = 1:1:size(RA,3)
-        for j = 1:1:ceil(M*size(Y,2))
-            for i = 1:1:size(Y,1)
+        for j = 1:1:ceil(M*size(RA,2))
+            for i = 1:1:size(RA,1)
                 
-                eps( i, j, k ) = min(RA( i, :, k )); % Constant step size.
+                eps( i, j, k ) = RA( i, j, k ) / W( 1, k ); % Constant step size.
             end
         end
     end
@@ -36,41 +36,38 @@ function [ Z ] = gradientDecent( F )
         for j = 1:1:ceil(M*size(Y,2))
             for i = 1:1:size(Y,1)
     
-                if ( RA( i, j, k ) - Y( i, j ) > 0 )
-                    while( Y( i, j ) < RA( i, j, k ) )
-                        Y( i, j ) = Y( i, j ) + ( gamma( i, j ) * RA( i, j, k ) +...
+                if ( RA( i, j, k ) - Y( i, j, k ) > 0 )
+                    while( Y( i, j, k ) < RA( i, j, k ) )
+                        Y( i, j, k ) = Y( i, j, k ) + ( gamma( i, j, k ) * RA( i, j, k ) +...
                             eps( i, j, k ) );
                         ii = ii + 1;
                     end 
 
-                    iiVec( i, j, k ) = ii; ii = 0;
+                    WALK( i, j, k ) = ii; ii = 0;
                 end
 
-                Y = F(:,:,1:size(F,2)-1); 
+                Y = F(:,1:size(F,2)-1,:); 
                 
-                if ( RA( i, j, k ) - Y( i, j ) < 0 )
-                    while( Y( i, j ) > RA( i, j, k ) )
-                        Y( i, j ) = Y( i, j ) - ( gamma( i, j ) * RA( i, j, k ) +...
+                if ( RA( i, j, k ) - Y( i, j, k ) < 0 )
+                    while( Y( i, j, k ) > RA( i, j, k ) )
+                        Y( i, j, k ) = Y( i, j, k ) - ( gamma( i, j, k ) * RA( i, j, k ) +...
                             eps( i, j ,k ) );
                         ii = ii + 1;
                     end
 
-                    iiVec( i, j, k ) = ii; ii = 0;
+                    WALK( i, j, k ) = ii; ii = 0;
                 end      
 
             end   
         end
 
-        Y = F(:,:,1:size(F,2)-1);        
+        Y = F(:,1:size(F,2)-1,:);        
     end
 
-    cc = 1;
-    for k = 1:1:size(iiVec,3)
+    for i = 1:1:size(WALK,1)
 
-        S( cc, 1 ) = sum(sum(iiVec(:,:,k )));
-
-        cc = cc + 1;
+        S(i,1) = sum(sum(WALK(i,:,:),2),3);
     end
 
-    [ ~, Z ] = min( S( :, 1 ) ); % Decisions are not constrained to groups.
+    [ ~, Z ] = min(S(:,1)); % Decisions are not constrained to groups.
 end

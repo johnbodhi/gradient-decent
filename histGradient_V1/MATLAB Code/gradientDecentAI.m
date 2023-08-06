@@ -82,11 +82,6 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MAT
 
 [ D, E ] = classifier( dataSet, Observation );
 
-if( hh <= size( N, 1 ) )
-
-    [ PREC( hh ), REC( hh ), ACC( hh ), F1( hh ) ] = fMeasure( D, E ); 
-end  
-
-AVE = [ mean(PREC) mean(REC) mean(ACC) mean(F1) ];
+[ PREC REC ACC F1 ] = fMeasure( D, E );
 
 toc;

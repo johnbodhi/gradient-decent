@@ -1,6 +1,6 @@
 function [ Y ] = kmeans( S, V )
 
-global imageLength RA
+global imageLength RA W
 
     ii = 1; jj = 1;  
 
@@ -40,4 +40,6 @@ global imageLength RA
 
         ii = ii + 1; jj = jj + 1;
     end
+
+    Y = cat(2,Y,S(:,size(S,2),:));
 end
