@@ -32,23 +32,30 @@ function [ RA ] = runningAverage( dataSet, verObservation )
 
         I = combinations( I, SEGMENTS );
         
-        RA = zeros(size(classType,2),size(A,2),size(A,3)); jj = 1;
+        RA = zeros(size(classType,2),size(A,2),size(A,3)); 
+        
+        ii = 1; jj = 1;
     
         for k = 1:1:size(A,3)
-            for i = 1:1:size(classType,2)
+            for i = 1:1:size(classType,2)  
                 
                 while ( jj < SEGMENTS )
                 
-                    RA(i,:,k) = RA(i,:,k) + A(I(i,jj),:,k);
+                    RA(i,:,k) = RA(i,:,k) + A(I(ii,jj,i),:,k);
     
-                    jj = jj + 1;
+                    if( ii >= 1 )
+
+                        ii = 0; jj = jj + 1;
+                    end
+                    ii = ii + 1;
                 end
-                jj = 1;
-    
+                jj = 1;        
             end
         end
     
         RA = RA ./ SEGMENTS;
+
+        A
 
     elseif( Supervision )
         
@@ -93,8 +100,10 @@ function [ RA ] = runningAverage( dataSet, verObservation )
             end   
             jj = 1; kk = 1;
         end
+
+        RA = RA ./ SEGMENTS; 
     end
 
-    RA = RA ./ SEGMENTS; 
+    
 end
    
