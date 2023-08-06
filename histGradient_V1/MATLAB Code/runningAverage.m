@@ -6,7 +6,7 @@ function [ RA ] = runningAverage( dataSet, verObservation )
 
     if ( ~Supervision )
     
-%         % Unsupervised training...
+    % Unsupervised training...
     
         for k = 1:1:size(dataSet,2)-1
             for i = 1:1:size(dataSet,1)/(imageLength)
@@ -104,7 +104,6 @@ function [ RA ] = runningAverage( dataSet, verObservation )
 
         RA = RA ./ SEGMENTS; 
     end
-
     
 end
    
