@@ -35,7 +35,7 @@ totalN = sum(N);
 % We can generate an objective label vector to keep track of our errors
 % with unsupervised data...
 
-verObservation = verificationList( N, totalN );
+Observation = verificationList( N, totalN );
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
 
@@ -54,7 +54,7 @@ end
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
 
-classifierTraining( dataSet, verObservation );
+classifierTraining( dataSet, Observation );
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -72,19 +72,13 @@ dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence.
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
 
-dataSet_ = histogramization( dataSet );
+dataSet = histogramization( dataSet, Observation ); 
 
-clear dataSet
-
-dataSet = dataSet_( :, 1:size(dataSet,2)-1 ); 
-
-testObservation = dataSet( :, size(dataSet,2) ); % Supervised observations.
-
-clear dataSet_
+Observation = dataSet( :, size(dataSet,2) ); % Supervised observations.
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");    
 
-[ D, E ] = imageClassification( dataSet, testObservation, verObservation );
+[ D, E ] = classifier( dataSet, Observation );
 
 if( hh <= size( N, 1 ) )
 

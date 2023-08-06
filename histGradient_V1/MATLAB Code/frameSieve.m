@@ -1,45 +1,16 @@
 function [ Y ] = frameSieve( S )
 
-    global A RA
+    global RA
 
-    A = size(RA,1); M = size(RA,2);
+    Y = S(:,1:end-1); Y = sort( Y,'descend' );
 
-    Y = S; Y = sort(Y);
-
-    for i = 1:1:A-1
-        
-        Y = cat( 1, Y, Y );
+    for i = 1:1:size(RA,1)
+        for j = 1:1:size(RA,2)-1
+            
+            Y(i,j) = S(1,j);      
+        end      
+        L(i,1) = i;
     end
 
-%     cc = 1;
-%     for i = 1:M:size(Y,1)
-% 
-%         if( i <= size(RA,2) )
-% 
-%             Y((cc-1)*M+1:cc*M,4) = X(1,1); 
-%         elseif( i > size(RA,2) )
-% 
-%             Y((cc-1)*M+1:cc*M,4) = X(1,2); 
-%         end
-%         
-%         cc = cc + 1;
-%     end    
-
-    ii = 1; jj = 1; kk = 1;
-    for i = 1:M:A*M
-
-        while ( jj <= M )
-    
-            Y(kk,4) = ii;
-    
-            jj = jj + 1; kk = kk + 1;
-        end    
-        ii = ii + 1; jj = 1;
-    
-        if ( size(Y,1) >= A*M ) % Unsupervised observations.
-    
-            break;
-        end
-    end
-    
+    Y = cat(2,Y,L);    
 end

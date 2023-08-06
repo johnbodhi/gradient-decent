@@ -1,4 +1,4 @@
-function [ RA ] = runningAverage( dataSet, verObservation )
+function [ RA ] = runningAverage( dataSet, Observation )
 
     global classType classGroups imageLength Supervision
 
@@ -34,8 +34,7 @@ function [ RA ] = runningAverage( dataSet, verObservation )
         
         RA = zeros(size(classType,2),size(A,2),size(A,3)); 
         
-        ii = 1; jj = 1;
-    
+        ii = 1; jj = 1;    
         for k = 1:1:size(A,3)
             for i = 1:1:size(classType,2)  
                 
@@ -76,7 +75,7 @@ function [ RA ] = runningAverage( dataSet, verObservation )
         for k = 1:1:size(A,3)
             for i = 1:1:size(A,1)
 
-                A(i,size(A,2),k) = verObservation(i,1);
+                A(i,size(A,2),k) = Observation(i,1);
             end
         end
 
@@ -89,7 +88,7 @@ function [ RA ] = runningAverage( dataSet, verObservation )
 
                 for i = 1:1:size(A,1)
                 
-                    if( A(i,size(A,2),k) == verObservation(kk,1) && ii <= SEGMENTS )
+                    if( A(i,size(A,2),k) == Observation(kk,1) && ii <= SEGMENTS )
     
                         RA(jj,:,k) = RA(jj,:,k) + A(i,1:end-1,k); 
 
@@ -104,6 +103,6 @@ function [ RA ] = runningAverage( dataSet, verObservation )
 
         RA = RA ./ SEGMENTS; 
     end
-    
+
 end
    

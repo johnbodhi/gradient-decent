@@ -12,37 +12,35 @@ function [ D, E ] = classifier( dataSet, testObservation, verObservation )
         % imageLength to pass into the Gradient.
 
         histData( ii, 1:size(dataSet,2)) = dataSet( i, 1:size(dataSet,2)); ii = ii + 1; 
+
+        histData = frameSieve(histData); % Duplicate and re-label each frame.
+
+        Observation_ = testObservation(:,1);
+
+        RA = Q; % We need to reset RA between classes...
+
+        % We can utilize non-stationary RA during classification to
+        % monitor dissimilarity between objects...
+
+        runningAverage( histData, Observation_ ); 
+
+        histData = kmeans( histData, Observation_ ); % k-means image data set.
+
+        imgDecision = imageDecision( histData ); D = D + 1; % Take image to classify in the gradient.
+
+        % Supervised Error...
         
-        if ( size( histData, 1 ) == size( dataSet, 2 ) )
+        if ( imgDecision ~= testObservation( i, 1 ) )
 
-            histData = frameSieve(histData); % Duplicate and re-label each frame.
+            E = E + 1;
+        end
 
-            Observation_ = testObservation(:,1);
+        % Display observation type, classifier decision, cumulative decision per
+        % class, and cumulative error per class...
 
-            RA = Q; % We need to reset RA between classes...
+        J = [ testObservation(i,1) imgDecision D E ]; disp( J )
 
-            % We can utilize non-stationary RA during classification to
-            % monitor dissimilarity between objects...
-
-            runningAverage( histData, Observation_ ); 
-
-            histData = kmeans( histData, Observation_ ); % k-means image data set.
-
-            imgDecision = imageDecision( histData ); D = D + 1; % Take image to classify in the gradient.
-
-            % Supervised Error...
-            
-            if ( imgDecision ~= testObservation( i, 1 ) )
-
-                E = E + 1;
-            end
-
-            % Display observation type, classifier decision, cumulative decision per
-            % class, and cumulative error per class...
-
-            J = [ testObservation(i,1) imgDecision D E ]; disp( J )
-
-            % Unsupervised Error...
+        % Unsupervised Error...
 
 %             if ( imgDecision ~= verObservation( pp, 1 ) )
 % 
@@ -52,7 +50,6 @@ function [ D, E ] = classifier( dataSet, testObservation, verObservation )
 %             
 %             J = [ 0 imgDecision D E ]; disp( J )
 
-            histData = 0; ii = 1;
-        end
+        histData = 0; ii = 1;
     end
 end
