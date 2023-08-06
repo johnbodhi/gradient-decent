@@ -84,4 +84,6 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MAT
 
 [ PREC REC ACC F1 ] = fMeasure( D, E );
 
+AVE = [ PREC REC ACC F1 ];
+
 toc;
