@@ -2,7 +2,7 @@ function [ Z ] = gradientDecent( F )
 
     global W RA C A imageLength classType classGroups uu vv
 
-    Y = F(:,1:C-3); % We can remove all labels from the data.
+    Y = F(:,1:C-1); % We can remove all labels from the data.
 
     eps = 1e1; ii = 0;
 
@@ -11,7 +11,7 @@ function [ Z ] = gradientDecent( F )
 
     for mm = 2:1:size(classGroups,2)
         for k = 2:1:size(classType,2)
-            for j = 1:1:C-3
+            for j = 1:1:C-1
                 for i = 2:imageLength*A % We process the entire split frame at once.
 
                     gamma( i, j, mm ) = abs( ...
@@ -21,12 +21,12 @@ function [ Z ] = gradientDecent( F )
                 end
             end
 
-            Y = F(:,1:C-3);
+            Y = F(:,1:C-1);
         end
     end
 
     for mm = 1:1:size(classGroups,2)
-        for j = 1:1:C-3
+        for j = 1:1:C-1
             for i = 1:1:size(classType,2)
                 
                 eps( i, j, mm ) = RA( i, j, mm ) / W( i, j, mm ); % Constant step size.
@@ -36,7 +36,7 @@ function [ Z ] = gradientDecent( F )
     
     for mm = 1:1:size(classGroups,2)
         for k = 1:1:size(classType,2)
-            for j = 1:1:C-3
+            for j = 1:1:C-1
                 for i = 1:1:imageLength*A
         
                     if ( RA( k, j, mm ) - Y( i, j ) > 0 )
@@ -49,7 +49,7 @@ function [ Z ] = gradientDecent( F )
                         iiVec( i, j, k, mm ) = ii; ii = 0;
                     end
     
-                    Y = F(:,1:C-3); 
+                    Y = F(:,1:C-1); 
                     
                     if ( RA( k, j, mm ) - Y( i, j ) < 0 )
                         while( Y( i, j ) > RA( k, j, mm ) )
@@ -64,10 +64,10 @@ function [ Z ] = gradientDecent( F )
                 end   
             end
 
-            Y = F(:,1:C-3);        
+            Y = F(:,1:C-1);        
         end
 
-        Y = F(:,1:C-3);
+        Y = F(:,1:C-1);
     end
 
     cc = 1;
