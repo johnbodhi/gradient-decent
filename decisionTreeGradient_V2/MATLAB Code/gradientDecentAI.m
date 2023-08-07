@@ -111,7 +111,7 @@ for k = 1:1:size(RA,3)
 
 %          dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
 
-         dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence.   
+           dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence.   
 
         % We can randomize all data frames over all groups.
 

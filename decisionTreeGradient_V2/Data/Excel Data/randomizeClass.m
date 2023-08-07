@@ -1,6 +1,6 @@
 function [ Y ] = randomizeClass( dataSet, Nr, Mr, L, C, N )
 
-    A = zeros( Nr * Mr, C, N ); %Y = zeros( L, C );
+    A = zeros( Nr * Mr, C, N ); Y = zeros( L, C );
 
     ii = 1;
     for k = 1:N
