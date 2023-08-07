@@ -2,7 +2,7 @@ function [ RA ] = runningAverage( dataSet, Observation )
 
     global classType imageLength RA BINS Supervision Train
 
-    if ( ~Supervision )
+    if ( ~Supervision && Train )
     
     % Unsupervised training...
     
@@ -55,7 +55,7 @@ function [ RA ] = runningAverage( dataSet, Observation )
         % The per element histogram magnitude ratios appear to be identical 
         % bewteen the supervised and unsupervised cases for each group.
 
-    elseif( Supervision )
+    else
 
         if ( Train )
         
