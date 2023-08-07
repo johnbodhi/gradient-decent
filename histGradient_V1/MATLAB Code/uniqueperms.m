@@ -89,6 +89,3 @@ end
 
 % replace the indices in P by the element values
 P = W(P) ;
-
-
-
