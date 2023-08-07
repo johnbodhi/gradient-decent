@@ -27,7 +27,7 @@ function [ Z ] = gradientDecent( F )
         for j = 1:1:size(RA,2)
             for i = 1:1:size(RA,1)
                 
-                eps( i, j, k ) = max(RA( i, :, k )) / W( 1, k ); % Constant step size.
+                eps( i, j, k ) = min(RA( i, :, k )) / W( 1, k ); % Constant step size.
             end
         end
     end

@@ -56,10 +56,12 @@ for j = 1:1:size( classType, 2 )
     
     dataSet = readmatrix( 'testRGB.csv' ); % Organized.
 
+    L = size( dataSet, 1 ); C = size( dataSet, 2 );
+
     % We can grab all observations in order, no matter the order of the
     % data content.
     ii = 1;
-    for i = 1:L
+    for i = 1:1:L
         if ( dataSet( i, C ) == classType( 1, j ) )
             dataSet_( ii, 1:C ) = dataSet( i, 1:C ); ii = ii + 1;
         end

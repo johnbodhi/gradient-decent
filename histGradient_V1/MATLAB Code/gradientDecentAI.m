@@ -16,7 +16,7 @@ Classes = 8; % Classes per group...
 
 classType = zeros( 1, Classes ); 
 
-Groups  = 3; % Groups per classification...
+Groups  = 3; % Groups per classification (RGB)...
 
 classGroups = zeros( 1, Groups );
 
@@ -41,7 +41,7 @@ Observation = verificationList( N, totalN );
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
 
-Supervision = 0; % Supervision...
+Supervision = 1; % Supervision...
 
 if ( Supervision )
 
