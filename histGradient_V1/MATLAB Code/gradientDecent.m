@@ -27,12 +27,12 @@ function [ Z ] = gradientDecent( F )
         for j = 1:1:size(RA,2)
             for i = 1:1:size(RA,1)
                 
-                eps( i, j, k ) = 55; % Constant step size.
+                eps( i, j, k ) = 30; % Constant step size.
             end
         end
     end
     
-    for k = 2:1:size(RA,3)
+    for k = 3:1:size(RA,3)
         for j = 1:1:size(Y,2)
             for i = 1:1:size(Y,1)
     

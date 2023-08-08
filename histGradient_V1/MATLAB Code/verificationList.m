@@ -1,6 +1,8 @@
-function [ Y ] = verificationList( N, T )
+function [ Y ] = verificationList( N )
 
     global pp
+
+    T = sum(N);
 
     ii = 1; jj = 1; kk = 1; pp = 1;
     for i = 1:N(ii,1):2*T

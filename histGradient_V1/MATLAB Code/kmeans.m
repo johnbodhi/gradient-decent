@@ -4,7 +4,7 @@ global imageLength RA W
 
     ii = 1; jj = 1;  
 
-    W = [ 1e0 1e0 1e0 ]; 
+    W = [ 0 0 1e0 ]; 
 
     while( jj < imageLength ) % Modified convergence criterion.
             

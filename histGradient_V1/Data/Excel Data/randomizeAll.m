@@ -1,6 +1,8 @@
-function [ Y ] = randomizeAll( dataSet, N )
+function [ Y, i ] = randomizeAll( dataSet, N )
 
     global imageLength
+
+    Y = zeros(size(dataSet,1),size(dataSet,2));
 
     M = 0;
     for i = 1:1:size(N,1)
@@ -20,8 +22,7 @@ function [ Y ] = randomizeAll( dataSet, N )
 
     if ( isfile( 'randomizedFrames.csv' ) )
     
-        Y = readmatrix('randomizedFrames.csv');
-    
+%         Y = readmatrix('randomizedFrames.csv');    
     else
     
         i = zeros( N,1 );
@@ -41,6 +42,6 @@ function [ Y ] = randomizeAll( dataSet, N )
             Y((k-2)*imageLength+1:k*imageLength,1:size(dataSet,2)) = cat( 1, B( :, :, k-1 ), B( :, :, k ) );
         end 
                 
-         writematrix( Y, 'randomizedFrames.csv' );               
+%          writematrix( Y, 'randomizedFrames.csv' );               
     end    
 end

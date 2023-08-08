@@ -1,4 +1,4 @@
-function [ D, E ] = classifier( dataSet, Observation )
+function [ D, E ] = classifier( dataSet )
     
     global RA Q Train
 
@@ -24,13 +24,13 @@ function [ D, E ] = classifier( dataSet, Observation )
 
         runningAverage( histData, Observation_ ); 
 
-%         histData = kmeans( histData, Observation_ ); % k-means image data set.
+        % histData = kmeans( histData, Observation_ ); % k-means image data set.
 
         imgDecision = imageDecision( histData ); D = D + 1; % Take image to classify in the gradient.
 
         % Supervised Error...
         
-        if ( imgDecision ~= Observation(i,1) )
+        if ( imgDecision ~= dataSet(i,size(dataSet,2)) )
 
             E = E + 1;
         end
@@ -38,7 +38,7 @@ function [ D, E ] = classifier( dataSet, Observation )
         % Display observation type, classifier decision, cumulative decision per
         % class, and cumulative error per class...
 
-        J = [ Observation(i,1) imgDecision D E ]; disp( J )
+        J = [ dataSet(i,size(dataSet,2)) imgDecision D E ]; disp( J )
 
         % Unsupervised Error...
 
