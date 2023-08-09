@@ -4,7 +4,7 @@ function [ RA ] = runningAverage( dataSet, Observation )
 
     if ( ~Supervision && Train )
     
-        % Unsupervised training...
+        % Unsupervised training with an SVM!
     
         for k = 1:1:size(dataSet,2)-1
             for i = 1:1:size(dataSet,1)/(imageLength)
