@@ -1,4 +1,4 @@
-function [ F ] = combinations( X, Y )
+function [ F, W ] = combinations( X, Y )
 
     global classType
 
@@ -12,5 +12,15 @@ function [ F ] = combinations( X, Y )
             end
         end 
     end
+
+    W = F(:,:,1);
+    for k = 2:1:size(F,1)-Y+1
+        for j = 1:1:size(F,2)
+            for i = 1:1:size(F,1)
+                
+                W(i,j,k) = W(i,j,k-1)+1;
+            end
+        end 
+    end    
     
 end

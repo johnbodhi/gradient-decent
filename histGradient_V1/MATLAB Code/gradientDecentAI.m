@@ -42,8 +42,6 @@ Supervision = 0; % Supervision...
 
 Randomized  = 0;
 
-% dataSet = randomizeAll( dataSet, N ); % Randomize all frames.
-
 if ( Supervision )
 
     dataSet = readmatrix( 'trainRGB (1).csv' );   % Supervised training data.
@@ -52,6 +50,8 @@ elseif( ~Supervision )
 
     dataSet = readmatrix( 'trainRGB (2).csv' );   % Unsupervised training data.
 end
+
+% dataSet = randomizeAll( dataSet, N ); % Randomize all frames.
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
 

@@ -1,10 +1,10 @@
 function [ RA ] = runningAverage( dataSet, Observation )
 
-    global classType imageLength RA BINS Supervision Train
+    global classType imageLength RA Q BINS Supervision Train
 
     if ( ~Supervision && Train )
     
-        % Unsupervised training with an SVM!
+    % Unsupervised training with an SVM!
     
         for k = 1:1:size(dataSet,2)-1
             for i = 1:1:size(dataSet,1)/(imageLength)
@@ -28,33 +28,54 @@ function [ RA ] = runningAverage( dataSet, Observation )
         end        
         % [ ~, I ] = sort(B,2);
 
-        I = combinations( I, SEGMENTS );
+        [ I, W ] = combinations( I, SEGMENTS );
         
-        RA = zeros(size(classType,2),size(A,2),size(A,3)); 
-        
-        ii = 1; jj = 1;    
-        for k = 1:1:size(A,3)
-            for i = 1:1:size(classType,2)  
-                
-                while ( jj < SEGMENTS )
-                
-                    RA(i,:,k) = RA(i,:,k) + A(I(ii,jj,i),:,k);
-    
-                    if( ii >= size(I,1) )
+%         RA = zeros(size(classType,2),size(A,2),size(A,3)); 
+%         
+%         ii = 1; jj = 1;    
+%         for k = 1:1:size(A,3)
+%             for i = 1:1:size(classType,2)  
+%                 
+%                 while ( jj < SEGMENTS )
+%                 
+%                     RA(i,:,k) = RA(i,:,k) + A(I(ii,jj,i),:,k);
+%     
+%                     if( ii >= size(I,1) )
+% 
+%                         ii = 0; jj = jj + 1;
+%                     end
+%                     ii = ii + 1;
+%                 end
+%                 jj = 1;        
+%             end
+%         end
 
-                        ii = 0; jj = jj + 1;
+        RA = zeros(size(classType,2),size(A,2),size(A,3)); 
+
+        ii = 1; jj = 1;    
+        for k = 1:1:size(A,3)            
+            for i = 1:1:size(RA,1)
+                while ( ii <= size(W,1) )
+                    for zz = 1:1:size(W,3)
+                    
+                        while ( jj <= SEGMENTS )
+                        
+                            RA(i,:,k) = RA(i,:,k) + A(W(ii,jj,zz),:,k);
+            
+                            jj = jj + 1;                       
+                        end
+                        jj = 1;
                     end
                     ii = ii + 1;
                 end
-                jj = 1;        
-            end
+                ii = 1;
+            end                 
         end
     
-        RA = RA ./ size(I,1); 
+        RA = RA ./ (size(W,1)*size(W,1)); 
         
         % The per element histogram magnitude ratios appear to be identical 
         % bewteen the supervised and unsupervised cases for each group.
-
     else
 
         if ( Train )
