@@ -14,7 +14,7 @@ function [ F, W ] = combinations( X, Y )
     end
 
     W = F(:,:,1);
-    for k = 2:1:size(F,1)-Y+1
+    for k = 2:1:size(F,1)+Y+1
         for j = 1:1:size(F,2)
             for i = 1:1:size(F,1)
                 
