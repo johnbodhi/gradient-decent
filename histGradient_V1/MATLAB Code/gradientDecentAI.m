@@ -22,7 +22,7 @@ classGroups = zeros( 1, Groups );
 
 Np = 100; Mp = 100; imageLength = Np * Mp; % Photo length, and width. 
 
-BINS = 12; % Histogram bins...
+BINS = 255; % Histogram bins...
 
 % Number of images per class to classify.
 

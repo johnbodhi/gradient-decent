@@ -1,4 +1,4 @@
-function [ RA ] = runningAverage( dataSet, Observation )
+function [ RA ] = SVM( dataSet, Observation )
 
     global classType imageLength RA Q BINS Supervision Train
 
@@ -28,7 +28,7 @@ function [ RA ] = runningAverage( dataSet, Observation )
         end        
         % [ ~, I ] = sort(B,2);
 
-        [ I, W ] = combinations( I, SEGMENTS );
+        [ I, W ] = combinations( I, SEGMENTS ); % Permutation windows abuut A.
         
         RA = zeros(size(classType,2),size(A,2),size(A,3)); 
         

@@ -6,7 +6,7 @@ function classifierTraining( dataSet, Observation )
 
     RA = zeros(size(classType,2),BINS,size(classGroups,2));
     
-    [ RA ] = runningAverage( dataSet, Observation );
+    [ RA ] =  SVM( dataSet, Observation );
 
     Q = RA; % Resetting RA during classification.
 end
