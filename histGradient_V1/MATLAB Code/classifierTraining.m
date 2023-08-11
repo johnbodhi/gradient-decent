@@ -1,4 +1,4 @@
-function classifierTraining( dataSet, Observation )
+function classifierTraining( dataSet, N, Observation )
 
     global RA Q classType BINS classGroups Train
 
@@ -6,7 +6,7 @@ function classifierTraining( dataSet, Observation )
 
     RA = zeros(size(classType,2),BINS,size(classGroups,2));
     
-    [ RA ] =  SVM( dataSet, Observation );
+    [ RA ] =  SVM( dataSet, N, Observation );
 
     Q = RA; % Resetting RA during classification.
 end
