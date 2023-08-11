@@ -19,20 +19,20 @@ function [ RA ] = SVM( dataSet, N, Observation )
                             A(ii,X_(i,1)+1,k) = Z;
                             Z = Z + 1;                  
                         end
-                    end
+                    end 
                     Z = 1;
                 end
             end
         end    
     
-%         for k = 1:1:size(dataSet,2)-1
-%             for i = 1:1:size(dataSet,1)/(imageLength)
-%     
-%                 A(i,:,k) = hist(dataSet((i-1)*imageLength+1:i*imageLength,k),BINS);
-%             end
-%         end
-%     
-%         EIGEN_FRAMES = size(A,1);
+        for k = 1:1:size(dataSet,2)-1
+            for i = 1:1:size(dataSet,1)/(imageLength)
+    
+                A_(i,:,k) = hist(dataSet((i-1)*imageLength+1:i*imageLength,k),BINS);
+            end
+        end
+     
+          EIGEN_FRAMES = size(A,1);
 %     
 %         SEGMENTS     = EIGEN_FRAMES / size(classType,2);
 %     
