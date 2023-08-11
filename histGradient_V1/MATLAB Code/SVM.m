@@ -1,6 +1,6 @@
 function [ RA ] = SVM( dataSet, N, Observation )
 
-    global classType classGroups imageLength RA Q BINS Supervision Train
+    global classType classGroups imageLength RA BINS Supervision Train
 
     if ( ~Supervision && Train )
     
@@ -24,52 +24,54 @@ function [ RA ] = SVM( dataSet, N, Observation )
                 end
             end
         end    
+
+        % Hist is deprecated!
     
-        for k = 1:1:size(dataSet,2)-1
-            for i = 1:1:size(dataSet,1)/(imageLength)
-    
-                A_(i,:,k) = hist(dataSet((i-1)*imageLength+1:i*imageLength,k),BINS);
-            end
-        end
-     
-          EIGEN_FRAMES = size(A,1);
+%         for k = 1:1:size(dataSet,2)-1
+%             for i = 1:1:size(dataSet,1)/(imageLength)
 %     
-%         SEGMENTS     = EIGEN_FRAMES / size(classType,2);
-%     
-%         for k = 1:1:size(A,3)      
-%             for j = 1:1:size(A,1)
-%                 for i = 1:1:size(A,1)
-%     
-%                     B(i,j,k) = norm( ( A(j,:,k) - A(i,:,k) ), Inf );
-%                     I(i,1,1) = i;
-%                 end
-%             end
-%         end        
-%         % [ ~, I ] = sort(B,2);
-% 
-%         [ I, W ] = combinations( I, SEGMENTS ); % Permutation windows abuut A.
-%         
-%         RA = zeros(size(classType,2),size(A,2),size(A,3)); 
-%         
-%         ii = 1; jj = 1; NN = 0;   
-%         for k = 1:1:size(A,3)
-%             for i = 1:1:size(classType,2)  
-%                 
-%                 while ( jj < SEGMENTS )
-%                 
-%                     RA(i,:,k) = RA(i,:,k) + A(I(ii,jj,i),:,k); NN = NN + 1;
-%     
-%                     if( ii >= size(I,1) )
-% 
-%                         ii = 0; jj = jj + 1;
-%                     end
-%                     ii = ii + 1;
-%                 end
-%                 jj = 1;        
+%                 A_(i,:,k) = hist(dataSet((i-1)*imageLength+1:i*imageLength,k),BINS);
 %             end
 %         end
-% 
-%         RA = RA ./ NN;         
+     
+        EIGEN_FRAMES = size(A,1);
+    
+        SEGMENTS     = EIGEN_FRAMES / size(classType,2);
+    
+        for k = 1:1:size(A,3)      
+            for j = 1:1:size(A,1)
+                for i = 1:1:size(A,1)
+    
+                    B(i,j,k) = norm( ( A(j,:,k) - A(i,:,k) ), Inf );
+                    I(i,1,1) = i;
+                end
+            end
+        end        
+        % [ ~, I ] = sort(B,2);
+
+        [ I, W ] = combinations( I, SEGMENTS ); % Permutation windows abuut A.
+        
+        RA = zeros(size(classType,2),size(A,2),size(A,3)); 
+        
+        ii = 1; jj = 1; NN = 0;   
+        for k = 1:1:size(A,3)
+            for i = 1:1:size(classType,2)
+                
+                while ( jj < SEGMENTS )
+                
+                    RA(i,:,k) = RA(i,:,k) + A(I(ii,jj,i),:,k); NN = NN + 1;
+    
+                    if( ii >= size(I,1) )
+
+                        ii = 0; jj = jj + 1;
+                    end
+                    ii = ii + 1;
+                end
+                jj = 1;        
+            end
+        end
+
+        RA = RA ./ NN;         
 
 %         RA = zeros(size(classType,2),size(A,2),size(A,3)); 
 % 
