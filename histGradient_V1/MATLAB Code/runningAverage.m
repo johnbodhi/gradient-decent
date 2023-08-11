@@ -30,53 +30,54 @@ function [ RA ] = runningAverage( dataSet, Observation )
 
         [ I, W ] = combinations( I, SEGMENTS );
         
-%          RA = zeros(size(classType,2),size(A,2),size(A,3)); 
-%         
-%         ii = 1; jj = 1;    
-%         for k = 1:1:size(A,3)
-%             for i = 1:1:size(classType,2)  
-%                 
-%                 while ( jj < SEGMENTS )
-%                 
-%                     RA(i,:,k) = RA(i,:,k) + A(I(ii,jj,i),:,k);
-%     
-%                     if( ii >= size(I,1) )
-% 
-%                         ii = 0; jj = jj + 1;
-%                     end
-%                     ii = ii + 1;
-%                 end
-%                 jj = 1;        
-%             end
-%         end
-% 
-%         RA = RA ./ size(W,1); 
-
         RA = zeros(size(classType,2),size(A,2),size(A,3)); 
+        
+        ii = 1; jj = 1; NN = 0;   
+        for k = 1:1:size(A,3)
+            for i = 1:1:size(classType,2)  
+                
+                while ( jj < SEGMENTS )
+                
+                    RA(i,:,k) = RA(i,:,k) + A(I(ii,jj,i),:,k); NN = NN + 1;
+    
+                    if( ii >= size(I,1) )
 
-        ii = 1; jj = 1;    
-        for k = 1:1:size(A,3)            
-            for i = 1:1:size(RA,1)
-                while ( ii <= size(W,1) )
-                    for zz = 1:1:size(W,3)
-                    
-                        % Convergence criterion...
-
-                        while ( jj <= SEGMENTS )
-                        
-                            RA(i,:,k) = RA(i,:,k) + A(W(ii,jj,zz),:,k);
-            
-                            jj = jj + 1;                       
-                        end
-                        jj = 1;
+                        ii = 0; jj = jj + 1;
                     end
                     ii = ii + 1;
                 end
-                ii = 1;
-            end                 
+                jj = 1;        
+            end
         end
-    
-        RA = RA ./ (size(W,1)*size(W,3)); 
+
+        RA = RA ./ NN;         
+
+%         RA = zeros(size(classType,2),size(A,2),size(A,3)); 
+% 
+%         ii = 1; jj = 1; NN = 0;
+%         for k = 1:1:size(A,3)            
+%             for i = 1:1:size(RA,1)
+%                 while ( ii <= size(W,1) )
+%                     for kk = 1:1:size(W,3)
+%                     
+%                         % Convergence criterion...
+% 
+%                         while ( jj <= SEGMENTS )
+%                         
+%                             RA(i,:,k) = RA(i,:,k) + A(W(ii,jj,kk),:,k);
+%             
+%                             jj = jj + 1; NN = NN + 1;                       
+%                         end
+%                         jj = 1;
+%                         
+%                     end
+%                     ii = ii + 1;
+%                 end
+%                 ii = 1;
+%             end                 
+%         end
+%     
+%         RA = RA ./ NN; 
         
         % The per element histogram magnitude ratios appear to be identical 
         % bewteen the supervised and unsupervised cases for each group.
@@ -109,7 +110,7 @@ function [ RA ] = runningAverage( dataSet, Observation )
     
         SEGMENTS     = EIGEN_FRAMES / size(classType,2);
  
-        ii = 1; jj = 1; kk = 1;
+        ii = 1; jj = 1; kk = 1; NN = 0;
         for k = 1:1:size(A,3)
 
             while ( jj <= size(classType,2) )
@@ -120,7 +121,7 @@ function [ RA ] = runningAverage( dataSet, Observation )
     
                         RA(jj,:,k) = RA(jj,:,k) + A(i,1:end-1,k); 
 
-                        ii = ii + 1; kk = kk + 1;
+                        ii = ii + 1; kk = kk + 1; NN = NN + 1;
                     end    
                     
                 end   
@@ -128,14 +129,8 @@ function [ RA ] = runningAverage( dataSet, Observation )
             end   
             jj = 1; kk = 1;
         end
-
-        if ( Train )
-
-            RA = RA ./ SEGMENTS; 
-        else
-
-            RA = RA ./ size(RA,1); 
-        end
+ 
+        RA = RA ./ NN;         
     end
 
 end   
