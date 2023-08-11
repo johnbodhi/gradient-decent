@@ -24,20 +24,22 @@ function [ Z ] = gradientDecent( F )
     end
 
     for k = 1:1:size(RA,3)
-        for i = 1:1:size(RA,1)
-            
-            eps( i, k ) = 0.2; % Constant step size.
+        for j = 1:1:size(RA,2)
+            for i = 1:1:size(RA,1)
+                
+                eps( i, j, k ) = RA( i, j, k ) + 1; % Constant step size.
+            end
         end
     end
     
-    for k = 3:1:size(RA,3)
+    for k = 1:1:size(RA,3)
         for j = 1:1:size(Y,2)
             for i = 1:1:size(Y,1)
     
                 if ( RA( i, j, k ) - Y( i, j, k ) > 0 )
                     while( Y( i, j, k ) < RA( i, j, k ) )
                         Y( i, j, k ) = Y( i, j, k ) + ( gamma( i, j, k ) * RA( i, j, k ) +...
-                            eps( i, k ) );
+                            eps( i, j, k ) );
                         ii = ii + 1;
                     end 
 
@@ -49,7 +51,7 @@ function [ Z ] = gradientDecent( F )
                 if ( RA( i, j, k ) - Y( i, j, k ) < 0 )
                     while( Y( i, j, k ) > RA( i, j, k ) )
                         Y( i, j, k ) = Y( i, j, k ) - ( gamma( i, j, k ) * RA( i, j, k ) +...
-                            eps( i, k ) );
+                            eps( i, j, k ) );
                         ii = ii + 1;
                     end
 
