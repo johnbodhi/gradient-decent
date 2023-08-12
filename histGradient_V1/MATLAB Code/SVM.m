@@ -72,8 +72,6 @@ function [ RA ] = SVM( dataSet, N, Observation )
         end
 
         RA = RA ./ NN; 
-        
-        %RA = sort(RA,2);  
 
 %         RA = zeros(size(classType,2),size(A,2),size(A,3)); 
 % 
@@ -154,8 +152,5 @@ function [ RA ] = SVM( dataSet, N, Observation )
         end
  
         RA = RA ./ NN; 
-        
-        %RA = sort(RA,2);
     end
-
 end   
