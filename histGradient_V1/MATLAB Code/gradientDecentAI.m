@@ -38,7 +38,7 @@ Observation = verificationList( N );
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
 
-Supervision = 1; % Supervision...
+Supervision = 0; % Supervision...
 
 Randomized  = 0;
 

@@ -71,7 +71,9 @@ function [ RA ] = SVM( dataSet, N, Observation )
             end
         end
 
-        RA = RA ./ NN;         
+        RA = RA ./ NN; 
+        
+        %RA = sort(RA,2);  
 
 %         RA = zeros(size(classType,2),size(A,2),size(A,3)); 
 % 
@@ -98,7 +100,7 @@ function [ RA ] = SVM( dataSet, N, Observation )
 %             end                 
 %         end
 %     
-%         RA = RA ./ NN; 
+%         RA = RA ./ NN; RA = sort(RA,2);
         
         % The per element histogram magnitude ratios appear to be identical 
         % bewteen the supervised and unsupervised cases for each group.
@@ -151,7 +153,9 @@ function [ RA ] = SVM( dataSet, N, Observation )
             jj = 1; kk = 1;
         end
  
-        RA = RA ./ NN;         
+        RA = RA ./ NN; 
+        
+        %RA = sort(RA,2);
     end
 
 end   

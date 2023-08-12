@@ -2,6 +2,8 @@ function [ Y ] = frameSieve( S )
 
     global RA
 
+%     S = sort(S,"ascend");
+
     for k = 1:1:size(RA,3)
         for i = 1:1:size(RA,1)
                 
