@@ -7,6 +7,8 @@ function [ RA ] = SVM( dataSet, N, Observation )
     % Unsupervised training with an SVM!
 
         A = zeros(sum(N),BINS,size(classGroups,2)); Z = 1;
+
+        % Histogram generation...
     
         for k = 1:1:size(dataSet,2)-1
             for ii = 1:1:sum(N)
@@ -49,56 +51,62 @@ function [ RA ] = SVM( dataSet, N, Observation )
         end        
         % [ ~, I ] = sort(B,2);
 
-        [ I, W ] = combinations( I, SEGMENTS ); % Permutation windows abuut A.
+        [ I, W ] = combinations( I, SEGMENTS ); % Permutation windows about A.
+
+        % RA optimized for well ordered classes from the input...
         
-        RA = zeros(size(classType,2),size(A,2),size(A,3)); 
-        
-        ii = 1; jj = 1; NN = 0;   
-        for k = 1:1:size(A,3)
-            for i = 1:1:size(classType,2)
-                
-                while ( jj < SEGMENTS )
-                
-                    RA(i,:,k) = RA(i,:,k) + A(I(ii,jj,i),:,k); NN = NN + 1;
-    
-                    if( ii >= size(I,1) )
-
-                        ii = 0; jj = jj + 1;
-                    end
-                    ii = ii + 1;
-                end
-                jj = 1;        
-            end
-        end
-
-        RA = RA ./ NN; 
-
 %         RA = zeros(size(classType,2),size(A,2),size(A,3)); 
+%         
+%         ii = 1; jj = 1; NN = 0; 
 % 
-%         ii = 1; jj = 1; NN = 0;
-%         for k = 1:1:size(A,3)            
-%             for i = 1:1:size(RA,1)
-%                 while ( ii <= size(W,1) )
-%                     for kk = 1:1:size(W,3)
-%                     
-%                         % Convergence criterion...
+%         for k = 1:1:size(A,3)
+%             for i = 1:1:size(classType,2)
+%                 
+%                 while ( jj < SEGMENTS )
+%                 
+%                     RA(i,:,k) = RA(i,:,k) + A(I(ii,jj,i),:,k); NN = NN + 1;
+%     
+%                     if( ii >= size(I,1) )
 % 
-%                         while ( jj <= SEGMENTS )
-%                         
-%                             RA(i,:,k) = RA(i,:,k) + A(W(ii,jj,kk),:,k);
-%             
-%                             jj = jj + 1; NN = NN + 1;                       
-%                         end
-%                         jj = 1;
-%                         
+%                         ii = 0; jj = jj + 1;
 %                     end
 %                     ii = ii + 1;
 %                 end
-%                 ii = 1;
-%             end                 
+%                 jj = 1;        
+%             end
 %         end
-%     
-%         RA = RA ./ NN; RA = sort(RA,2);
+% 
+%         RA = RA ./ NN; 
+
+        % RA optimized for randomized classes from the input...
+
+        RA = zeros(size(classType,2),size(A,2),size(A,3)); 
+
+        ii = 1; jj = 1; NN = 0;
+
+        for k = 1:1:size(A,3)            
+            for i = 1:1:size(RA,1)
+                while ( ii <= size(W,1) )
+                    for kk = 1:1:size(W,3)
+                    
+                        % Convergence criterion...
+
+                        while ( jj <= SEGMENTS )
+                        
+                            RA(i,:,k) = RA(i,:,k) + A(W(ii,jj,kk),:,k);
+            
+                            jj = jj + 1; NN = NN + 1;                       
+                        end
+                        jj = 1;
+                        
+                    end
+                    ii = ii + 1;
+                end
+                ii = 1;
+            end                 
+        end
+    
+        RA = RA ./ NN;
         
         % The per element histogram magnitude ratios appear to be identical 
         % bewteen the supervised and unsupervised cases for each group.

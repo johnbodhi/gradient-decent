@@ -8,7 +8,16 @@ photoToArray(); % Pre-process all images.
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code"); 
 
-% We can use K-Means clustering, and a RGB running average within a Gradient Decent / Ascent.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 global classType classGroups imageLength BINS Supervision Randomized
 
@@ -22,7 +31,11 @@ classGroups = zeros( 1, Groups );
 
 Np = 100; Mp = 100; imageLength = Np * Mp; % Photo length, and width. 
 
-BINS = 255; % Histogram bins...
+BINS = 5; % Histogram bins...
+
+Supervision = 0; % Supervision...
+
+Randomized  = 0; % Frame randomization...
 
 % Number of images per class to classify.
 
@@ -36,11 +49,18 @@ end
 
 Observation = verificationList( N );
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
-
-Supervision = 0; % Supervision...
-
-Randomized  = 0;
 
 if ( Supervision )
 
@@ -51,11 +71,35 @@ elseif( ~Supervision )
     dataSet = readmatrix( 'trainRGB (2).csv' );   % Unsupervised training data.
 end
 
-% dataSet = randomizeAll( dataSet, N ); % Randomize all frames.
+if ( Randomized )
+
+    dataSet = randomizeAll( dataSet, N ); % Randomize all frames.
+
+elseif( ~Randomized )
+    
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
 
 classifierTraining( dataSet, N, Observation );
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -77,8 +121,18 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MAT
 
 [ D, E ] = classifier( dataSet );
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 [ PREC REC ACC F1 ] = fMeasure( D, E );
 
-AVE = [ PREC REC ACC F1 ];
+AVE = [ PREC REC ACC F1 ]; 
 
 toc;
