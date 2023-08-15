@@ -1,12 +1,12 @@
 function [ Y ] = kmeans( S, V )
 
-global imageLength RA W
+global frameLength RA W
 
     ii = 1; jj = 1;  
 
-    W = [ 0 0 1e0 ]; 
+    W = [ 1e0 1e1 1e2 ]; 
 
-    while( jj < imageLength ) % Modified convergence criterion.
+    while( jj < frameLength ) % Modified convergence criterion.
             
         for k = 1:1:size(RA,3)
             for j = 1:1:size(S,2)-1

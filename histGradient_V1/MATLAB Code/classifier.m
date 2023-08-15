@@ -24,7 +24,7 @@ function [ D, E ] = classifier( dataSet, Observation )
 
 %         SVM( histData, [], Observation_ ); 
 
-        %histData = kmeans( histData, Observation_ ); % k-means image data set.
+        histData = kmeans( histData, Observation_ ); % k-means image data set.
 
         imgDecision = imageDecision( histData ); D = D + 1; % Take image to classify in the gradient.
 
