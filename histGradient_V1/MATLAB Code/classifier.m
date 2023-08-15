@@ -1,6 +1,6 @@
-function [ D, E ] = classifier( dataSet )
+function [ D, E ] = classifier( dataSet, Observation )
     
-    global RA Q Train
+    global RA Q Supervision Train
 
     Train = 0;
 
@@ -17,38 +17,41 @@ function [ D, E ] = classifier( dataSet )
 
         Observation_ = histData(:,size(dataSet,2));
 
-        RA = Q; % We need to reset RA between classes...
+%         RA = Q; % We need to reset RA between classes...
 
         % We can utilize non-stationary RA during classification to
         % monitor dissimilarity between objects...
 
-        SVM( histData, [], Observation_ ); 
+%         SVM( histData, [], Observation_ ); 
 
-%         histData = kmeans( histData, Observation_ ); % k-means image data set.
+        %histData = kmeans( histData, Observation_ ); % k-means image data set.
 
         imgDecision = imageDecision( histData ); D = D + 1; % Take image to classify in the gradient.
 
-        % Supervised Error...
-        
-        if ( imgDecision ~= dataSet(i,size(dataSet,2)) )
+        if( Supervision )
 
-            E = E + 1;
+            % Supervised Error...
+            
+            if ( imgDecision ~= dataSet(i,size(dataSet,2)) )
+    
+                E = E + 1;
+            end
+    
+            % Display observation type, classifier decision, cumulative decision per
+            % class, and cumulative error per class...
+    
+            J = [ dataSet(i,size(dataSet,2)) imgDecision D E ]; disp( J )            
+        else
+
+            % Unsupervised Error...
+    
+            if ( imgDecision ~= Observation( i, 1 ) )
+            
+                E = E + 1;
+            end
+               
+            J = [ Observation(i,1) imgDecision D E ]; disp( J )
         end
-
-        % Display observation type, classifier decision, cumulative decision per
-        % class, and cumulative error per class...
-
-        J = [ dataSet(i,size(dataSet,2)) imgDecision D E ]; disp( J )
-
-        % Unsupervised Error...
-
-%             if ( imgDecision ~= Observation( pp, 1 ) )
-% 
-%                 E = E + 1;
-%             end
-%             pp = pp + 1;
-%             
-%             J = [ 0 imgDecision D E ]; disp( J )
 
         histData = zeros(1,size(dataSet,2),size(dataSet,3));
     end

@@ -14,12 +14,9 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MAT
 
 
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-global classType classGroups imageLength BINS Supervision Randomized
+global classType classGroups frameLength DATARANGE BINS Supervision Randomized
 
 Classes = 8; % Classes per group...
 
@@ -29,9 +26,19 @@ Groups  = 3; % Groups per classification (RGB)...
 
 classGroups = zeros( 1, Groups );
 
-Np = 100; Mp = 100; imageLength = Np * Mp; % Photo length, and width. 
+Np = 100; Mp = 100; frameLength = Np * Mp; % Photo length, and width. 
 
-BINS = 5; % Histogram bins...
+DATARANGE = 256;
+
+ii = 1;
+for i = 1:1:DATARANGE   
+    if( mod(DATARANGE,i) == 0 )
+        
+        BINS_(ii,1) = i;ii = ii + 1;
+    end
+end
+
+BINS = BINS_(3,1); % Histogram bins...
 
 Supervision = 0; % Supervision...
 
@@ -45,7 +52,7 @@ for i = 1:1:size(numImages,2)
 end
  
 % We can generate an objective label vector to keep track of our errors
-% with unsupervised data...
+% with supervised / unsupervised data...
 
 Observation = verificationList( N );
 
@@ -54,11 +61,7 @@ Observation = verificationList( N );
 
 
 
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
 
@@ -71,32 +74,18 @@ elseif( ~Supervision )
     dataSet = readmatrix( 'trainRGB (2).csv' );   % Unsupervised training data.
 end
 
-if ( Randomized )
-
-    dataSet = randomizeAll( dataSet, N ); % Randomize all frames.
-
-elseif( ~Randomized )
-    
-end
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 
 
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
 
 classifierTraining( dataSet, N, Observation );
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
 
 
 
@@ -113,17 +102,16 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Dat
 
 dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence. 
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
+cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
 
 dataSet = histogramization( dataSet, N, Observation ); 
 
 cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");    
 
-[ D, E ] = classifier( dataSet );
+[ D, E ] = classifier( dataSet, Observation );
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 
 
 
