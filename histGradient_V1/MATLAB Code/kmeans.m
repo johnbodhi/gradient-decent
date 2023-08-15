@@ -4,7 +4,7 @@ global frameLength RA W
 
     ii = 1; jj = 1;  
 
-    W = [ 1e0 1e1 1e2 ]; 
+    W = [ 1e3 1e1 1e2 ]; 
 
     while( jj < frameLength ) % Modified convergence criterion.
             

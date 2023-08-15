@@ -126,6 +126,6 @@ function [ RA ] = SVM( dataSet, N, Observation )
         RA = RA ./ SEGMENTS; 
     end
 
-    % plotDist(RA);
+    plotDist(RA);
 
 end   

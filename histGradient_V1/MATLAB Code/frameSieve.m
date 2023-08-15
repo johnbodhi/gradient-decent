@@ -4,8 +4,10 @@ function [ Y ] = frameSieve( S )
 
     % S = sort(S,"ascend");
 
+    SPLITS = 8;
+
     for k = 1:1:size(RA,3)
-        for i = 1:1:size(RA,1)
+        for i = 1:1:SPLITS
                 
             Y(i,:,k) = S(1,1:end-1,k); 
             L(i,1,k) = i;

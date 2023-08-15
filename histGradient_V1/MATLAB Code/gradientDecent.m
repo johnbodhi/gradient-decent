@@ -23,7 +23,7 @@ function [ Z ] = gradientDecent( F )
         Y = F(:,1:size(F,2)-1,:);
     end
 
-    eps_ = 0.0001;
+    eps_ = 0.001;
     for k = 1:1:size(Y,3)
         for j = 1:1:size(Y,2)
             for i = 1:1:size(Y,1)
