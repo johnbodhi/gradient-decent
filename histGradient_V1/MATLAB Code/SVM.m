@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function [ RA, J ] = SVM( dataSet, N, Observation )
 
     global RA JX classType Supervision Randomized Train
@@ -300,6 +299,4 @@ function [ RA ] = SVM( dataSet, N, Observation )
     end
 
     plotDist(RA);
-
->>>>>>> 491721bc0ee142d1b67c0fd99828486edccf7ea9
 end   
