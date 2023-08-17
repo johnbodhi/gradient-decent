@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function [ Y ] = kmeans( S, V )
 
 global frameLength RA W
@@ -88,5 +87,4 @@ global frameLength RA W
     end
 
     Y = cat(2,Y,S(:,size(S,2),:));
->>>>>>> 491721bc0ee142d1b67c0fd99828486edccf7ea9
 end
