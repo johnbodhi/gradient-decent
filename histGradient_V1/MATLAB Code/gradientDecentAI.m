@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 clear all; close all; clc; 
 
 tic;
@@ -249,5 +248,4 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MAT
 
 AVE = [ PREC REC ACC F1 ]; 
 
->>>>>>> 491721bc0ee142d1b67c0fd99828486edccf7ea9
 toc;
