@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function [ Z ] = gradientDecent( F )
 
     global RA
@@ -152,5 +151,4 @@ function [ Z ] = gradientDecent( F )
     end
 
     [ ~, Z ] = min(S(:,1)); % Decisions are not constrained to groups.
->>>>>>> 491721bc0ee142d1b67c0fd99828486edccf7ea9
 end
