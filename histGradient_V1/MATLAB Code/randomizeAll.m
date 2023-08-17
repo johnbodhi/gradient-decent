@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function [ Y, i ] = randomizeAll( dataSet, N )
 
     global frameLength
@@ -92,5 +91,5 @@ function [ Y, i ] = randomizeAll( dataSet, N )
                 
 %          writematrix( Y, 'randomizedFrames.csv' );               
     end    
->>>>>>> 491721bc0ee142d1b67c0fd99828486edccf7ea9
+
 end
