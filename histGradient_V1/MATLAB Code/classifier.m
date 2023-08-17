@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function [ D, E ] = classifier( dataSet, Observation )
     
     global RA Q Supervision Train
@@ -114,5 +113,3 @@ function [ D, E ] = classifier( dataSet, Observation )
 
         histData = zeros(1,size(dataSet,2),size(dataSet,3));
     end
->>>>>>> 491721bc0ee142d1b67c0fd99828486edccf7ea9
-end
