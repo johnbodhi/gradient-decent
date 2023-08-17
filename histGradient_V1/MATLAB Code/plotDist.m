@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function plotDist()
 
     global RA
@@ -276,5 +275,3 @@ function plotDist(RA)
     legend( 'Target Signal 1', 'Target Signal 2' );
 
 end
-
->>>>>>> 491721bc0ee142d1b67c0fd99828486edccf7ea9
