@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function [ Y ] = frameSieve( S )
 
     global RA JX
@@ -46,6 +45,5 @@ function [ Y ] = frameSieve( S )
         end
     end
 
-    Y = cat(2,Y,L);    
->>>>>>> 491721bc0ee142d1b67c0fd99828486edccf7ea9
+    Y = cat(2,Y,L);
 end
