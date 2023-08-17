@@ -18,6 +18,5 @@ function [ Y ] = verificationList( N )
         if ( size(Y,1) >= T ) % Unsupervised observations.
             break;
         end
-    end
-    
+    end    
 end

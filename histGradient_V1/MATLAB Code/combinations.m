@@ -22,5 +22,4 @@ function [ F, W ] = combinations( X, Y )
             end
         end 
     end    
-    
 end
