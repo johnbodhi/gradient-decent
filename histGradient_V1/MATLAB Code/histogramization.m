@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 function [ F ] = histogramization( X, Y, Z )
 
     global frameLength classGroups DATARANGE BINS Supervision Randomized
@@ -155,6 +154,4 @@ function [ F ] = histogramization( X, Y, Z )
     elseif( Randomized && ~Supervision || ~Randomized && ~Supervision )
         
     end
-
->>>>>>> 491721bc0ee142d1b67c0fd99828486edccf7ea9
 end
