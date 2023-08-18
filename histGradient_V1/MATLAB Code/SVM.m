@@ -1,4 +1,4 @@
-function [ RA, J ] = SVM( dataSet, N, Observation )
+function [ RA ] = SVM( dataSet, N, Observation )
 
     global RA JX classType Supervision Randomized Train
 
@@ -45,18 +45,18 @@ function [ RA, J ] = SVM( dataSet, N, Observation )
 
         % Select maximum amplitude.
 
-        dope();
-        for k = 1:1:size(RA,3)
-            for i = 1:1:size(RA,1)
-                [ X, JX(i,k) ] = max(RA(i,:,k));
-                for j = 1:1:size(RA,2)
-
-                    if( RA(i,j,k) ~= X && j ~= JX(i,k) )
-                        RA(i,j,k) = 0;
-                    end
-                end
-            end
-        end
+        % dope();
+        % for k = 1:1:size(RA,3)
+        %     for i = 1:1:size(RA,1)
+        %         [ X, JX(i,k) ] = max(RA(i,:,k));
+        %         for j = 1:1:size(RA,2)
+        % 
+        %             if( RA(i,j,k) ~= X && j ~= JX(i,k) )
+        %                 RA(i,j,k) = 0;
+        %             end
+        %         end
+        %     end
+        % end
 
     elseif( ~Supervision && Train && Randomized )
 
@@ -100,17 +100,18 @@ function [ RA, J ] = SVM( dataSet, N, Observation )
     
         RA = RA ./ NN;
 
-        for k = 1:1:size(RA,3)
-            for i =1:1:size(RA,1)
-                [ X, JX(i,k) ] = max(RA(i,:,k));
-                for j = 1:1:size(RA,2)
-
-                    if( RA(i,j,k) ~= X )
-                        RA(i,j,k) = 0;
-                    end
-                end
-            end
-        end
+        % dope();
+        % for k = 1:1:size(RA,3)
+        %     for i = 1:1:size(RA,1)
+        %         [ X, JX(i,k) ] = max(RA(i,:,k));
+        %         for j = 1:1:size(RA,2)
+        % 
+        %             if( RA(i,j,k) ~= X && j ~= JX(i,k) )
+        %                 RA(i,j,k) = 0;
+        %             end
+        %         end
+        %     end
+        % end
         
         % The per element histogram magnitude ratios appear to be identical 
         % bewteen the supervised and unsupervised cases for each group.
@@ -152,21 +153,21 @@ function [ RA, J ] = SVM( dataSet, N, Observation )
  
         RA = RA ./ SEGMENTS; 
 
-        for k = 1:1:size(RA,3)
-            for i =1:1:size(RA,1)
-                [ X, JX(i,k) ] = max(RA(i,:,k));
-                for j = 1:1:size(RA,2)
-
-                    if( RA(i,j,k) ~= X )
-                        RA(i,j,k) = 0;
-                    end
-                end
-            end
-        end
-
+        % dope();
+        % for k = 1:1:size(RA,3)
+        %     for i = 1:1:size(RA,1)
+        %         [ X, JX(i,k) ] = max(RA(i,:,k));
+        %         for j = 1:1:size(RA,2)
+        % 
+        %             if( RA(i,j,k) ~= X && j ~= JX(i,k) )
+        %                 RA(i,j,k) = 0;
+        %             end
+        %         end
+        %     end
+        % end
     end
 
-%     plotDist();
+     plotDist();
 %     dope();
 %     plotDist();
-end   
+end
