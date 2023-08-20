@@ -15,7 +15,7 @@ cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MAT
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-global classType classGroups frameLength DATARANGE BINS Supervision Randomized
+global classType classGroups frameLength DATARANGE BINS Supervision Randomized Optimized
 
 Classes = 8; % Classes per group...
 
@@ -37,11 +37,13 @@ for i = 1:1:DATARANGE
     end
 end
 
-BINS = BINS_(9,1); % Histogram bins...
+BINS = BINS_(4,1); % Histogram bins...
 
 Supervision = 0; % Supervision...
 
 Randomized  = 0; % Frame randomization...
+
+Optimized   = 0; % RA optimization...
 
 % Number of images per class to classify.
 

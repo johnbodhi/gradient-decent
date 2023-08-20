@@ -1,6 +1,6 @@
 function [ RA ] = SVM( dataSet, N, Observation )
 
-    global RA JX classType Supervision Randomized Train
+    global RA classType Supervision Randomized Optimized Train
 
     A = histogramization( dataSet, N, Observation ); 
 
@@ -43,21 +43,6 @@ function [ RA ] = SVM( dataSet, N, Observation )
 
         RA = RA ./ NN; 
 
-        % Select maximum amplitude.
-
-        % dope();
-        % for k = 1:1:size(RA,3)
-        %     for i = 1:1:size(RA,1)
-        %         [ X, JX(i,k) ] = max(RA(i,:,k));
-        %         for j = 1:1:size(RA,2)
-        % 
-        %             if( RA(i,j,k) ~= X && j ~= JX(i,k) )
-        %                 RA(i,j,k) = 0;
-        %             end
-        %         end
-        %     end
-        % end
-
     elseif( ~Supervision && Train && Randomized )
 
         for k = 1:1:size(A,3)      
@@ -70,7 +55,7 @@ function [ RA ] = SVM( dataSet, N, Observation )
             end
         end  
 
-        [ B, I ] = sort(B,2);
+        %[ B, I ] = sort(B,2);
 
         [ ~, W ] = combinations( I, SEGMENTS ); % Permutation windows about A.
 
@@ -82,6 +67,7 @@ function [ RA ] = SVM( dataSet, N, Observation )
                     for kk = 1:1:size(W,3)
                     
                         % Convergence criterion to avoid a bricked RA...
+                        % Compare with supervised states...
 
                         while ( jj <= SEGMENTS )
                         
@@ -99,19 +85,6 @@ function [ RA ] = SVM( dataSet, N, Observation )
         end
     
         RA = RA ./ NN;
-
-        % dope();
-        % for k = 1:1:size(RA,3)
-        %     for i = 1:1:size(RA,1)
-        %         [ X, JX(i,k) ] = max(RA(i,:,k));
-        %         for j = 1:1:size(RA,2)
-        % 
-        %             if( RA(i,j,k) ~= X && j ~= JX(i,k) )
-        %                 RA(i,j,k) = 0;
-        %             end
-        %         end
-        %     end
-        % end
         
         % The per element histogram magnitude ratios appear to be identical 
         % bewteen the supervised and unsupervised cases for each group.
@@ -153,21 +126,14 @@ function [ RA ] = SVM( dataSet, N, Observation )
  
         RA = RA ./ SEGMENTS; 
 
-        % dope();
-        % for k = 1:1:size(RA,3)
-        %     for i = 1:1:size(RA,1)
-        %         [ X, JX(i,k) ] = max(RA(i,:,k));
-        %         for j = 1:1:size(RA,2)
-        % 
-        %             if( RA(i,j,k) ~= X && j ~= JX(i,k) )
-        %                 RA(i,j,k) = 0;
-        %             end
-        %         end
-        %     end
-        % end
     end
 
-     plotDist();
-%     dope();
-%     plotDist();
+    if ( Optimized )        
+    
+        filterOptimization();
+    end
+
+    % plotDist();
+    % dope();
+    % plotDist();
 end

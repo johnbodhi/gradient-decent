@@ -6,7 +6,7 @@ function classifierTraining( dataSet, N, Observation )
 
     RA = zeros(size(classType,2),BINS,size(classGroups,2));
     
-    [ RA ] =  SVM( dataSet, N, Observation );
+    [ RA ] = SVM( dataSet, N, Observation );
 
     Q = RA; % Resetting RA during classification.
 end
