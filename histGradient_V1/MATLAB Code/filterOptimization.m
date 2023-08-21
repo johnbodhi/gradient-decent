@@ -13,7 +13,6 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
 
     V = zeros(size(S,1),size(S,2),size(classType,2),size(RA,3));
 
-    eps = 0.0001;
     for k = 1:1:size(V,4)
         for m = 1:1:size(V,3)
             for i = 1:1:size(V,1)
