@@ -8,7 +8,7 @@ function [ Y ] = frameSieve( S )
 
     if( Optimized )
 
-        for k = 1:1:size(RA,4)
+        for k = 1:1:size(RA,3)
            for i = 1:1:SPLITS
                     
                 Y(i,:,k) = S(1,1:end-1,k); 

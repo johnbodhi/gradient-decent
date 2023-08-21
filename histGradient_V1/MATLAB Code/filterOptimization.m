@@ -13,6 +13,7 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
 
     V = zeros(size(S,1),size(S,2),size(classType,2),size(RA,3));
 
+    eps = 0.0001;
     for k = 1:1:size(V,4)
         for m = 1:1:size(V,3)
             for i = 1:1:size(V,1)
@@ -22,7 +23,7 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
 
                         V(i,j,m,k) = RA(m,j,k);                        
                     else
-
+                         
                         V(i,j,m,k) = 0;
                     end
                 end
@@ -40,7 +41,7 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
         for m = 1:1:size(V,3)            
             for i = 1:1:size(V,1)
 
-                RA(m,:,k) = V(i,:,m,k);            
+                RA(m,:,:) = V(i,:,m,:);            
              
                 [ D, E ] = classifier( dataSet, Observation );
     
