@@ -130,8 +130,9 @@ function [ RA ] = SVM( dataSet, N, Observation )
 
     if ( Optimized )        
     
-        filterOptimization();
+        [ RA ] = filterOptimization( dataSet, N, Observation );
     end
+
 
     % plotDist();
     % dope();
