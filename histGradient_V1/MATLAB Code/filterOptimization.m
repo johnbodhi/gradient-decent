@@ -44,9 +44,10 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
              
                 [ D, E ] = classifier( dataSet, Observation );
     
-                [ PREC REC ACC F1 ] = fMeasure( D, E );
+                [ PREC(rr,1) REC(rr,1) ACC(rr,1) F1(rr,1) ] = fMeasure( D, E );
     
-                AVE = [ PREC REC ACC F1 ]; 
+                AVE = [ mean(PREC(rr,1)) mean(REC(rr,1))...
+                        mean(ACC(rr,1)) mean(F1(rr,1)) ]; 
     
                 if( F1 == 1 )
     
