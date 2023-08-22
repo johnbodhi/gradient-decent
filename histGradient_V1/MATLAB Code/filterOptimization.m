@@ -36,22 +36,22 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
     dataSet = histogramization( dataSet, N, Observation );
 
     rr = 1;
-    for k = 1:1:size(V,4)
-        for m = 1:1:size(V,3)            
-            for i = 1:1:size(V,1)
+    for k = 1:1:size(V,4) % Color
+        for m = 1:1:size(V,3) % Class           
+            for i = 1:1:size(V,1) % Permutation Row
 
-                RA(m,:,:) = V(i,:,m,:);            
+                RA(m,:,:) = V(i,:,m,k);            
              
-                [ D, E ] = classifier( dataSet, Observation );
+                [ D, E ]  = classifier( dataSet, Observation );
     
                 [ PREC(rr,1) REC(rr,1) ACC(rr,1) F1(rr,1) ] = fMeasure( D, E );
     
                 AVE = [ mean(PREC(rr,1)) mean(REC(rr,1))...
                         mean(ACC(rr,1)) mean(F1(rr,1)) ]; 
     
-                if( F1 == 1 )
+                if( F1 >= 0.9 )
     
-                    A = [ i j ]; disp(A)
+                    % A(rr,:) = [ F1 i j ]; disp(A)
 
                     X(:,:,rr) = RA; rr = rr + 1;
                 end

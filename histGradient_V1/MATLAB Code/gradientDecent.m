@@ -26,9 +26,9 @@ function [ Z ] = gradientDecent( F )
     end
 
     eps_ = 0.0001;
-    for k = 1:1:size(Y,3)
-        for j = 1:1:size(Y,2)
-            for i = 1:1:size(Y,1)
+    for k = 2:1:size(Y,3)
+        for j = 2:1:size(Y,2)
+            for i = 2:1:size(Y,1)
                 
                 eps( i, j, k ) = Y( i, j, k ) + eps_; % Constant step size.
             end
@@ -38,9 +38,9 @@ function [ Z ] = gradientDecent( F )
     % We need variable, truncated, un-weighted intervals found in the
     % average class distributions...
 
-    for k = 1:1:size(RA,3)
-        for j = 1:1:size(Y,2)
-            for i = 1:1:size(Y,1)
+    for k = 2:1:size(RA,3)
+        for j = 2:1:size(Y,2)
+            for i = 2:1:size(Y,1)
     
                 if ( RA( i, j, k ) - Y( i, j, k ) > 0 )
                     while( Y( i, j, k ) < RA( i, j, k ) )
@@ -69,10 +69,12 @@ function [ Z ] = gradientDecent( F )
 
         Y = F(:,1:size(F,2)-1,:);        
     end
+    
+    ii = 1;
+    for i = 2:1:size(WALK,1)
 
-    for i = 1:1:size(WALK,1)
-
-        S(i,1) = sum(sum(WALK(i,:,:),2),3);
+        S(ii,1) = sum(sum(WALK(i,2:end,2:end),2),3);
+        ii = ii + 1;
     end
 
     [ ~, Z ] = min(S(:,1)); % Decisions are not constrained to groups.

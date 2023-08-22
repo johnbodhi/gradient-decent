@@ -1,0 +1,32 @@
+function [ Y ] = frameSieve( S )
+
+    global RA Optimized
+
+    % S = sort(S,"ascend");
+
+    SPLITS = 8;
+
+    Y = zeros(size(RA,1),size(RA,2),size(RA,2));
+
+    if( Optimized )
+
+        for k = 1:1:size(RA,3)
+           for i = 1:1:SPLITS
+                    
+                Y(i+1,2:end,k) = S(1,1:end-1,k); 
+                L(i,1,k) = i;
+            end
+        end
+    else
+
+        for k = 2:1:size(RA,3)
+           for i = 2:1:SPLITS
+                    
+                Y(i,2:end,k) = S(1,1:end-1,k); 
+                L(i,1,k) = i;
+            end
+        end
+    end
+
+    Y = cat(2,Y,L);    
+end
