@@ -1,6 +1,6 @@
 function [ V ] = filterOptimization( dataSet, N, Observation )
 
-    global classType BINS RA Q
+    global classType classGroups BINS RA Q
 
     % Allocate state-space to find all minimal distributions...
 
@@ -35,29 +35,61 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
 
     dataSet = histogramization( dataSet, N, Observation );
 
-    rr = 1;
-    for k = 1:1:size(V,4) % Color
-        for m = 1:1:size(V,3) % Class           
-            for i = 1:1:size(V,1) % Permutation Row
 
-                RA(m,:,:) = V(i,:,m,k);            
-             
-                [ D, E ]  = classifier( dataSet, Observation );
-    
-                [ PREC(rr,1) REC(rr,1) ACC(rr,1) F1(rr,1) ] = fMeasure( D, E );
-    
-                AVE = [ mean(PREC(rr,1)) mean(REC(rr,1))...
-                        mean(ACC(rr,1)) mean(F1(rr,1)) ]; 
-    
-                if( F1 >= 0.9 )
-    
-                    % A(rr,:) = [ F1 i j ]; disp(A)
+    COLORS  = size(V,4);
+    CLASSES = size(V,1)^(size(classType,2));
 
-                    X(:,:,rr) = RA; rr = rr + 1;
-                end
+    ii = 1; rr = 1; 
+    for k = 1:1:COLORS          
+        for i = 1:1:CLASSES
 
-                RA = Q;
+            RA(1,:,k) = V(i,:,m,k); ii = ii + 1;
+            
+            if( ii == UB )
+                
+                RA(2,:,k) = V(i,:,m,k);
+                
+            elseif( ii == UB )
+
+                RA(3,:,k) = V(i,:,m,k);
+
+            elseif( ii == 3*UB )
+
+                RA(4,:,k) = V(i,:,m,k);
+            
+            elseif( ii == 4*UB )
+
+                RA(5,:,k) = V(i,:,m,k);
+
+            elseif( ii == 5*UB )
+
+                RA(6,:,k) = V(i,:,m,k);
+
+            elseif( ii == 6*UB )
+
+
+                RA(7,:,k) = V(i,:,m,k);
+
+            elseif( ii == 7*UB )
+
+                
+                RA(8,:,k) = V(i,:,m,k);
+            end           
+            
+            [ D, E ]  = classifier( dataSet, Observation );
+
+            [ PREC(rr,1) REC(rr,1) ACC(rr,1) F1(rr,1) ] = fMeasure( D, E );
+
+            AVE = [ mean(PREC(rr,1)) mean(REC(rr,1))...
+                    mean(ACC(rr,1)) mean(F1(rr,1)) ]; 
+
+            if( F1 >= 0.9 )
+
+                % A(rr,:) = [ F1 i j ]; disp(A)
+
+                X(:,:,rr) = RA; rr = rr + 1;
             end
+
         end
     end
 
