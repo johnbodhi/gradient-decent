@@ -30,7 +30,7 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
         end
     end
 
-    % Reshape...
+    % We need to reshape for a more efficient mapping...
 
     V = cat(1,V_(:,:,:,2),V_(:,:,:,3),V_(:,:,:,4));
 
@@ -50,37 +50,37 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
 
     while( ii <= SUP )
 
-        K = ceil( ii / size(S,1) );
+        K = ceil( aa / size(S,1) );
 
         if( aa <= size(V,1) )
 
              RA(1,:,K) = V(aa,:,1); 
              aa = aa + 1;
-        elseif( aa >= size(V,1) )
-
+        elseif( aa > size(V,1) && bb <= size(V,1) )
+             
              RA(2,:,K) = V(bb,:,2); 
              bb = bb + 1; aa = 1;
-        elseif( bb >= size(V,1) )
+        elseif( bb > size(V,1) && cc <= size(V,1) )
 
              RA(3,:,K) = V(cc,:,3); 
              cc = cc + 1; bb = 1;
-        elseif( cc >= size(V,1) )
+        elseif( cc > size(V,1) && dd <= size(V,1) )
 
              RA(4,:,K) = V(dd,:,4); 
              dd = dd + 1; cc = 1;
-        elseif( dd >= size(V,1) )
+        elseif( dd > size(V,1) && ee <= size(V,1) )
 
              RA(5,:,K) = V(ee,:,5); 
              ee = ee + 1; dd = 1;
-        elseif( ee >= size(V,1) )
+        elseif( ee > size(V,1) && ff <= size(V,1) )
 
              RA(6,:,K) = V(ff,:,6); 
              ff = ff + 1; ee = 1;
-        elseif( ff >= size(V,1) )
+        elseif( ff > size(V,1) && gg <= size(V,1) )
 
              RA(7,:,K) = V(gg,:,7); 
              gg = gg + 1; ff = 1;
-        elseif( hh >= size(V,1) )
+        elseif( hh > size(V,1) )
 
              RA(8,:,K) = V(hh,:,8); 
              hh = hh + 1; gg = 1;
