@@ -89,17 +89,17 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
         end
         ii = ii + 1;        
 
-        % [ D, E ]  = classifier( dataSet, Observation );
-        % 
-        % [ PREC REC ACC F1 ] = fMeasure( D, E ); 
-        % 
-        % if( F1 >= 0.95 )
-        % 
-        %     A(rr,1) = F1; [ ~, M ] = max(A)
-        % 
-        %     X(:,:,:,rr) = RA; rr = rr + 1;
+        [ D, E ]  = classifier( dataSet, Observation );
+         
+        [ PREC REC ACC F1 ] = fMeasure( D, E ); 
+         
+        if( F1 >= 0.95 )
+         
+            A(rr,1) = F1; [ ~, M ] = max(A)
+         
+            X(:,:,:,rr) = RA; rr = rr + 1;
                 
-        % end
+        end
     end
     RA = X(:,:,:,M);
 
