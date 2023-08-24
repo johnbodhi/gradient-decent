@@ -30,6 +30,8 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
         end
     end
 
+    % Reshape...
+
     V = cat(1,V_(:,:,:,2),V_(:,:,:,3),V_(:,:,:,4));
 
     % We need to apply a sub-gradient within the SVM to optimize the filter
@@ -37,7 +39,7 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
 
     dataSet = histogramization( dataSet, N, Observation );
 
-    SUP     = size(V,1)^size(V,1);
+    SUP     = size(V,1)^size(classType,1);
 
     ii = 1;
 
@@ -47,11 +49,11 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
     hh = 1;
 
     while( ii <= SUP )
-        
+
 
         if(  )
 
-             RA(1,:,k) = V(aa,:,m,k); 
+             RA(1,:,k) = V(aa,:,1,k); 
              aa = aa + 1;
 
         elseif(  )
@@ -90,7 +92,7 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
              hh = hh + 1; gg = 1;
         end
         ii = ii + 1;        
-        
+
         [ D, E ]  = classifier( dataSet, Observation );
 
         [ PREC REC ACC F1 ] = fMeasure( D, E ); 
