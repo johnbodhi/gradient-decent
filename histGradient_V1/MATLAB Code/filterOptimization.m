@@ -48,6 +48,8 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
     ee = 1; ff = 1; 
     hh = 1;
 
+    % We need to convolve! This is the shave...
+
     while( ii <= SUP )
 
         K = ceil( aa / size(S,1) );
@@ -93,10 +95,12 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
         % 
         % if( F1 >= 0.95 )
         % 
-        %     A(rr,:) = F1;
+        %     A(rr,1) = F1; [ ~, M ] = max(A)
         % 
         %     X(:,:,:,rr) = RA; rr = rr + 1;
+                
         % end
     end
+    RA = X(:,:,:,M);
 
 end
