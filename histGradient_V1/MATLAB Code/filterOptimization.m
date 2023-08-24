@@ -11,19 +11,19 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
         
     S = permn( [ 0 1 ], BINS );
 
-    V_ = zeros(size(S,1),size(S,2),size(RA,1),size(RA,3));
+    V_ = zeros(size(S,1),size(RA,2),size(RA,1),size(RA,3));
 
     for k = 1:1:size(V_,4)
         for m = 1:1:size(V_,3)
             for i = 1:1:size(V_,1)
-                for j = 1:1:size(V_,2)
+                for j = 1:1:size(V_,2)-1
 
                     if ( S(i,j) )
 
-                        V_(i,j,m,k) = RA(m,j,k);                        
+                        V_(i,j+1,m,k) = RA(m,j+1,k);                        
                     else
                          
-                        V_(i,j,m,k) = 0;
+                        V_(i,j+1,m,k) = 0;
                     end
                 end
             end
@@ -39,7 +39,7 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
 
     dataSet = histogramization( dataSet, N, Observation );
 
-    SUP     = size(V,1)^size(classType,1);
+    SUP     = size(V,1)^size(classType,2);
 
     ii = 1;
 
@@ -54,50 +54,49 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
 
         if( aa <= size(V,1) )
 
-             RA(1,:,K) = V(aa,:,1,K); 
+             RA(1,:,K) = V(aa,:,1); 
              aa = aa + 1;
-        elseif( aa > size(V,1) )
+        elseif( aa >= size(V,1) )
 
-             RA(2,:,K) = V(bb,:,2,K); 
+             RA(2,:,K) = V(bb,:,2); 
              bb = bb + 1; aa = 1;
-        elseif( bb > size(V,1) )
+        elseif( bb >= size(V,1) )
 
-             RA(3,:,K) = V(cc,:,3,K); 
+             RA(3,:,K) = V(cc,:,3); 
              cc = cc + 1; bb = 1;
-        elseif( cc > size(V,1) )
+        elseif( cc >= size(V,1) )
 
-             RA(4,:,K) = V(dd,:,4,K); 
+             RA(4,:,K) = V(dd,:,4); 
              dd = dd + 1; cc = 1;
-        elseif( dd > size(V,1) )
+        elseif( dd >= size(V,1) )
 
-             RA(5,:,K) = V(ee,:,5,K); 
+             RA(5,:,K) = V(ee,:,5); 
              ee = ee + 1; dd = 1;
-        elseif( ee > size(V,1) )
+        elseif( ee >= size(V,1) )
 
-             RA(6,:,K) = V(ff,:,6,K); 
+             RA(6,:,K) = V(ff,:,6); 
              ff = ff + 1; ee = 1;
-        elseif( ff > size(V,1) )
+        elseif( ff >= size(V,1) )
 
-             RA(7,:,K) = V(gg,:,7,K); 
+             RA(7,:,K) = V(gg,:,7); 
              gg = gg + 1; ff = 1;
-        elseif( hh > size(V,1) )
+        elseif( hh >= size(V,1) )
 
-             RA(8,:,K) = V(hh,:,8,K); 
+             RA(8,:,K) = V(hh,:,8); 
              hh = hh + 1; gg = 1;
         end
         ii = ii + 1;        
 
-        [ D, E ]  = classifier( dataSet, Observation );
-
-        [ PREC REC ACC F1 ] = fMeasure( D, E ); 
-
-        if( F1 >= 0.95 )
-
-            A(rr,:) = [ F1 ii aa bb cc dd ee ff gg hh ]; disp(A)
-
-            X(:,:,:,rr) = RA; rr = rr + 1;
-        end
-
+        % [ D, E ]  = classifier( dataSet, Observation );
+        % 
+        % [ PREC REC ACC F1 ] = fMeasure( D, E ); 
+        % 
+        % if( F1 >= 0.95 )
+        % 
+        %     A(rr,:) = F1;
+        % 
+        %     X(:,:,:,rr) = RA; rr = rr + 1;
+        % end
     end
 
 end

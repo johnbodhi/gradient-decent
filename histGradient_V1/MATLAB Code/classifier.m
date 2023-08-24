@@ -55,7 +55,7 @@ function [ D, E ] = classifier( dataSet, Observation )
             % cumulative decision per
             % class, and cumulative error per class...
                
-            J = [ Observation(i,1) imgDecision D E ]; disp( J )
+            %J = [ Observation(i,1) imgDecision D E ]; disp( J )
         end
 
         histData = zeros(1,size(dataSet,2),size(dataSet,3));
