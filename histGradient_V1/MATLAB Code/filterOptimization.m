@@ -1,6 +1,6 @@
 function [ V ] = filterOptimization( dataSet, N, Observation )
 
-    global classType classGroups BINS RA Q
+    global classType BINS RA
 
     % Allocate state-space to find all minimal distributions...
 
@@ -11,86 +11,97 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
         
     S = permn( [ 0 1 ], BINS );
 
-    V = zeros(size(S,1),size(S,2),size(classType,2),size(RA,3));
+    V_ = zeros(size(S,1),size(S,2),size(RA,1),size(RA,3));
 
-    for k = 1:1:size(V,4)
-        for m = 1:1:size(V,3)
-            for i = 1:1:size(V,1)
-                for j = 1:1:size(V,2)
+    for k = 1:1:size(V_,4)
+        for m = 1:1:size(V_,3)
+            for i = 1:1:size(V_,1)
+                for j = 1:1:size(V_,2)
 
                     if ( S(i,j) )
 
-                        V(i,j,m,k) = RA(m,j,k);                        
+                        V_(i,j,m,k) = RA(m,j,k);                        
                     else
                          
-                        V(i,j,m,k) = 0;
+                        V_(i,j,m,k) = 0;
                     end
                 end
             end
         end
     end
 
+    V = cat(1,V_(:,:,:,2),V_(:,:,:,3),V_(:,:,:,4));
+
     % We need to apply a sub-gradient within the SVM to optimize the filter
     % efficiency.
 
     dataSet = histogramization( dataSet, N, Observation );
 
+    SUP     = size(V,1)^size(V,1);
 
-    COLORS  = size(V,4);
-    CLASSES = size(V,1)^(size(classType,2));
+    ii = 1;
 
-    ii = 1; rr = 1; 
-    for k = 1:1:COLORS          
-        for i = 1:1:CLASSES
+    aa = 1; bb = 1; 
+    cc = 1; dd = 1; 
+    ee = 1; ff = 1; 
+    hh = 1;
 
-            RA(1,:,k) = V(i,:,m,k); ii = ii + 1;
-            
-            if( ii == UB )
-                
-                RA(2,:,k) = V(i,:,m,k);
-                
-            elseif( ii == UB )
+    while( ii <= SUP )
 
-                RA(3,:,k) = V(i,:,m,k);
+        if(  )
 
-            elseif( ii == 3*UB )
+             RA(1,:,k) = V(aa,:,m,k); 
+             aa = aa + 1;
 
-                RA(4,:,k) = V(i,:,m,k);
-            
-            elseif( ii == 4*UB )
+        elseif(  )
 
-                RA(5,:,k) = V(i,:,m,k);
+             RA(2,:,k) = V(bb,:,2,k); 
+             bb = bb + 1; aa = 1;
 
-            elseif( ii == 5*UB )
+        elseif(  )
 
-                RA(6,:,k) = V(i,:,m,k);
+             RA(3,:,k) = V(cc,:,3,k); 
+             cc = cc + 1; bb = 1;
 
-            elseif( ii == 6*UB )
+        elseif(  )
 
+             RA(4,:,k) = V(dd,:,4,k); 
+             dd = dd + 1; cc = 1;
 
-                RA(7,:,k) = V(i,:,m,k);
+        elseif(  )
 
-            elseif( ii == 7*UB )
+             RA(5,:,k) = V(ee,:,5,k); 
+             ee = ee + 1; dd = 1;
 
-                
-                RA(8,:,k) = V(i,:,m,k);
-            end           
-            
-            [ D, E ]  = classifier( dataSet, Observation );
+        elseif(  )
 
-            [ PREC(rr,1) REC(rr,1) ACC(rr,1) F1(rr,1) ] = fMeasure( D, E );
+             RA(6,:,k) = V(ff,:,6,k); 
+             ff = ff + 1; ee = 1;
 
-            AVE = [ mean(PREC(rr,1)) mean(REC(rr,1))...
-                    mean(ACC(rr,1)) mean(F1(rr,1)) ]; 
+        elseif(  )
 
-            if( F1 >= 0.9 )
+             RA(7,:,k) = V(gg,:,7,k); 
+             gg = gg + 1; ff = 1;
 
-                % A(rr,:) = [ F1 i j ]; disp(A)
+        elseif(  )
 
-                X(:,:,rr) = RA; rr = rr + 1;
-            end
+             RA(8,:,k) = V(hh,:,8,k); 
+             hh = hh + 1; gg = 1;
 
         end
+        ii = ii + 1;        
+        
+        [ D, E ]  = classifier( dataSet, Observation );
+
+        [ PREC REC ACC F1 ] = fMeasure( D, E ); 
+
+        if( F1 >= 1.0 )
+
+            A(rr,:) = [ F1 i j k ]; disp(A)
+
+            X(:,:,:,rr) = RA; rr = rr + 1;
+        end
+
     end
 
 end
