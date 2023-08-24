@@ -50,45 +50,39 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
 
     while( ii <= SUP )
 
+        K = ceil( ii / size(S,1) );
 
-        if(  )
+        if( aa <= size(V,1) )
 
-             RA(1,:,k) = V(aa,:,1,k); 
+             RA(1,:,K) = V(aa,:,1,K); 
              aa = aa + 1;
+        elseif( aa > size(V,1) )
 
-        elseif(  )
-
-             RA(2,:,k) = V(bb,:,2,k); 
+             RA(2,:,K) = V(bb,:,2,K); 
              bb = bb + 1; aa = 1;
+        elseif( bb > size(V,1) )
 
-        elseif(  )
-
-             RA(3,:,k) = V(cc,:,3,k); 
+             RA(3,:,K) = V(cc,:,3,K); 
              cc = cc + 1; bb = 1;
+        elseif( cc > size(V,1) )
 
-        elseif(  )
-
-             RA(4,:,k) = V(dd,:,4,k); 
+             RA(4,:,K) = V(dd,:,4,K); 
              dd = dd + 1; cc = 1;
+        elseif( dd > size(V,1) )
 
-        elseif(  )
-
-             RA(5,:,k) = V(ee,:,5,k); 
+             RA(5,:,K) = V(ee,:,5,K); 
              ee = ee + 1; dd = 1;
+        elseif( ee > size(V,1) )
 
-        elseif(  )
-
-             RA(6,:,k) = V(ff,:,6,k); 
+             RA(6,:,K) = V(ff,:,6,K); 
              ff = ff + 1; ee = 1;
+        elseif( ff > size(V,1) )
 
-        elseif(  )
-
-             RA(7,:,k) = V(gg,:,7,k); 
+             RA(7,:,K) = V(gg,:,7,K); 
              gg = gg + 1; ff = 1;
+        elseif( hh > size(V,1) )
 
-        elseif(  )
-
-             RA(8,:,k) = V(hh,:,8,k); 
+             RA(8,:,K) = V(hh,:,8,K); 
              hh = hh + 1; gg = 1;
         end
         ii = ii + 1;        
@@ -99,7 +93,7 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
 
         if( F1 >= 0.95 )
 
-            A(rr,:) = [ F1 i j k ]; disp(A)
+            A(rr,:) = [ F1 ii aa bb cc dd ee ff gg hh ]; disp(A)
 
             X(:,:,:,rr) = RA; rr = rr + 1;
         end
