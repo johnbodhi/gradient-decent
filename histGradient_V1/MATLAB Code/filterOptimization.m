@@ -56,49 +56,48 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
 
         if( aa <= size(V,1) )
 
-             RA(1,:,K) = V(aa,:,1); 
+             RA(2,:,K) = V(aa,:,2);
              aa = aa + 1;
         elseif( aa > size(V,1) && bb <= size(V,1) )
              
-             RA(2,:,K) = V(bb,:,2); 
+             RA(3,:,K) = V(bb,:,3); 
              bb = bb + 1; aa = 1;
         elseif( bb > size(V,1) && cc <= size(V,1) )
 
-             RA(3,:,K) = V(cc,:,3); 
+             RA(4,:,K) = V(cc,:,4); 
              cc = cc + 1; bb = 1;
         elseif( cc > size(V,1) && dd <= size(V,1) )
 
-             RA(4,:,K) = V(dd,:,4); 
+             RA(5,:,K) = V(dd,:,5); 
              dd = dd + 1; cc = 1;
         elseif( dd > size(V,1) && ee <= size(V,1) )
 
-             RA(5,:,K) = V(ee,:,5); 
+             RA(6,:,K) = V(ee,:,6); 
              ee = ee + 1; dd = 1;
         elseif( ee > size(V,1) && ff <= size(V,1) )
 
-             RA(6,:,K) = V(ff,:,6); 
+             RA(7,:,K) = V(ff,:,7); 
              ff = ff + 1; ee = 1;
         elseif( ff > size(V,1) && gg <= size(V,1) )
 
-             RA(7,:,K) = V(gg,:,7); 
+             RA(8,:,K) = V(gg,:,8); 
              gg = gg + 1; ff = 1;
         elseif( hh > size(V,1) )
 
-             RA(8,:,K) = V(hh,:,8); 
+             RA(9,:,K) = V(hh,:,9); 
              hh = hh + 1; gg = 1;
         end
         ii = ii + 1;        
 
         [ D, E ]  = classifier( dataSet, Observation );
-         
+
         [ PREC REC ACC F1 ] = fMeasure( D, E ); 
-         
+
         if( F1 >= 0.95 )
-         
-            A(rr,1) = F1; [ ~, M ] = max(A)
-         
-            X(:,:,:,rr) = RA; rr = rr + 1;
-                
+
+            A(rr,1) = F1; [ ~, M ] = max(A);
+
+            X(:,:,:,rr) = RA; rr = rr + 1;                
         end
     end
     RA = X(:,:,:,M);
