@@ -47,6 +47,7 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
     hh = 1;
 
     while( ii <= SUP )
+        
 
         if(  )
 
@@ -87,7 +88,6 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
 
              RA(8,:,k) = V(hh,:,8,k); 
              hh = hh + 1; gg = 1;
-
         end
         ii = ii + 1;        
         
@@ -95,7 +95,7 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
 
         [ PREC REC ACC F1 ] = fMeasure( D, E ); 
 
-        if( F1 >= 1.0 )
+        if( F1 >= 0.95 )
 
             A(rr,:) = [ F1 i j k ]; disp(A)
 
