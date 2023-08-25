@@ -11,7 +11,7 @@ function [ F ] = histogramization( X, Y, Z )
 
     % Generate histograms...
 
-    SCALE = DATARANGE / BINS;
+    SCALE = floor( DATARANGE / BINS );
 
     F_ = zeros(sum(Y),DATARANGE,size(classGroups,2)); H = 1;
 
