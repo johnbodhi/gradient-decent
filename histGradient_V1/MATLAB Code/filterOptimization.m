@@ -41,14 +41,14 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
 
     SUP     = size(V,1)^size(classType,2);
 
-    ii = 1;
+    rr = 1; ii = 1;
 
     aa = 1; bb = 1; 
     cc = 1; dd = 1; 
     ee = 1; ff = 1; 
     gg = 1; hh = 1;
 
-    % We need to convolve! This is the shave...
+    % We need to convolve! This is the shave, or keying.
 
     while( ii <= SUP )
 

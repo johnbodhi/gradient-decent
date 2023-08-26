@@ -96,32 +96,36 @@ classifierTraining( dataSet, N, Observation );
 
 % Verification / Test... 
 
+PERSISTENCE = 1; x = 1;
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
+while( PERSISTENCE )
 
-% Test sequences not included in training data...
-
-% dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
-
-dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence. 
-
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
-
-dataSet = histogramization( dataSet, N, Observation ); 
-
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");    
-
-[ D, E ] = classifier( dataSet, Observation );
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-[ PREC REC ACC F1 ] = fMeasure( D, E );
-
-AVE = [ PREC REC ACC F1 ]; 
+    cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
+    
+    % Test sequences not included in training data...
+    
+    % dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
+    
+    dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence. 
+    
+    cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
+    
+    dataSet = histogramization( dataSet, N, Observation );  
+    
+    [ D, E ] = classifier( dataSet, Observation );
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    
+    
+    
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    
+    [ PREC(x,1) REC(x,1) ACC(x,1) F1(x,1) ] = fMeasure( D, E );
+    
+    AVE = [ mean(PREC(:,1)) mean(REC(:,1)) mean(ACC(:,1)) mean(F1(:,1)) ];
+    
+    x = x + 1;
+end
 
 toc;
