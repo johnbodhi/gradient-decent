@@ -44,50 +44,12 @@ function [ RA ] = SVM( dataSet, N, Observation )
         RA = RA ./ NN; 
 
     elseif( ~Supervision && Train && Randomized )
-
-        for k = 1:1:size(A,3)      
-            for j = 1:1:size(A,1)
-                for i = 1:1:size(A,1)
     
-                    B(i,j,k) = norm( ( A(j,1:end-1,k) - A(i,1:end-1,k) ), Inf );
-                    I(i,1,1) = i;
-                end
-            end
-        end  
-
-        %[ B, I ] = sort(B,2);
-
-        [ ~, W ] = combinations( I, SEGMENTS ); % Permutation windows about A.
-
-        ii = 1; jj = 1; NN = SEGMENTS*size(W,1);
-        for k = 1:1:size(A,3)            
-            for i = 1:1:size(RA,1)
-                
-                while ( ii <= size(W,1) )
-                    for kk = 1:1:size(W,3)
-                    
-                        % Convergence criterion to avoid a bricked RA...
-                        % Compare with supervised states...
-
-                        while ( jj <= SEGMENTS )
-                        
-                            RA(i+1,2:end,k+1) = RA(i+1,2:end,k+1) + A(W(ii,jj,kk),1:end-1,k);
-            
-                            jj = jj + 1;                      
-                        end
-                        jj = 2;
-                        
-                    end
-                    ii = ii + 1;
-                end
-                ii = 1;
-            end                 
-        end
     
-        RA = RA ./ NN;
+    
+    
         
-        % The per element histogram magnitude ratios appear to be identical 
-        % bewteen the supervised and unsupervised cases for each group.
+        
     else
 
         if ( Train )
@@ -132,7 +94,6 @@ function [ RA ] = SVM( dataSet, N, Observation )
     
         [ RA ] = filterOptimization( dataSet, N, Observation );
     end
-
 
     % plotDist();
     % dope();
