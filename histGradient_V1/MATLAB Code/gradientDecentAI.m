@@ -41,9 +41,9 @@ BINS = BINS_(3,1); % Histogram bins...
 
 Supervision = 0; % Supervision...
 
-Randomized  = 0; % Frame randomization...
+Randomized  = 1; % Frame randomization...
 
-Optimized   = 1; % RA optimization...
+Optimized   = 0; % RA optimization...
 
 % Number of images per class to classify.
 
@@ -96,9 +96,9 @@ classifierTraining( dataSet, N, Observation );
 
 % Verification / Test... 
 
-PERSISTENCE = 1; x = 1;
+PERSISTENCE = 1; T = 100;
 
-while( PERSISTENCE )
+while( PERSISTENCE < T)
 
     cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
     
@@ -121,11 +121,11 @@ while( PERSISTENCE )
     
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
-    [ PREC(x,1) REC(x,1) ACC(x,1) F1(x,1) ] = fMeasure( D, E );
+    [ PREC(T,1) REC(T,1) ACC(T,1) F1(T,1) ] = fMeasure( D, E );
     
     AVE = [ mean(PREC(:,1)) mean(REC(:,1)) mean(ACC(:,1)) mean(F1(:,1)) ];
     
-    x = x + 1;
+    T = T + 1;
 end
 
 toc;
