@@ -61,5 +61,3 @@ function [ D, E ] = classifier( dataSet, Observation )
         histData = zeros(1,size(dataSet,2),size(dataSet,3));
     end
 end
-
-
