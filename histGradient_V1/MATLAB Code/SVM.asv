@@ -1,35 +1,17 @@
 function [ RA ] = SVM( dataSet, N, Observation )
 
     global RA classType Supervision Randomized Optimized Train
-    
 
     A = histogramization( dataSet, N, Observation ); 
 
-    if ( ~Supervision && Train )
-   
+    if ( ( ~Supervision && Train && ~Randomized ) ||...
+         ( Supervision && Train && Randomized ) )
        
-
-
-
         
         
-    elseif( Supervision )
-
-        if ( Train )
-
-            for k = 1:1:size(A,3)
-                for i = 1:1:size(A,1)
-    
-                    A(i,size(A,2),k) = Observation(i,1);
-                end
-            end 
-        else
-            
-            A = dataSet;
-        end
- 
+    elseif( ( ~Supervision && ~Train && ~Randomized ) ||...
+            ( Supervision && ~Train && Randomized ) ) 
         
-
 
 
     end
