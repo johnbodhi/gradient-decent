@@ -2,11 +2,11 @@ clear all; close all; clc;
 
 tic;
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data");
+cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data");
 
 photoToArray(); % Pre-process all images.
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code"); 
+cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code"); 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -37,7 +37,7 @@ for i = 1:1:DATARANGE
     end
 end
 
-BINS = BINS_(3,1); % Histogram bins...
+BINS = BINS_(6,1); % Histogram bins...
 
 Supervision = 0; % Supervision...
 
@@ -64,7 +64,7 @@ Observation = verificationList( N );
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
+cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
 
 if ( Supervision )
 
@@ -83,7 +83,7 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
+cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
 
 classifierTraining( dataSet, N, Observation );
 
@@ -100,7 +100,7 @@ PERSISTENCE = 1; T = 100;
 
 while( PERSISTENCE < T)
 
-    cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
+    cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
     
     % Test sequences not included in training data...
     
@@ -108,7 +108,7 @@ while( PERSISTENCE < T)
     
     dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence. 
     
-    cd("C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
+    cd("C:\Users\johnbodhi\\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
     
     dataSet = histogramization( dataSet, N, Observation );  
     

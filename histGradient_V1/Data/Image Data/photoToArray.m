@@ -2,39 +2,39 @@ clear all; close all; clc;
 
 % Training sequences...
 
-A1l = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Derm7pt\train\A1l"; 
+A1l = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Derm7pt\train\A1l"; 
 
-A2l = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Derm7pt\train\A2l"; 
+A2l = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Derm7pt\train\A2l"; 
 
-Cancerous = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\breast_xrays\train\Cancerous"; 
+Cancerous = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\breast_xrays\train\Cancerous"; 
 
-nonCancerous = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\breast_xrays\train\nonCancerous"; 
+nonCancerous = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\breast_xrays\train\nonCancerous"; 
 
-Pneumonia = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\chest_xray\train\PNEUMONIA";  
+Pneumonia = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\chest_xray\train\PNEUMONIA";  
 
-Normal = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\chest_xray\train\NORMAL"; 
+Normal = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\chest_xray\train\NORMAL"; 
 
-Melanoma = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\MedNode\train\melanoma"; 
+Melanoma = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\MedNode\train\melanoma"; 
 
-Naevus = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\MedNode\train\naevus"; 
+Naevus = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\MedNode\train\naevus"; 
 
 % Test sequences...
 
-% A1l = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Derm7pt\test\A1l";
+% A1l = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Derm7pt\test\A1l";
 % 
-% A2l = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Derm7pt\test\A2l";  
+% A2l = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Derm7pt\test\A2l";  
 % 
-% Cancerous = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\breast_xrays\test\Cancerous"; 
+% Cancerous = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\breast_xrays\test\Cancerous"; 
 % 
-% nonCancerous = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\breast_xrays\test\nonCancerous"; 
+% nonCancerous = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\breast_xrays\test\nonCancerous"; 
 % 
-% Pneumonia = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\chest_xray\test\PNEUMONIA";  
+% Pneumonia = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\chest_xray\test\PNEUMONIA";  
 % 
-% Normal = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\chest_xray\test\NORMAL"; 
+% Normal = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\chest_xray\test\NORMAL"; 
 % 
-% Melanoma = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\MedNode\test\melanoma"; 
+% Melanoma = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\MedNode\test\melanoma"; 
 % 
-% Naevus = "C:\Users\johnm\OneDrive\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\MedNode\test\naevus"; 
+% Naevus = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\MedNode\test\naevus"; 
 
 directoryArr = [ A1l A2l...                 
                  Cancerous nonCancerous...
