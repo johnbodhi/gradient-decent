@@ -1,4 +1,4 @@
-function [ V ] = filterOptimization( dataSet, N, Observation )
+function [ V ] = filterOptimization( dataSet, Observation )
 
     global classType BINS RA
 
@@ -37,8 +37,6 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
     % We need to apply a sub-gradient within the SVM to optimize the filter
     % efficiency.
 
-    dataSet = histogramization( dataSet, N, Observation );
-
     SUP     = size(V,1)^size(classType,2);
 
     rr = 1; ii = 1;
@@ -70,11 +68,11 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
             
             [ PREC REC ACC F1 ] = fMeasure( D, E ); 
             
-            if( F1 >= 0.90 )
+            if( F1 >= 0.99 )
             
                 A(rr,1) = F1; [ ~, M ] = max(A);
                 
-                X(:,:,:,rr) = RA; rr = rr + 1;                
+                X(:,:,:,rr) = RA; rr = rr + 1; break;            
             end
 
         elseif( aa > size(V,1) && bb <= size(V,1) )
@@ -86,11 +84,11 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
             
             [ PREC REC ACC F1 ] = fMeasure( D, E ); 
             
-            if( F1 >= 0.90 )
+            if( F1 >= 0.99 )
             
                 A(rr,1) = F1; [ ~, M ] = max(A);
                 
-                X(:,:,:,rr) = RA; rr = rr + 1;                
+                X(:,:,:,rr) = RA; rr = rr + 1; break          
             end
         elseif( bb > size(V,1) && cc <= size(V,1) )
 
@@ -101,11 +99,11 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
             
             [ PREC REC ACC F1 ] = fMeasure( D, E ); 
             
-            if( F1 >= 0.90 )
+            if( F1 >= 0.99 )
             
                 A(rr,1) = F1; [ ~, M ] = max(A);
                 
-                X(:,:,:,rr) = RA; rr = rr + 1;                
+                X(:,:,:,rr) = RA; rr = rr + 1; break;             
             end
         elseif( cc > size(V,1) && dd <= size(V,1) )
 
@@ -116,11 +114,11 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
             
             [ PREC REC ACC F1 ] = fMeasure( D, E ); 
             
-            if( F1 >= 0.90 )
+            if( F1 >= 0.99 )
             
                 A(rr,1) = F1; [ ~, M ] = max(A);
                 
-                X(:,:,:,rr) = RA; rr = rr + 1;                
+                X(:,:,:,rr) = RA; rr = rr + 1; break;                
             end
         elseif( dd > size(V,1) && ee <= size(V,1) )
 
@@ -131,11 +129,11 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
             
             [ PREC REC ACC F1 ] = fMeasure( D, E ); 
             
-            if( F1 >= 0.90 )
+            if( F1 >= 0.99 )
             
                 A(rr,1) = F1; [ ~, M ] = max(A);
                 
-                X(:,:,:,rr) = RA; rr = rr + 1;                
+                X(:,:,:,rr) = RA; rr = rr + 1; break;              
             end
         elseif( ee > size(V,1) && ff <= size(V,1) )
 
@@ -146,11 +144,11 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
             
             [ PREC REC ACC F1 ] = fMeasure( D, E ); 
             
-            if( F1 >= 0.90 )
+            if( F1 >= 0.99 )
             
                 A(rr,1) = F1; [ ~, M ] = max(A);
                 
-                X(:,:,:,rr) = RA; rr = rr + 1;                
+                X(:,:,:,rr) = RA; rr = rr + 1; break;                
             end
         elseif( ff > size(V,1) && gg <= size(V,1) )
 
@@ -161,11 +159,11 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
             
             [ PREC REC ACC F1 ] = fMeasure( D, E ); 
             
-            if( F1 >= 0.90 )
+            if( F1 >= 0.99 )
             
                 A(rr,1) = F1; [ ~, M ] = max(A);
                 
-                X(:,:,:,rr) = RA; rr = rr + 1;                
+                X(:,:,:,rr) = RA; rr = rr + 1; break;                
             end
         elseif( hh > size(V,1) )
 
@@ -176,11 +174,11 @@ function [ V ] = filterOptimization( dataSet, N, Observation )
             
             [ PREC REC ACC F1 ] = fMeasure( D, E ); 
             
-            if( F1 >= 0.90 )
+            if( F1 >= 0.99 )
             
                 A(rr,1) = F1; [ ~, M ] = max(A);
                 
-                X(:,:,:,rr) = RA; rr = rr + 1;                
+                X(:,:,:,rr) = RA; rr = rr + 1; break;               
             end
         end
         ii = ii + 1;

@@ -18,7 +18,7 @@ function [ RA ] = SVM( dataSet, N, Observation )
 
     if ( Optimized )        
     
-        [ RA ] = filterOptimization( dataSet, N, Observation );
+        [ RA ] = filterOptimization( A, Observation );
     end
 
 end
