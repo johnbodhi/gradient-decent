@@ -13,8 +13,8 @@ function [ Y ] = filterCreation( dataSet )
     ee = 1; ff = 1; 
     gg = 1; hh = 1;
 
-    % We need to convolve! This is the shave, or keying.
-
+    % We need to convolve!
+    
     while( ii <= SUP )
 
         K = ceil( ii / SUP )+1;
