@@ -35,7 +35,7 @@ function [ Y ] = filterCreation( dataSet )
             
             if( F1 >= 0.99 )
             
-                A(rr,1) = F1; [ ~, M ] = max(A);
+                A(rr,1) = ACC; [ ~, M ] = max(A);
                 
                 X(:,:,:,rr) = Y; rr = rr + 1; break;            
             end
@@ -57,7 +57,7 @@ function [ Y ] = filterCreation( dataSet )
             
             if( F1 >= 0.99 )
             
-                A(rr,1) = F1; [ ~, M ] = max(A);
+                A(rr,1) = ACC; [ ~, M ] = max(A);
                 
                 X(:,:,:,rr) = Y; rr = rr + 1; break          
             end
@@ -78,7 +78,7 @@ function [ Y ] = filterCreation( dataSet )
             
             if( F1 >= 0.99 )
             
-                A(rr,1) = F1; [ ~, M ] = max(A);
+                A(rr,1) = ACC; [ ~, M ] = max(A);
                 
                 X(:,:,:,rr) = Y; rr = rr + 1; break;             
             end
@@ -98,7 +98,7 @@ function [ Y ] = filterCreation( dataSet )
             
             if( F1 >= 0.99 )
             
-                A(rr,1) = F1; [ ~, M ] = max(A);
+                A(rr,1) = ACC; [ ~, M ] = max(A);
                 
                 X(:,:,:,rr) = Y; rr = rr + 1; break;                
             end
@@ -119,7 +119,7 @@ function [ Y ] = filterCreation( dataSet )
             
             if( F1 >= 0.99 )
             
-                A(rr,1) = F1; [ ~, M ] = max(A);
+                A(rr,1) = ACC; [ ~, M ] = max(A);
                 
                 X(:,:,:,rr) = Y; rr = rr + 1; break;              
             end
@@ -140,7 +140,7 @@ function [ Y ] = filterCreation( dataSet )
             
             if( F1 >= 0.99 )
             
-                A(rr,1) = F1; [ ~, M ] = max(A);
+                A(rr,1) = ACC; [ ~, M ] = max(A);
                 
                 X(:,:,:,rr) = Y; rr = rr + 1; break;                
             end
@@ -161,7 +161,7 @@ function [ Y ] = filterCreation( dataSet )
             
             if( F1 >= 0.99 )
             
-                A(rr,1) = F1; [ ~, M ] = max(A);
+                A(rr,1) = ACC; [ ~, M ] = max(A);
                 
                 X(:,:,:,rr) = Y; rr = rr + 1; break;                
             end
@@ -182,7 +182,7 @@ function [ Y ] = filterCreation( dataSet )
             
             if( F1 >= 0.99 )
             
-                A(rr,1) = F1; [ ~, M ] = max(A);
+                A(rr,1) = ACC; [ ~, M ] = max(A);
                 
                 X(:,:,:,rr) = Y; rr = rr + 1; break;               
             end
