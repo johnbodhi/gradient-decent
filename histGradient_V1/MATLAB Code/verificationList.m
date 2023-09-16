@@ -1,11 +1,9 @@
 function [ Y ] = verificationList( N )
 
-    global pp
-
     T = sum(N);
 
-    ii = 1; jj = 1; kk = 1; pp = 1;
-    for i = 1:N(ii,1):2*T
+    ii = 1; jj = 1; kk = 1;
+    for i = 1:N(ii,1):(2*T)
     
         while ( jj <= N(ii,1) )
     
@@ -15,9 +13,9 @@ function [ Y ] = verificationList( N )
         end
         ii = ii + 1; jj = 1;
     
-        if ( size(Y,1) >= T ) % Unsupervised observations.
+        if ( size(Y,1) >= T )
             break;
         end
     end
-    
+
 end
