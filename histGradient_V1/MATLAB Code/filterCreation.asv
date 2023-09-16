@@ -1,8 +1,8 @@
 function [ Y ] = filterCreation( dataSet )
 
-    global classType frameLength
+    global classType classGroups frameLength
 
-    SUP = size(dataSet,1)^size(classType,2);
+    SUP = size(classGroups,2)*size(dataSet,1)^size(classType,2);
 
     V   = (size(dataSet,1) - size(classType,2));
 
@@ -17,20 +17,13 @@ function [ Y ] = filterCreation( dataSet )
 
     while( ii <= SUP )
 
-        Ka = ceil( aa / size(S,1) )+1;
-        Kb = ceil( bb / size(S,1) )+1;
-        Kc = ceil( cc / size(S,1) )+1;
-        Kd = ceil( dd / size(S,1) )+1;
-        Ke = ceil( ee / size(S,1) )+1;
-        Kf = ceil( ff / size(S,1) )+1;
-        Kg = ceil( gg / size(S,1) )+1;
-        Kh = ceil( hh / size(S,1) )+1;
+        K = ceil( ii / SUP )+1;
 
         if( aa <= size(V,1) )
             
             C = sum(dataSet(1:aa,:),2);
 
-            Y(2,:,Ka) = Y(2,:,Ka) + C;
+            Y(2,:,K) = Y(2,:,K) + C;
             Y         = Y / (aa*frameLength);
             aa = aa + 1;
             
@@ -72,7 +65,7 @@ function [ Y ] = filterCreation( dataSet )
 
             C = sum(dataSet(1:cc,:),2);
              
-            Y(3,:,Kc) = Y(3,:,Kc) + C; 
+            Y(4,:,Kc) = Y(4,:,Kc) + C; 
             Y         = Y / (cc*frameLength);
 
             cc = cc + 1; bb = 1;
@@ -93,7 +86,7 @@ function [ Y ] = filterCreation( dataSet )
 
             C = sum(dataSet(1:dd,:),2);
              
-            Y(3,:,Kd) = Y(3,:,Kd) + C; 
+            Y(5,:,Kd) = Y(5,:,Kd) + C; 
             Y         = Y / (dd*frameLength);
             dd = dd + 1; cc = 1;
             
@@ -113,7 +106,7 @@ function [ Y ] = filterCreation( dataSet )
 
             C = sum(dataSet(1:ee,:),2);
              
-            Y(3,:,Ke) = Y(3,:,Ke) + C; 
+            Y(6,:,Ke) = Y(6,:,Ke) + C; 
             Y         = Y / (ee*frameLength); 
 
             ee = ee + 1; dd = 1;
@@ -134,7 +127,7 @@ function [ Y ] = filterCreation( dataSet )
 
             C = sum(dataSet(1:ff,:),2);
              
-            Y(3,:,Kf) = Y(3,:,Kf) + C; 
+            Y(7,:,Kf) = Y(7,:,Kf) + C; 
             Y         = Y / (ff*frameLength); 
 
             ff = ff + 1; ee = 1;
@@ -155,7 +148,7 @@ function [ Y ] = filterCreation( dataSet )
 
             C = sum(dataSet(1:gg,:),2);
              
-            Y(3,:,Kg) = Y(3,:,Kg) + C; 
+            Y(8,:,Kg) = Y(8,:,Kg) + C; 
             Y         = Y / (gg*frameLength); 
 
             gg = gg + 1; ff = 1;
@@ -176,7 +169,7 @@ function [ Y ] = filterCreation( dataSet )
 
             C = sum(dataSet(1:hh,:),2);
              
-            Y(3,:,Kh) = Y(3,:,Kh) + C; 
+            Y(9,:,Kh) = Y(9,:,Kh) + C; 
             Y         = Y / (hh*frameLength); 
             
             hh = hh + 1; gg = 1;
@@ -197,8 +190,5 @@ function [ Y ] = filterCreation( dataSet )
         ii = ii + 1;
 
     end
-    Y = X(:,:,:,M);
-    
-    
-    
+    Y = X(:,:,:,M);   
 end
