@@ -117,89 +117,79 @@ function [ RA ] = filterCreation( dataSet )
 
             for q = 1:1:size(dataSet,1)
 
-                C = sum(dataSet(1:ee,:),1);
-                 
-                RA(6,:,K)  = RA(6,:,K) + C; 
-                RA         = RA / (ee*frameLength); 
-    
-                ee = ee + 1; dd = 1;
-                
-                [ D, E ] = classifier( dataSet, Observation );
-                
-                [ PREC REC ACC F1 ] = fMeasure( D, E ); 
-    
-                dataSet = circshift(dataSet,1);
-                
-                A(rr,1) = ACC; [ ~, M ] = max(A);
-                
-                X(:,:,:,rr) = RA; rr = rr + 1; 
-            end
+            C = sum(dataSet(1:ee,:),1);
+             
+            RA(6,:,K)  = RA(6,:,K) + C; 
+            RA         = RA / (ee*frameLength); 
+
+            ee = ee + 1; dd = 1;
+            
+            [ D, E ] = classifier( dataSet, Observation );
+            
+            [ PREC REC ACC F1 ] = fMeasure( D, E ); 
+
+            dataSet = circshift(dataSet,1);
+            
+            A(rr,1) = ACC; [ ~, M ] = max(A);
+            
+            X(:,:,:,rr) = RA; rr = rr + 1; 
 
         elseif( ee > size(V,1) && ff <= size(V,1) )
 
-            for q = 1:1:size(dataSet,1)
+            C = sum(dataSet(1:ff,:),1);
+             
+            RA(7,:,K) = RA(7,:,K) + C; 
+            RA         = RA / (ff*frameLength); 
 
-                C = sum(dataSet(1:ff,:),1);
-                 
-                RA(7,:,K) = RA(7,:,K) + C; 
-                RA         = RA / (ff*frameLength); 
-    
-                ff = ff + 1; ee = 1;
-                
-                [ D, E ] = classifier( dataSet, Observation );
-                
-                [ PREC REC ACC F1 ] = fMeasure( D, E ); 
-    
-                dataSet = circshift(dataSet,1);
-                
-                A(rr,1) = ACC; [ ~, M ] = max(A);
-                
-                X(:,:,:,rr) = RA; rr = rr + 1; 
-            end
+            ff = ff + 1; ee = 1;
+            
+            [ D, E ] = classifier( dataSet, Observation );
+            
+            [ PREC REC ACC F1 ] = fMeasure( D, E ); 
+
+            dataSet = circshift(dataSet,1);
+            
+            A(rr,1) = ACC; [ ~, M ] = max(A);
+            
+            X(:,:,:,rr) = RA; rr = rr + 1; 
 
         elseif( ff > size(V,1) && gg <= size(V,1) )
 
-            for q = 1:1:size(dataSet,1)
+            C = sum(dataSet(1:gg,:),1);
+             
+            RA(8,:,K) = RA(8,:,K) + C; 
+            RA        = RA / (gg*frameLength); 
 
-                C = sum(dataSet(1:gg,:),1);
-                 
-                RA(8,:,K) = RA(8,:,K) + C; 
-                RA        = RA / (gg*frameLength); 
-    
-                gg = gg + 1; ff = 1;
-                
-                [ D, E ] = classifier( dataSet, Observation );
-                
-                [ PREC REC ACC F1 ] = fMeasure( D, E ); 
-    
-                dataSet = circshift(dataSet,1);
-                
-                A(rr,1) = ACC; [ ~, M ] = max(A);
-                
-                X(:,:,:,rr) = RA; rr = rr + 1; 
-            end
+            gg = gg + 1; ff = 1;
+            
+            [ D, E ] = classifier( dataSet, Observation );
+            
+            [ PREC REC ACC F1 ] = fMeasure( D, E ); 
+
+            dataSet = circshift(dataSet,1);
+            
+            A(rr,1) = ACC; [ ~, M ] = max(A);
+            
+            X(:,:,:,rr) = RA; rr = rr + 1; 
 
         elseif( hh > size(V,1) )
 
-            for q = 1:1:size(dataSet,1)
+            C = sum(dataSet(1:hh,:),1);
+             
+            RA(9,:,K) = RA(9,:,K) + C; 
+            RA        = RA / (hh*frameLength); 
+            
+            hh = hh + 1; gg = 1;
+            
+            [ D, E ] = classifier( dataSet, Observation );
+            
+            [ PREC REC ACC F1 ] = fMeasure( D, E ); 
 
-                C = sum(dataSet(1:hh,:),1);
-                 
-                RA(9,:,K) = RA(9,:,K) + C; 
-                RA        = RA / (hh*frameLength); 
-                
-                hh = hh + 1; gg = 1;
-                
-                [ D, E ] = classifier( dataSet, Observation );
-                
-                [ PREC REC ACC F1 ] = fMeasure( D, E ); 
-    
-                dataSet = circshift(dataSet,1);
-                
-                A(rr,1) = ACC; [ ~, M ] = max(A);
-                
-                X(:,:,:,rr) = RA; rr = rr + 1; 
-            end
+            dataSet = circshift(dataSet,1);
+            
+            A(rr,1) = ACC; [ ~, M ] = max(A);
+            
+            X(:,:,:,rr) = RA; rr = rr + 1; 
         end
         ii = ii + 1;
 
