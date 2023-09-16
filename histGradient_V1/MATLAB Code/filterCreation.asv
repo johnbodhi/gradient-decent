@@ -6,12 +6,7 @@ function [ Y ] = filterCreation( dataSet )
 
     V   = (size(dataSet,1) - size(classType,2));
 
-    Z(:,1) = (1:1:size(dataSet,1)); L(:,1) = Z;
-
-    for j = 2:1:size(classType,2)
-
-        L(:,j) = circshift(Z,j-1);
-    end
+    
 
     rr = 1; ii = 1;
 
