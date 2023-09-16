@@ -15,12 +15,14 @@ function [ RA ] = filterCreation( dataSet )
         L(:,j) = circshift(Z,j-1);
     end
 
-    rr = 1; ii = 1;
+    ii = 1;
 
     aa = 1; bb = 1; 
     cc = 1; dd = 1; 
     ee = 1; ff = 1; 
     gg = 1; hh = 1;
+
+    rr = 1; 
     
     while( ii <= SUP )
 
@@ -202,7 +204,7 @@ function [ RA ] = filterCreation( dataSet )
             end
         end
         ii = ii + 1;
-
     end
     RA = X(:,:,:,M);   
+
 end
