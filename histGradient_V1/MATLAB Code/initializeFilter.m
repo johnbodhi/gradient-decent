@@ -1,5 +1,5 @@
 function [ Y ] = initializeFilter( X )
     
-    RA = krylovSubspace( X );   
+    Y = krylovSubspace( X );   
     
 end

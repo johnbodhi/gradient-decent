@@ -27,7 +27,7 @@ classGroups = zeros( 1, Groups );
 
 Np = 100; Mp = 100; frameLength = Np * Mp; % Photo length, and width. 
 
-DATARANGE = 256;
+DATARANGE = 2^8;
 
 ii = 1;
 for i = 1:1:DATARANGE   

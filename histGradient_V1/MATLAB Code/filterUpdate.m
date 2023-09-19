@@ -1,6 +1,6 @@
 function [ Y ] = filterUpdate( X )
 
-    RA = krylovSubspace( X );   
+    Y = krylovSubspace( X );   
 
 end
 
