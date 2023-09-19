@@ -29,8 +29,6 @@ function [ RA ] = filterCreation( dataSet )
     gg = 1; hh = 1;
 
     rr = 1; xx = 1;
-
-    zz = 1;
     
     while( sum(sum(sum(B,1),2),3) < SUM )
 
@@ -245,7 +243,6 @@ function [ RA ] = filterCreation( dataSet )
             end
         end
         ii = ii + 1;
-
     end
 
 end
