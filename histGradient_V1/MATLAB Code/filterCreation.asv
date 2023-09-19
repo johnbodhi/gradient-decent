@@ -6,7 +6,7 @@ function [ RA ] = filterCreation( dataSet )
 
     N = size(dataSet,1); M = size(classType,2); 
 
-    SUM = size(classGroups,2)*N*M; B = zeros(N,M,size(classGroups,2));
+    SUM = size(classGroups,2)*N*M; B = zeros(N,M);
 
     % SUP = simpleNN(N,M); 
     
@@ -32,13 +32,13 @@ function [ RA ] = filterCreation( dataSet )
 
     zz = 1;
     
-    while( sum(sum(sum(B,1),2),3) < SUM )
+    while( sum(sum(B,1),2) < SUM )
 
         K = ceil( ii / SUP ) + 1;
 
         if( aa <= size(V,1) )
 
-            B(aa,1,K) = 1;
+            B(aa,1) = 1;
 
             aa = aa + 1;
 
@@ -64,7 +64,7 @@ function [ RA ] = filterCreation( dataSet )
 
         elseif( aa > size(V,1) && bb <= size(V,1) )
 
-             B(bb,2,K) = 1; B(:,1,K) = 0;
+             B(bb,2) = 1; B(:,1) = 0;
 
              bb = bb + 1; aa = 1;
 
@@ -90,7 +90,7 @@ function [ RA ] = filterCreation( dataSet )
 
         elseif( bb > size(V,1) && cc <= size(V,1) )
 
-            B(cc,3,K) = 1; B(:,2,K) = 0;
+            B(cc,3) = 1; B(:,2) = 0;
 
             cc = cc + 1; bb = 1;
 
@@ -116,7 +116,7 @@ function [ RA ] = filterCreation( dataSet )
 
         elseif( cc > size(V,1) && dd <= size(V,1) )
 
-            B(dd,4,K) = 1; B(:,3,K) = 0;
+            B(dd,4) = 1; B(:,3) = 0;
 
             dd = dd + 1; cc = 1;
 
@@ -142,7 +142,7 @@ function [ RA ] = filterCreation( dataSet )
 
         elseif( dd > size(V,1) && ee <= size(V,1) )
 
-            B(ee,5,K) = 1; B(:,4,K) = 0;
+            B(ee,5) = 1; B(:,4) = 0;
 
             ee = ee + 1; dd = 1;
 
@@ -168,7 +168,7 @@ function [ RA ] = filterCreation( dataSet )
 
         elseif( ee > size(V,1) && ff <= size(V,1) )
 
-            B(ff,6,K) = 1; B(:,5,K) = 0;
+            B(ff,6) = 1; B(:,5) = 0;
 
             ff = ff + 1; ee = 1;
 
@@ -194,7 +194,7 @@ function [ RA ] = filterCreation( dataSet )
 
         elseif( ff > size(V,1) && gg <= size(V,1) )
 
-            B(gg,7,K) = 1; B(:,5,K) = 0;
+            B(gg,7) = 1; B(:,5) = 0;
 
             gg = gg + 1; ff = 1;
 
@@ -220,7 +220,7 @@ function [ RA ] = filterCreation( dataSet )
 
         elseif( hh > size(V,1) )
 
-            B(hh,8,K) = 1; B(:,7,K) = 0;
+            B(hh,8) = 1; B(:,7) = 0;
 
             hh = hh + 1; gg = 1;
 
@@ -246,6 +246,15 @@ function [ RA ] = filterCreation( dataSet )
         end
         ii = ii + 1;
 
-    end
+        if ( sum(sum(B,1),2) >= N*M )
 
+            B(:,:) = 0;
+
+            zz = zz + 1;
+
+        elseif( zz >= size() )
+
+            break;
+        end
+    end
 end
