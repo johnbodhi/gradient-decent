@@ -15,7 +15,7 @@ cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB C
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-global classType classGroups frameLength DATARANGE BINS Supervision Randomized Optimized
+global classType classGroups frameLength DATARANGE BINS Supervision Randomized Optimized Noise
 
 Classes = 8; % Classes per group...
 
@@ -44,6 +44,8 @@ Supervision = 0; % Supervision...
 Randomized  = 0; % Frame randomization...
 
 Optimized   = 0; % RA optimization...
+
+Noise       = 0; % RA / input noisy...
 
 % Number of images per class to classify.
 
