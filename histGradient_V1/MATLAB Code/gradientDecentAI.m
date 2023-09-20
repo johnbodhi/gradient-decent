@@ -100,7 +100,7 @@ classifierTraining( dataSet, N, Observation );
 
 PERSISTENCE = 1; T = 100;
 
-while( PERSISTENCE < T)
+while( PERSISTENCE < T )
 
     cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
     

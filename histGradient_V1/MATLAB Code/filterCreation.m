@@ -2,8 +2,6 @@ function [ RA ] = filterCreation( dataSet )
 
     global classType classGroups RA
 
-    
-
     N = size(dataSet,1); 
     
     M = size(classType,2); 
@@ -14,15 +12,17 @@ function [ RA ] = filterCreation( dataSet )
 
     % SUP = simpleNN(N,M); 
     
-    UB = 1171591994624;
+    UB  = 1171591994624;
 
     SUP = size(classGroups,2)*UB;
 
-    V   = (size(dataSet,1) - size(classType,2));
+    V   = (size(dataSet,1) - size(classType,2)); % Pattern limit...
 
     % Shift initial entries for faster convergence...
 
-    Z(:,1) = (1:1:size(dataSet,1)); L(:,1) = Z;
+    Z(:,1) = (1:1:size(dataSet,1)); 
+    
+    L(:,1) = Z;
 
     for j = 2:1:size(classType,2)
 
@@ -226,7 +226,7 @@ function [ RA ] = filterCreation( dataSet )
                 rr = rr + 1; 
             end
 
-        elseif( hh > size(V,1) )
+        elseif( gg > size(V,1) && hh <= size(V,1) )
 
             B(hh,8,K) = 1; B(:,7,K) = 0;
 
