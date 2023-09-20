@@ -1,4 +1,4 @@
-function [ Y ] = initializeFilter( X )
+function [ Y ] = verifyFilter( X )
     
     Y = krylovSubspace( X );   
     
