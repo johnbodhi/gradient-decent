@@ -2,17 +2,25 @@ function [ RA ] = filterCreation( dataSet )
 
     global classType classGroups RA
 
-    [ RA ] = initializeFilter( dataSet );
+    
 
-    N = size(dataSet,1); M = size(classType,2); 
+    N = size(dataSet,1); 
+    
+    M = size(classType,2); 
 
-    SUM = size(classGroups,2)*N*M; B = zeros(N,M,size(classGroups,2));
+    SUM = size(classGroups,2)*N*M; 
+    
+    B = zeros(N,M,size(classGroups,2));
 
     % SUP = simpleNN(N,M); 
     
-    SUP = 1171591994624;
+    UB = 1171591994624;
+
+    SUP = size(classGroups,2)*UB;
 
     V   = (size(dataSet,1) - size(classType,2));
+
+    % Shift initial entries for faster convergence...
 
     Z(:,1) = (1:1:size(dataSet,1)); L(:,1) = Z;
 
@@ -20,6 +28,8 @@ function [ RA ] = filterCreation( dataSet )
 
         L(:,j) = circshift(Z,j-1);
     end
+
+    % Convoltuion with a sub-gradient!!
 
     ii = 1;
 
@@ -244,5 +254,7 @@ function [ RA ] = filterCreation( dataSet )
         end
         ii = ii + 1;
     end
+
+    [ RA ] = initializeFilter( dataSet );
 
 end
