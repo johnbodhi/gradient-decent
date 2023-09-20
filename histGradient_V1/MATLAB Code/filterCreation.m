@@ -255,6 +255,6 @@ function [ RA ] = filterCreation( dataSet )
         ii = ii + 1;
     end
 
-    [ RA ] = verifyFilter( dataSet );
+    [ RA ] = verifyFilter( RA, dataSet );
 
 end

@@ -1,4 +1,4 @@
-function [ Y ] = BiCGSTAB( X )
+function [ Z ] = BiCGSTAB( X, Y )
     
     
     
