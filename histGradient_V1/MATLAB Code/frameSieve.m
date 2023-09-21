@@ -13,6 +13,8 @@ function [ Y ] = frameSieve( S )
             L(i+1,1,k+1) = i;
         end
     end
+    
+    Y = sort(Y,2,'descend');
 
     Y = cat(2,Y,L);    
 end
