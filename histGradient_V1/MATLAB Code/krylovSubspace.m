@@ -1,5 +1,5 @@
-function [ Y ] = krylovSubspace( X )
+function [ Z ] = krylovSubspace( X, Y )
     
-    Y = BiCGSTAB( X );    
+    Z = BiCGSTAB( X, Y );    
     
 end

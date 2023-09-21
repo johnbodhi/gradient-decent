@@ -1,5 +1,5 @@
-function [ Y ] = verifyFilter( X )
+function [ Z ] = verifyFilter( X, Y )
     
-    Y = krylovSubspace( X );   
+    Z = krylovSubspace( X, Y );   
     
 end

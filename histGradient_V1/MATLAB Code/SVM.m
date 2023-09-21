@@ -7,7 +7,7 @@ function [ RA ] = SVM( dataSet, N, Observation )
     if ( ( ~Supervision && Train && ~Randomized ) ||...
          ( Supervision && Train && Randomized ) )
 
-        [ RA ] = filterCreation( A );       
+        [ RA ] = filterCreation( RA, A );       
         
     elseif( ( ~Supervision && ~Train && ~Randomized ) ||...
             ( Supervision && ~Train && Randomized ) ) 
