@@ -1,6 +1,6 @@
 function [ RA ] = SVM( dataSet, N, Observation )
 
-    global RA Supervision Randomized Optimized Train
+    global A RA Supervision Randomized Optimized Train
 
     A = histogramization( dataSet, N, Observation ); 
 
