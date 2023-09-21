@@ -33,11 +33,11 @@ ii = 1;
 for i = 1:1:DATARANGE   
     if( mod(DATARANGE,i) == 0 )
         
-        BINS_(ii,1) = i;ii = ii + 1;
+        BINS_(ii,1) = i; ii = ii + 1;
     end
 end
 
-BINS = BINS_(6,1); % Histogram bins...
+BINS        = BINS_(6,1); % Histogram bins...
 
 Supervision = 0; % Supervision...
 
@@ -90,6 +90,7 @@ cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB C
 classifierTraining( dataSet, N, Observation );
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 
 
