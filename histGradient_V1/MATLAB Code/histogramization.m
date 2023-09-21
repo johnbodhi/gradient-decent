@@ -5,8 +5,6 @@ function [ F ] = histogramization( X, Y, Z )
     if ( Randomized )
 
         [ X, L ] = randomizeAll( X, Y ); % Randomize all photos.
-    else
-
     end
 
     % Generate histograms...
@@ -72,7 +70,8 @@ function [ F ] = histogramization( X, Y, Z )
                 F(i,size(F,2),k) = Z(i,1);
             end
         end
-    elseif( Randomized && ~Supervision || ~Randomized && ~Supervision )
+    elseif( ( Randomized && ~Supervision ) ||...
+            ( ~Randomized && ~Supervision ) )
         
     end
 end
