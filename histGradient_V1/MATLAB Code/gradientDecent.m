@@ -21,7 +21,6 @@ function [ Z ] = gradientDecent( F )
                                     ( abs( RA( i, j, k ) - RA( i-1, j-1, k-1 ) ) + eps );
             end
         end
-
         Y = F(:,1:size(F,2)-1,:);
     end
 
@@ -31,7 +30,7 @@ function [ Z ] = gradientDecent( F )
             for i = 2:1:size(Y,1)
                 
                 eps( i, j, k ) = Y( i, j, k ) + eps_; % Constant step size.
-                % eps( i, j, k ) = eps_; % Constant step size.
+                % eps( i, j, k ) = eps_;              % Constant step size.
             end
         end
     end
@@ -67,7 +66,6 @@ function [ Z ] = gradientDecent( F )
 
             end   
         end
-
         Y = F(:,1:size(F,2)-1,:);        
     end
     
@@ -75,7 +73,7 @@ function [ Z ] = gradientDecent( F )
     for i = 2:1:size(WALK,1)
 
         S(ii,1) = sum(sum(WALK(i,2:end,2:end),2),3);
-        
+
         ii = ii + 1;
     end
 
