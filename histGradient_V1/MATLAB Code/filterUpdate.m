@@ -1,6 +1,5 @@
-function [ Y ] = filterUpdate( X )
+function [ Z ] = filterUpdate( X, Y )
 
-    Y = krylovSubspace( X );   
-
+    Z = krylovSubspace( X, Y ); 
 end
 

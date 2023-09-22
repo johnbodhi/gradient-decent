@@ -86,11 +86,11 @@ function [ V ] = filterOptimization( dataSet, Observation )
             
             if( ACC >= T )
             
-                A(rr,1) = F1; [ ~, M ] = max(A);
+                A(rr,1) = ACC; [ ~, M ] = max(A);
                 
                 X(:,:,:,rr) = RA; 
                 
-                rr = rr + 1; break;            
+                rr = rr + 1;           
             end
         elseif( aa > size(V,1) && bb <= size(V,1) )
              
@@ -104,11 +104,11 @@ function [ V ] = filterOptimization( dataSet, Observation )
             
             if( ACC >= T )
             
-                A(rr,1) = F1; [ ~, M ] = max(A);
+                A(rr,1) = ACC; [ ~, M ] = max(A);
                 
                 X(:,:,:,rr) = RA; 
                 
-                rr = rr + 1; break;            
+                rr = rr + 1;           
             end
         elseif( bb > size(V,1) && cc <= size(V,1) )
 
@@ -122,11 +122,11 @@ function [ V ] = filterOptimization( dataSet, Observation )
             
             if( ACC >= T )
             
-                A(rr,1) = F1; [ ~, M ] = max(A);
+                A(rr,1) = ACC; [ ~, M ] = max(A);
                 
                 X(:,:,:,rr) = RA; 
                 
-                rr = rr + 1; break;            
+                rr = rr + 1;            
             end
         elseif( cc > size(V,1) && dd <= size(V,1) )
 
@@ -140,11 +140,11 @@ function [ V ] = filterOptimization( dataSet, Observation )
             
             if( ACC >= T )
             
-                A(rr,1) = F1; [ ~, M ] = max(A);
+                A(rr,1) = ACC; [ ~, M ] = max(A);
                 
                 X(:,:,:,rr) = RA; 
                 
-                rr = rr + 1; break;            
+                rr = rr + 1;            
             end
         elseif( dd > size(V,1) && ee <= size(V,1) )
 
@@ -158,11 +158,11 @@ function [ V ] = filterOptimization( dataSet, Observation )
             
             if( ACC >= T )
             
-                A(rr,1) = F1; [ ~, M ] = max(A);
+                A(rr,1) = ACC; [ ~, M ] = max(A);
                 
                 X(:,:,:,rr) = RA; 
                 
-                rr = rr + 1; break;            
+                rr = rr + 1;         
             end
         elseif( ee > size(V,1) && ff <= size(V,1) )
 
@@ -176,11 +176,11 @@ function [ V ] = filterOptimization( dataSet, Observation )
             
             if( ACC >= T )
             
-                A(rr,1) = F1; [ ~, M ] = max(A);
+                A(rr,1) = ACC; [ ~, M ] = max(A);
                 
                 X(:,:,:,rr) = RA; 
                 
-                rr = rr + 1; break;            
+                rr = rr + 1;        
             end
         elseif( ff > size(V,1) && gg <= size(V,1) )
 
@@ -194,11 +194,11 @@ function [ V ] = filterOptimization( dataSet, Observation )
             
             if( ACC >= T )
             
-                A(rr,1) = F1; [ ~, M ] = max(A);
+                A(rr,1) = ACC; [ ~, M ] = max(A);
                 
                 X(:,:,:,rr) = RA; 
                 
-                rr = rr + 1; break;            
+                rr = rr + 1;            
             end
         elseif( gg > size(V,1) && hh <= size(V,1) )
 
@@ -212,15 +212,14 @@ function [ V ] = filterOptimization( dataSet, Observation )
             
             if( ACC >= T )
             
-                A(rr,1) = F1; [ ~, M ] = max(A);
+                A(rr,1) = ACC; [ ~, M ] = max(A);
                 
                 X(:,:,:,rr) = RA; 
                 
-                rr = rr + 1; break;            
+                rr = rr + 1;           
             end
         end
         ii = ii + 1;
-
     end
     RA = X(:,:,:,M);
 
