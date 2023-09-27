@@ -86,6 +86,7 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
             BETA     = ( RHO(1,2) / RHO(1,1) ) * ( ALPHA / OMEGA );
 
             P(:,1)   = R(:,1) + BETA.*( P(:,1) - OMEGA.*V(:,1) );
+            
 
             kk = kk + 1;
         end 
