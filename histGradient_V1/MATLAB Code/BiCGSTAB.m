@@ -18,7 +18,7 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
     SUP = size(classGroups,2) * UB;
     
-    ii = 1;
+    ii = 1; kk = 1;
 
     aa = 1; bb = 1; cc = 1;
 
@@ -50,8 +50,8 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
             cc = cc + 1; bb = 1;
             
-            X(:,1) = Y_(cc,:,K);              
-            
+            X(:,1) = Y_(cc,:,K);
+
         end
         
         R_0(:,1) = B(:,1) - A(:,1).*X(:,1); R(:,1) = R_0;
@@ -81,15 +81,22 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
             RHO(1,2) = dot( R_0(:,1), R(:,1) );
 
-            TOL      = RHO(1,2) / RHO_0;
+            TOL    = RHO(1,2) / RHO_0;
 
             BETA   = ( RHO(1,2) / RHO(1,1) ) * ( ALPHA / OMEGA );
 
             P(:,1) = R(:,1) + BETA.*( P(:,1) - OMEGA.*V(:,1) );
-            
-        end
-        ii = ii + 1;
+
+            kk = kk + 1;
+        end 
+
+        WALK_(aa,bb,cc) = kk; kk = 1;
         
+        ii = ii + 1;
     end
-       
+
+    WALK = sort(WALK_, 1,'descend');
+    WALK = sort(WALK,  3,'descend');
+    
+
 end
