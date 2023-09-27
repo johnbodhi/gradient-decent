@@ -10,11 +10,11 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
     SUM = size(classGroups,2) * N * M; 
     
-    V   = zeros(N,size(classGroups,2),size(classGroups,2));
+    V   = zeros(N,M,M);
 
     % SUP = simpleNN(N,M); 
     
-    UB  = 1004;
+    UB  = 34912;
 
     SUP = size(classGroups,2) * UB;
     
@@ -81,11 +81,11 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
             RHO(1,2) = dot( R_0(:,1), R(:,1) );
 
-            TOL    = RHO(1,2) / RHO_0;
+            TOL      = RHO(1,2) / RHO_0;
 
-            BETA   = ( RHO(1,2) / RHO(1,1) ) * ( ALPHA / OMEGA );
+            BETA     = ( RHO(1,2) / RHO(1,1) ) * ( ALPHA / OMEGA );
 
-            P(:,1) = R(:,1) + BETA.*( P(:,1) - OMEGA.*V(:,1) );
+            P(:,1)   = R(:,1) + BETA.*( P(:,1) - OMEGA.*V(:,1) );
 
             kk = kk + 1;
         end 
@@ -97,5 +97,5 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
     WALK = sort(WALK_, 1,'descend');
     WALK = sort(WALK,  3,'descend');
-    
+
 end
