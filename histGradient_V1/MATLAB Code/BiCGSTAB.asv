@@ -22,6 +22,8 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
     aa = 1; bb = 1; cc = 1;
 
+    U  = 1e-5;
+
     while( sum(sum(sum(V,1),2),3) < SUM )
 
         K = ceil( ii / SUP ) + 1;
@@ -54,15 +56,15 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
         
         R_0(:,1) = B(:,1) - A(:,1).*X(:,1); R(:,1) = R_0;
 
-        RHO_0    = dot(R_0(:,1), R_0(:,1)); RHO(:,1) = RHO_0;
+        RHO_0    = dot(R_0(:,1), R_0(:,1)); RHO(1,1) = RHO_0;
 
         P(:,1)   = R_0(:,1);
 
-        for i = 1:1:size(R_0,1)
+        while i = 1:1:size(R_0,1)
             
             V(:,1) = A(:,1) .* P(:,1);
 
-            ALPHA  = RHO(:,1) / dot(R(:,1),V(:,1));
+            ALPHA  = RHO(:,1) / dot( R(:,1), V(:,1) );
 
             H(:,1) = X(:,1) + ALPHA.*P(:,1);
 
@@ -70,37 +72,27 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
             T(:,1) = A(:,1).*S(:,1);
 
-            OMEGA  = dot(T(:,1),S(:,1))/dot(T(:,1),T(:,1));
+            OMEGA  = dot( T(:,1), S(:,1) ) / dot( T(:,1), T(:,1) );
 
             X(:,1) = H(:,1) + OMEGA(:,1).*S(:,1);
 
             R(:,1) = S(:,1) - OMEGA(:,1).*T(:,1);
 
-            RHO(1,2) = dot(R_0(:,1),R(:,1));
 
-            TOL = RHO(1,2) / RHO_0;
+            RHO(1,2) = dot( R_0(:,1), R(:,1) );
+
+            TOL      = RHO(1,2) / RHO_0;
 
             if(TOL <= U )
 
                 break;
             end
 
-            BETA = ( RHO(:,2) / RHO(:,1) ) * ( ALPHA / OMEGA );
-
-          
+            BETA   = ( RHO(1,2) / RHO(1,1) ) * ( ALPHA / OMEGA );
 
             P(:,1) = R(:,1) + BETA.*( P(:,1) - OMEGA.*V(:,1) );
-
-
-            
             
         end
-        
-        
-        
-        
-        
     end
-
        
 end

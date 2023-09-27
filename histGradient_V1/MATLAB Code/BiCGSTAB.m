@@ -22,7 +22,7 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
     aa = 1; bb = 1; cc = 1;
 
-    U  = 1e-5;
+    LIMIT = 1e-5;
 
     while( sum(sum(sum(V,1),2),3) < SUM )
 
@@ -42,7 +42,7 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
             
             bb = bb + 1; aa = 1;
             
-            B(:,1) = frameLength * X_(bb,:,K);           
+            B(:,1) = frameLength .* X_(bb,:,K);           
 
         elseif( bb > size(V,1) && cc <= size(V,1) )
 
@@ -60,7 +60,7 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
         P(:,1)   = R_0(:,1);
 
-        for i = 1:1:size(R_0,1)
+        while( TOL <= LIMIT )
             
             V(:,1) = A(:,1) .* P(:,1);
 
@@ -83,17 +83,13 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
             TOL      = RHO(1,2) / RHO_0;
 
-            if(TOL <= U )
-
-                break;
-            end
-
             BETA   = ( RHO(1,2) / RHO(1,1) ) * ( ALPHA / OMEGA );
 
             P(:,1) = R(:,1) + BETA.*( P(:,1) - OMEGA.*V(:,1) );
             
         end
-
+        ii = ii + 1;
+        
     end
        
 end
