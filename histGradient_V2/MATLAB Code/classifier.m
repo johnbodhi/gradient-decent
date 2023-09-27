@@ -15,7 +15,7 @@ function [ D, E ] = classifier( dataSet, Observation )
 
         histData = frameSieve(histData); % Duplicate and re-label each frame.
 
-        % Observation_ = histData(:,size(dataSet,2));
+        Observation_ = histData(:,size(dataSet,2));
 
         RA = Q; % We need to reset RA between classes...
 

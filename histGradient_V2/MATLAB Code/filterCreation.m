@@ -1,8 +1,8 @@
-function [ RA ] = filterCreation( dataSet )
+function [ RA ] = filterCreation( A )
 
-    global classType classGroups RA
+    global classType classGroups
 
-    N = size(dataSet,1); 
+    N = size(A,1); 
     
     M = size(classType,2); 
 
@@ -16,11 +16,11 @@ function [ RA ] = filterCreation( dataSet )
 
     SUP = size(classGroups,2)*UB;
 
-    V   = (size(dataSet,1) - size(classType,2)); % Pattern limit...
+    V   = (size(A,1) - size(classType,2)); % Pattern limit...
 
     % Shift initial entries for faster convergence...
 
-    Z(:,1) = (1:1:size(dataSet,1)); 
+    Z(:,1) = (1:1:size(A,1)); 
     
     L(:,1) = Z;
 
@@ -40,6 +40,8 @@ function [ RA ] = filterCreation( dataSet )
 
     rr = 1; xx = 1;
     
+    T = 0.95;
+
     while( sum(sum(sum(B,1),2),3) < SUM )
 
         K = ceil( ii / SUP ) + 1;
@@ -50,22 +52,22 @@ function [ RA ] = filterCreation( dataSet )
 
             aa = aa + 1;
 
-            for q = 1:1:size(dataSet,1)
+            for q = 1:1:size(A,1)
             
-                C = sum(dataSet(1:aa,:,K),1);
+                C = sum(A(1:aa,:,K),1);
     
                 RA(2,:,K) = RA(2,:,K) + C; RA = RA / aa;
     
-                [ D, E ] = classifier( dataSet, Observation );
+                [ D, E ] = classifier( A, Observation );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
-                if( ACC > 0.70 )
+                if( ACC > T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
     
-                dataSet = circshift( dataSet, 1 );
+                A = circshift( A, 1 );
                 
                 rr = rr + 1;
             end
@@ -76,22 +78,22 @@ function [ RA ] = filterCreation( dataSet )
 
              bb = bb + 1; aa = 1;
 
-            for q = 1:1:size(dataSet,1)
+            for q = 1:1:size(A,1)
 
-                C =  sum(dataSet(1:bb,:,K),1);
+                C =  sum(A(1:bb,:,K),1);
                  
                 RA(3,:,K)  = RA(3,:,K) + C; RA = RA / bb;
                
-                [ D, E ] = classifier( dataSet, Observation );
+                [ D, E ] = classifier( A, Observation );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
-                if( ACC > 0.70 )
+                if( ACC > T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
     
-                dataSet = circshift(dataSet,1);
+                A = circshift(A,1);
                 
                 rr = rr + 1; 
             end
@@ -102,22 +104,22 @@ function [ RA ] = filterCreation( dataSet )
 
             cc = cc + 1; bb = 1;
 
-            for q = 1:1:size(dataSet,1)
+            for q = 1:1:size(A,1)
     
-                C = sum(dataSet(1:cc,:,K),1);
+                C = sum(A(1:cc,:,K),1);
                  
                 RA(4,:,K) = RA(4,:,K) + C; RA = RA / cc;
                               
-                [ D, E ] = classifier( dataSet, Observation );
+                [ D, E ] = classifier( A, Observation );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
-                if( ACC > 0.70 )
+                if( ACC > T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
     
-                dataSet = circshift(dataSet,1);
+                A = circshift(A,1);
                 
                 rr = rr + 1;
             end
@@ -128,22 +130,22 @@ function [ RA ] = filterCreation( dataSet )
 
             dd = dd + 1; cc = 1;
 
-            for q = 1:1:size(dataSet,1)
+            for q = 1:1:size(A,1)
 
-                C = sum(dataSet(1:dd,:,K),1);
+                C = sum(A(1:dd,:,K),1);
                  
                 RA(5,:,K) = RA(5,:,K) + C; RA = RA / dd;
                 
-                [ D, E ] = classifier( dataSet, Observation );
+                [ D, E ] = classifier( A, Observation );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
-                if( ACC > 0.70 )
+                if( ACC > T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
     
-                dataSet = circshift(dataSet,1);
+                A = circshift(A,1);
                 
                 rr = rr + 1; 
             end
@@ -154,22 +156,22 @@ function [ RA ] = filterCreation( dataSet )
 
             ee = ee + 1; dd = 1;
 
-            for q = 1:1:size(dataSet,1)
+            for q = 1:1:size(A,1)
 
-                C = sum(dataSet(1:ee,:,K),1);
+                C = sum(A(1:ee,:,K),1);
                  
                 RA(6,:,K)  = RA(6,:,K) + C; RA = RA / ee; 
     
-                [ D, E ] = classifier( dataSet, Observation );
+                [ D, E ] = classifier( A, Observation );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E );
 
-                if( ACC > 0.70 )
+                if( ACC > T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
     
-                dataSet = circshift(dataSet,1);
+                A = circshift(A,1);
                 
                 rr = rr + 1; 
             end
@@ -180,22 +182,22 @@ function [ RA ] = filterCreation( dataSet )
 
             ff = ff + 1; ee = 1;
 
-            for q = 1:1:size(dataSet,1)
+            for q = 1:1:size(A,1)
 
-                C = sum(dataSet(1:ff,:,K),1);
+                C = sum(A(1:ff,:,K),1);
                  
                 RA(7,:,K) = RA(7,:,K) + C; RA = RA / ff;
                 
-                [ D, E ] = classifier( dataSet, Observation );
+                [ D, E ] = classifier( A, Observation );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
-                if( ACC > 0.70 )
+                if( ACC > T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
     
-                dataSet = circshift(dataSet,1);
+                A = circshift(A,1);
                 
                 rr = rr + 1; 
             end
@@ -206,22 +208,22 @@ function [ RA ] = filterCreation( dataSet )
 
             gg = gg + 1; ff = 1;
 
-            for q = 1:1:size(dataSet,1)
+            for q = 1:1:size(A,1)
 
-                C = sum(dataSet(1:gg,:,K),1);
+                C = sum(A(1:gg,:,K),1);
                  
                 RA(8,:,K) = RA(8,:,K) + C; RA = RA / gg; 
     
-                [ D, E ] = classifier( dataSet, Observation );
+                [ D, E ] = classifier( A, Observation );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E );
 
-                if( ACC > 0.70 )
+                if( ACC > T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
     
-                dataSet = circshift(dataSet,1);
+                A = circshift(A,1);
                 
                 rr = rr + 1; 
             end
@@ -232,22 +234,22 @@ function [ RA ] = filterCreation( dataSet )
 
             hh = hh + 1; gg = 1;
 
-            for q = 1:1:size(dataSet,1)
+            for q = 1:1:size(A,1)
 
-                C = sum(dataSet(1:hh,:,K),1);
+                C = sum(A(1:hh,:,K),1);
                  
                 RA(9,:,K) = RA(9,:,K) + C; RA = RA / hh; 
                
-                [ D, E ] = classifier( dataSet, Observation );
+                [ D, E ] = classifier( A, Observation );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E );
 
-                if( ACC > 0.70 )
+                if( ACC > T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
     
-                dataSet = circshift(dataSet,1);
+                A = circshift(A,1);
                 
                 rr = rr + 1; 
             end
@@ -255,6 +257,6 @@ function [ RA ] = filterCreation( dataSet )
         ii = ii + 1;
     end
 
-    [ RA ] = verifyFilter( RA, dataSet );
+    [ RA ] = verifyFilter( RA, A );
 
 end
