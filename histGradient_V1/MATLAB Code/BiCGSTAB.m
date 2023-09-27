@@ -98,5 +98,4 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
     WALK = sort(WALK_, 1,'descend');
     WALK = sort(WALK,  3,'descend');
     
-
 end
