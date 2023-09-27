@@ -19,8 +19,6 @@ cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB C
 
 global classType classGroups frameLength DATARANGE BINS Supervision Randomized Optimized Noise
 
-
-
 Classes = 8; % Classes per group...
 
 classType = zeros( 1, Classes ); 
