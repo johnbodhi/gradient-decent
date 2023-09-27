@@ -42,7 +42,7 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
             
             bb = bb + 1; aa = 1;
             
-            B(:,1) = frameLength .* X_(bb,:,K);           
+            B(:,1) = frameLength.*X_(bb,:,K);           
 
         elseif( bb > size(V,1) && cc <= size(V,1) )
 
@@ -86,7 +86,7 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
             BETA     = ( RHO(1,2) / RHO(1,1) ) * ( ALPHA / OMEGA );
 
             P(:,1)   = R(:,1) + BETA.*( P(:,1) - OMEGA.*V(:,1) );
-            
+
 
             kk = kk + 1;
         end 
