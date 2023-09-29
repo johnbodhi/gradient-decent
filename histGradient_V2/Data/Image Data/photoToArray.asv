@@ -6,9 +6,9 @@ Tumor    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\
 
 NonTumor = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Brain MRI Images\no"; 
 
-COVID    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Covid-19 Images\train\Covid"; 
+COVID    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\breast_xraysovid-19 Images\train\Cancerous"; 
 
-NonCOVID = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Covid-19 Images\train\Normal"; 
+NonCOVID = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\breast_xrays\train\nonCancerous"; 
 
 % Test sequences...
 

@@ -62,9 +62,9 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
         while( TOL <= LIMIT )
             
-            V(:,1) = A(:,1) .* P(:,1);
+            V(:,1) = A(:,1).*P(:,1);
 
-            ALPHA  = RHO(:,1) / dot( R(:,1), V(:,1) );
+            ALPHA  = RHO(1,1) / dot( R(:,1), V(:,1) );
 
             H(:,1) = X(:,1) + ALPHA.*P(:,1);
 
@@ -87,6 +87,7 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
             P(:,1)   = R(:,1) + BETA.*( P(:,1) - OMEGA.*V(:,1) );
 
+            RHO(1,1) = RHO(1,2);
 
             kk = kk + 1;
         end 
