@@ -2,41 +2,30 @@ clear all; close all; clc;
 
 % Training sequences...
 
-Tumor    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Brain MRI Images\yes"; 
+Tumor    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Brain MRI Images\train\yes"; 
 
-NonTumor = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Brain MRI Images\no"; 
+NonTumor = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Brain MRI Images\train\no"; 
 
-COVID    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Covid-19 Images\train\Covid"; 
+COVID    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Covid-19 Images\train\Covid"; 
 
-NonCOVID = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Covid-19 Images\train\Normal"; 
+NonCOVID = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Covid-19 Images\train\Normal"; 
 
 % Test sequences...
 
-% A1l = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Derm7pt\test\A1l";
+% Tumor    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Brain MRI Images\test\yes"; 
 % 
-% A2l = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Derm7pt\test\A2l";  
+% NonTumor = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Brain MRI Images\test\no"; 
 % 
-% Cancerous = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\breast_xrays\test\Cancerous"; 
+% COVID    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Covid-19 Images\test\Covid"; 
 % 
-% nonCancerous = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\breast_xrays\test\nonCancerous"; 
-% 
-% Pneumonia = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\chest_xray\test\PNEUMONIA";  
-% 
-% Normal = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\chest_xray\test\NORMAL"; 
-% 
-% Melanoma = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\MedNode\test\melanoma"; 
-% 
-% Naevus = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\MedNode\test\naevus"; 
+% NonCOVID = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Covid-19 Images\test\Normal"; 
 
-directoryArr = [ A1l A2l...                 
-                 Cancerous nonCancerous...
-                 Pneumonia Normal...
-                 Melanoma Naevus ];
 
-str1_ = [ "A1l (" "A2l ("...          
-          "Cancerous (" "nonCancerous ("...
-          "Pneumonia (" "Normal ("...  
-          "Melanoma (" "Naevus (" ];
+directoryArr = [ Tumor NonTumor...                 
+                 COVID NonCOVID ];
+
+str1_ = [ "Tumor (" "nonTumor ("...          
+          "COVID (" "NonCOVID (" ];
 
 for j = 1:size(str1_,2)
     cd( directoryArr( j ) );
@@ -50,37 +39,37 @@ for j = 1:size(str1_,2)
     end    
 end
 
-% Np = 100; Mp = 100;
-% 
-% NN = 0; sampleSize = Np * Mp; l = 1;
-% 
-% for p = 1:size( IMAGES, 2 )
-% 
-%      cd( directoryArr( p ) )
+Np = 30; Mp = 30;
+
+NN = 0; sampleSize = Np * Mp; l = 1;
+
+for p = 1:size( IMAGES, 2 )
+
+     cd( directoryArr( p ) )
+
+    for k = 1:numImages( p )
+
+%         RGB = imread( IMAGES( k, p ) ); 
 %     
-%     for k = 1:numImages( p )
+%         RGB = imresize( RGB, [ Np, Mp ] ); 
+% 
+%         I = rgb2gray(RGB);
 %     
-% %         RGB = imread( IMAGES( k, p ) ); 
-% %     
-% %         RGB = imresize( RGB, [ Np, Mp ] ); 
-% % 
-% %         I = rgb2gray(RGB);
-% %     
-% %         BW  = edge( I, 'Canny' );    
-%      
-%         h = imshow( IMAGES( k, p ) );
-%         
-%         im = imagemodel( h );    
-%     
-%         % Resized RGB vector...
-%        
-%         for j = 1:Np
-%             for i = 1:Mp          
-%                 pixels( l, 1:3 ) = getPixelValue( im, i, j );
-%                 pixels( l, 4:4 ) = p;
-%                 l = l + 1;
-%             end
-%         end     
-%     end          
-% end
-% dataSet = pixels;
+%         BW  = edge( I, 'Canny' );    
+
+        h = imshow( IMAGES( k, p ) );
+
+        im = imagemodel( h );    
+
+        % Resized RGB vector...
+
+        for j = 1:Np
+            for i = 1:Mp          
+                pixels( l, 1:3 ) = getPixelValue( im, i, j );
+                pixels( l, 4:4 ) = p;
+                l = l + 1;
+            end
+        end     
+    end          
+end
+dataSet = pixels;

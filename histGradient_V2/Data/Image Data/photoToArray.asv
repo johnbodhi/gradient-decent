@@ -6,29 +6,22 @@ Tumor    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\
 
 NonTumor = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Brain MRI Images\no"; 
 
-COVID    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\breast_xraysovid-19 Images\train\Cancerous"; 
+COVID    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Covid-19 Images\train\Covid"; 
 
-NonCOVID = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\breast_xrays\train\nonCancerous"; 
+NonCOVID = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Covid-19 Images\train\Normal"; 
 
 % Test sequences...
 
-% A1l = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Derm7pt\test\A1l";
+% Tumor    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Brain MRI Images\yes"; 
 % 
-% A2l = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Derm7pt\test\A2l";  
+% NonTumor = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Brain MRI Images\no"; 
 % 
-% Cancerous = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\breast_xrays\test\Cancerous"; 
+% COVID    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Covid-19 Images\test\Covid"; 
 % 
-% nonCancerous = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\breast_xrays\test\nonCancerous"; 
-% 
-% Pneumonia = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\chest_xray\test\PNEUMONIA";  
-% 
-% Normal = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\chest_xray\test\NORMAL"; 
-% 
-% Melanoma = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\MedNode\test\melanoma"; 
-% 
-% Naevus = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\MedNode\test\naevus"; 
+% NonCOVID = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data\Covid-19 Images\test\Normal"; 
 
-directoryArr = [ A1l A2l...                 
+
+directoryArr = [ Tumor nonTumor...                 
                  Cancerous nonCancerous...
                  Pneumonia Normal...
                  Melanoma Naevus ];
