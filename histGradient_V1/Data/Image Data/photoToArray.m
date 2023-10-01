@@ -58,40 +58,37 @@ for j = 1:size(str1_,2)
     end    
 end
 
-Np = 100; Mp = 100;
-
-NN = 0; sampleSize = Np * Mp; l = 1;
-
-for p = 1:size( IMAGES, 2 )
-
-     cd( directoryArr( p ) )
-
-    for k = 1:numImages( p )
-
-%         RGB = imread( IMAGES( k, p ) ); 
-%     
-%         RGB = imresize( RGB, [ Np, Mp ] ); 
+% Np = 25; Mp = 25;
 % 
-%         I = rgb2gray(RGB);
-%     
-%         BW  = edge( I, 'Canny' );    
-
-        h = imshow( IMAGES( k, p ) );
-
-        im = imagemodel( h );    
-
-        % Resized RGB vector...
-
-        for j = 1:Np
-            for i = 1:Mp          
-                pixels( l, 1:3 ) = getPixelValue( im, i, j );
-                pixels( l, 4:4 ) = p;
-                l = l + 1;
-            end
-        end     
-    end          
-end
-dataSet = pixels;
-
-
-
+% NN = 0; sampleSize = Np * Mp; l = 1;
+% 
+% for p = 1:size( IMAGES, 2 )
+% 
+%      cd( directoryArr( p ) )
+% 
+%     for k = 1:numImages( p )
+% 
+%         RGB = imread( IMAGES( k, p ) ); 
+% 
+%         RGB = imresize( RGB, [ Np, Mp ] ); 
+% % 
+% %         I = rgb2gray(RGB);
+% %     
+% %         BW  = edge( I, 'Canny' );    
+% 
+%         h = imshow( RGB );
+% 
+%         im = imagemodel( h );    
+% 
+%         % Resized RGB vector...
+% 
+%         for j = 1:Np
+%             for i = 1:Mp          
+%                 pixels( l, 1:3 ) = getPixelValue( im, i, j );
+%                 pixels( l, 4:4 ) = p;
+%                 l = l + 1;
+%             end
+%         end     
+%     end          
+% end
+% dataSet = pixels;

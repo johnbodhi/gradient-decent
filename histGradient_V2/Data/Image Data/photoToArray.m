@@ -2,35 +2,40 @@ clear all; close all; clc;
 
 % Training sequences...
 
-Tumor    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Brain MRI Images\train\yes"; 
-
-NonTumor = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Brain MRI Images\train\no"; 
-
-COVID    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Covid-19 Images\train\Covid"; 
-
-NonCOVID = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Covid-19 Images\train\Normal"; 
+% Tumor    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Brain MRI Images\train\yes"; 
+% 
+% NonTumor = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Brain MRI Images\train\no"; 
+% 
+% COVID    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Covid-19 Images\train\Covid"; 
+% 
+% Normal = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Covid-19 Images\train\Normal"; 
 
 % Test sequences...
 
-% Tumor    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Brain MRI Images\test\yes"; 
-% 
-% NonTumor = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Brain MRI Images\test\no"; 
-% 
-% COVID    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Covid-19 Images\test\Covid"; 
-% 
-% NonCOVID = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Covid-19 Images\test\Normal"; 
+Tumor    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Brain MRI Images\test\yes"; 
 
+NonTumor = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Brain MRI Images\test\no"; 
+
+COVID    = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Covid-19 Images\test\Covid"; 
+
+Normal   = "C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data\Covid-19 Images\test\Normal"; 
 
 directoryArr = [ Tumor NonTumor...                 
-                 COVID NonCOVID ];
+                 COVID Normal ];
 
-str1_ = [ "Tumor (" "nonTumor ("...          
-          "COVID (" "NonCOVID (" ];
+str1_ = [ "Tumor (" "NonTumor ("...          
+          "COVID (" "Normal (" ];
 
 for j = 1:size(str1_,2)
-    cd( directoryArr( j ) );
-    Images = dir('*.jpg'); numImages( j ) = numel( Images );
+
+    cd( directoryArr( j ) );    
+
+    Images = dir('*.jpg'); 
+
+    numImages( j ) = numel( Images );
+
     for i = 1:1:numImages( j )
+
         str1 = str1_( j );  
         str2 = num2str( i ); 
         str3 = ").jpg";
@@ -49,15 +54,15 @@ for p = 1:size( IMAGES, 2 )
 
     for k = 1:numImages( p )
 
-%         RGB = imread( IMAGES( k, p ) ); 
-%     
-%         RGB = imresize( RGB, [ Np, Mp ] ); 
-% 
+        RGB = imread( IMAGES( k, p ) ); 
+
+        RGB = imresize( RGB, [ Np, Mp ] ); 
+
 %         I = rgb2gray(RGB);
 %     
 %         BW  = edge( I, 'Canny' );    
 
-        h = imshow( IMAGES( k, p ) );
+        h = imshow( RGB );
 
         im = imagemodel( h );    
 

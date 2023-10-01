@@ -2,7 +2,7 @@ program dataSetRandomized
 use ifport
 implicit none
 
-integer, parameter      :: L = 906250, C = 4
+integer, parameter      :: L = 600, C = 4
 integer,dimension(L,C)  :: X
 integer,dimension(L)    :: R, G, B, Z
 integer,dimension(L)    :: F

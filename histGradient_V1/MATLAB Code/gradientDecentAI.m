@@ -27,7 +27,7 @@ Groups  = 3; % Groups per classification (RGB)...
 
 classGroups = zeros( 1, Groups );
 
-Np = 100; Mp = 100; frameLength = Np * Mp; % Photo length, and width. 
+Np = 25; Mp = 25; frameLength = Np * Mp; % Photo length, and width. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -99,9 +99,13 @@ if ( Supervision )
 
     dataSet = readmatrix( 'trainRGB (1).csv' ); % Supervised training data.
 
+    % dataSet = readmatrix( 'trainRGB (3).csv' ); % Supervised training data.
+
 elseif( ~Supervision )
 
     dataSet = readmatrix( 'trainRGB (2).csv' );   % Unsupervised training data.
+
+    % dataSet = readmatrix( 'trainRGB (4).csv' );   % Unsupervised training data.
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
