@@ -50,9 +50,13 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
         end
         
-        R_0(:,1) = B(:,1) - A(:,1).*X(:,1); R(:,1) = R_0;
+        R_0(:,1) = B(:,1) - A(:,1).*X(:,1); 
+        
+        R(:,1)   = R_0(:,1);
 
-        RHO_0    = dot(R_0(:,1), R_0(:,1)); RHO(1,1) = RHO_0;
+        RHO_0    = dot(R_0(:,1), R_0(:,1)); 
+        
+        RHO(1,1) = RHO_0;
 
         P(:,1)   = R_0(:,1);
 
@@ -100,5 +104,5 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
     WALK = sort(WALK_, 1,'descend');
     WALK = sort(WALK,  3,'descend');
 
-    % Z_ = 
+    Z_ = 
 end
