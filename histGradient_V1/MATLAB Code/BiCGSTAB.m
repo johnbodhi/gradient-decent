@@ -60,13 +60,15 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
             
             V(:,1) = A(:,1).*P(:,1);
 
+
             ALPHA  = RHO(1,1) / dot( R(:,1), V(:,1) );
 
             H(:,1) = X(:,1) + ALPHA.*P(:,1);
 
-            S(:,1) = R(:,1) - ALPHA.*V(:,1);
+            S(:,1) = R(:,1) - ALPHA.*V(:,1);            
 
             T(:,1) = A(:,1).*S(:,1);
+
 
             OMEGA  = dot( T(:,1), S(:,1) ) / dot( T(:,1), T(:,1) );
 
@@ -77,7 +79,9 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
             RHO(1,2) = dot( R_0(:,1), R(:,1) );
 
+
             TOL      = RHO(1,2) / RHO_0;
+
 
             BETA     = ( RHO(1,2) / RHO(1,1) ) * ( ALPHA / OMEGA );
 
