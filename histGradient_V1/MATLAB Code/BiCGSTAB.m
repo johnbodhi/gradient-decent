@@ -1,6 +1,6 @@
 function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
-    global classType classGroups frameLength Train
+    global classType classGroups frameLength
 
     N   = size(Y_,1); 
     
@@ -97,5 +97,4 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
     WALK = sort(WALK,  3,'descend');
 
     % Z_ = 
-
 end
