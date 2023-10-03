@@ -17,12 +17,12 @@ function [ D, E ] = classifier( dataSet, Observation )
 
         Observation_ = histData(:,size(dataSet,2));
 
-        RA = Q; % We need to reset RA between classes...
+        % RA = Q; % We need to reset RA between classes...
 
         % We can utilize non-stationary RA during classification to
         % monitor dissimilarity between objects...
 
-        SVM( histData, [], Observation_ ); 
+        % SVM( histData, [], Observation_ ); 
 
         % histData = kmeans( histData, Observation_ ); % k-means image data set.
 

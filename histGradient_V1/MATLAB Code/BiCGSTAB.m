@@ -24,102 +24,165 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
 
     LIMIT = 1e-5;
 
-    while( sum(sum(sum(V,1),2),3) < SUM )
+    if( N == 1 )
 
-        K = ceil( ii / SUP ) + 1;
+        X_ = frameLength.*X_; A = Y_;
 
-        if( aa <= size(V,2) )
+        for ii = 1:1:size(X_,1)
 
-            V(aa,1,K) = 1;
-
-            aa = aa + 1;    
+            R_0(:,1) = X_(ii,:,1) - Y_(1,:,1).*Y_(1,:,1); 
             
-            A(:,1) = Y_(aa,:,K);            
+            R(:,1)   = R_0(:,1);
+    
+            RHO_0    = dot(R_0(:,1), R_0(:,1)); 
             
-        elseif( aa > size(V,3) && bb <= size(V,3) )
+            RHO(1,1) = RHO_0;
+    
+            P(:,1)   = R_0(:,1);            
+    
+            while( TOL <= LIMIT )
+                
+                V(:,1) = A(:,1).*P(:,1);
+    
+    
+                ALPHA  = RHO(1,1) / dot( R(:,1), V(:,1) );
+    
+                H(:,1) = X(:,1) + ALPHA.*P(:,1);
+    
+                S(:,1) = R(:,1) - ALPHA.*V(:,1);            
+    
+                T(:,1) = A(:,1).*S(:,1);
+    
+    
+                OMEGA  = dot( T(:,1), S(:,1) ) / dot( T(:,1), T(:,1) );
+    
+                X(:,1) = H(:,1) + OMEGA(:,1).*S(:,1);
+    
+                R(:,1) = S(:,1) - OMEGA(:,1).*T(:,1);
+    
+    
+                RHO(1,2) = dot( R_0(:,1), R(:,1) );
+    
+    
+                TOL      = RHO(1,2) / RHO_0;
+    
+    
+                BETA     = ( RHO(1,2) / RHO(1,1) ) * ( ALPHA / OMEGA );
+    
+                P(:,1)   = R(:,1) + BETA.*( P(:,1) - OMEGA.*V(:,1) );
+    
+                RHO(1,1) = RHO(1,2);
+    
+                kk = kk + 1;
+            end 
+    
+            WALK_(1,jj) = kk; jj = jj + 1; kk = 1;
 
-            V(bb,2,K) = 1; V(:,1,K) = 0;
-            
-            bb = bb + 1; aa = 1;
-            
-            B(:,1) = frameLength.*X_(bb,:,K);           
-
-        elseif( bb > size(V,1) && cc <= size(V,1) )
-
-            V(cc,3,K) = 1; V(:,2,K) = 0;
-
-            cc = cc + 1; bb = 1;
-            
-            X(:,1) = Y_(cc,:,K);
-
+            [ ~, Z_ ] = min(WALK_);
         end
         
-        R_0(:,1) = B(:,1) - A(:,1).*X(:,1); 
-        
-        R(:,1)   = R_0(:,1);
+        RA(Z_,:,:) = ( RA(Z_,:,:) + Y_ ) ./ 2;
 
-        RHO_0    = dot(R_0(:,1), R_0(:,1)); 
-        
-        RHO(1,1) = RHO_0;
+    else
 
-        P(:,1)   = R_0(:,1);
-
-        while( TOL <= LIMIT )
-            
-            V(:,1) = A(:,1).*P(:,1);
-
-
-            ALPHA  = RHO(1,1) / dot( R(:,1), V(:,1) );
-
-            H(:,1) = X(:,1) + ALPHA.*P(:,1);
-
-            S(:,1) = R(:,1) - ALPHA.*V(:,1);            
-
-            T(:,1) = A(:,1).*S(:,1);
-
-
-            OMEGA  = dot( T(:,1), S(:,1) ) / dot( T(:,1), T(:,1) );
-
-            X(:,1) = H(:,1) + OMEGA(:,1).*S(:,1);
-
-            R(:,1) = S(:,1) - OMEGA(:,1).*T(:,1);
-
-
-            RHO(1,2) = dot( R_0(:,1), R(:,1) );
-
-
-            TOL      = RHO(1,2) / RHO_0;
-
-
-            BETA     = ( RHO(1,2) / RHO(1,1) ) * ( ALPHA / OMEGA );
-
-            P(:,1)   = R(:,1) + BETA.*( P(:,1) - OMEGA.*V(:,1) );
-
-            RHO(1,1) = RHO(1,2);
-
-            kk = kk + 1;
-        end 
-
-        WALK_(aa,bb,cc) = kk; kk = 1;
-        
-        ii = ii + 1;
-    end
-
-    WALK  = sort(WALK_, 1,'descend');
-    WALK  = sort(WALK,  3,'descend');
-
-    EP_MU = 1; 
-
-    for j = 1:1:size(WALK,2)
-
-        for k = 2:1:size(WALK,1)
-
-            Z_(k,j) = WALK(1,j,k);
+        while( sum(sum(sum(V,1),2),3) < SUM )
     
-            if( ( WALK(1,j,k) - WALK(1,j,k-1) ) >= EP_MU )
+            K = ceil( ii / SUP ) + 1;
+    
+            if( aa <= size(V,2) )
+    
+                V(aa,1,K) = 1;
+    
+                aa = aa + 1;    
                 
-                break;                
+                A(:,1) = Y_(aa,:,K);            
+                
+            elseif( aa > size(V,3) && bb <= size(V,3) )
+    
+                V(bb,2,K) = 1; V(:,1,K) = 0;
+                
+                bb = bb + 1; aa = 1;
+                
+                B(:,1) = frameLength.*X_(bb,:,K);           
+    
+            elseif( bb > size(V,1) && cc <= size(V,1) )
+    
+                V(cc,3,K) = 1; V(:,2,K) = 0;
+    
+                cc = cc + 1; bb = 1;
+                
+                X(:,1) = Y_(cc,:,K);
+    
             end
+            
+            R_0(:,1) = B(:,1) - A(:,1).*X(:,1); 
+            
+            R(:,1)   = R_0(:,1);
+    
+            RHO_0    = dot(R_0(:,1), R_0(:,1)); 
+            
+            RHO(1,1) = RHO_0;
+    
+            P(:,1)   = R_0(:,1);
+    
+            while( TOL <= LIMIT )
+                
+                V(:,1) = A(:,1).*P(:,1);
+    
+    
+                ALPHA  = RHO(1,1) / dot( R(:,1), V(:,1) );
+    
+                H(:,1) = X(:,1) + ALPHA.*P(:,1);
+    
+                S(:,1) = R(:,1) - ALPHA.*V(:,1);            
+    
+                T(:,1) = A(:,1).*S(:,1);
+    
+    
+                OMEGA  = dot( T(:,1), S(:,1) ) / dot( T(:,1), T(:,1) );
+    
+                X(:,1) = H(:,1) + OMEGA(:,1).*S(:,1);
+    
+                R(:,1) = S(:,1) - OMEGA(:,1).*T(:,1);
+    
+    
+                RHO(1,2) = dot( R_0(:,1), R(:,1) );
+    
+    
+                TOL      = RHO(1,2) / RHO_0;
+    
+    
+                BETA     = ( RHO(1,2) / RHO(1,1) ) * ( ALPHA / OMEGA );
+    
+                P(:,1)   = R(:,1) + BETA.*( P(:,1) - OMEGA.*V(:,1) );
+    
+                RHO(1,1) = RHO(1,2);
+    
+                kk = kk + 1;
+            end 
+    
+            WALK_(aa,bb,cc) = kk; kk = 1;
+            
+            ii = ii + 1;
+        end
+    
+        WALK  = sort(WALK_, 1,'descend');
+        WALK  = sort(WALK,  3,'descend');
+    
+        EP_MU = 1; 
+    
+        for j = 1:1:size(WALK,2)
+    
+            for k = 2:1:size(WALK,1)
+    
+                Z_(k,j) = WALK(1,j,k);
+        
+                if( ( WALK(1,j,k) - WALK(1,j,k-1) ) >= EP_MU )
+                    
+                    break;                
+                end
+            end
+    
         end
 
     end
