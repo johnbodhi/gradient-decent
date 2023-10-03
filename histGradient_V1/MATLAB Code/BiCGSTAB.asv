@@ -1,6 +1,6 @@
 function [ RA ] = BiCGSTAB( X_, Y_ )
 
-    global classType classGroups BINS frameLength
+    global classType classGroups frameLength
 
     N   = size(Y_,1); 
     
@@ -124,23 +124,21 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
 
     end
 
+    % Average over grouped indices...
+
     RA = zeros(M,BINS,O); ii = 1;
 
-    for k = 1:1:O
+    for k = 1:1:size(classGroups,2)
         for j = 1:1:size(Z_,2)
             for i = 1:1:size(Z_,1)
         
-                if( Z_(i,j) ~= 0 )
-
-                    RA(ii,:,k) =  RA(ii,:,k) + Y_(Z_(i,j),:,k); 
-                else
-
-                    break;
-                end                
+                RA(ii,:,k) =  RA(ii,:,k) + Y_(Z_(i,j),:,k); 
             end
             ii = ii + 1;
         end
         ii = 1;
     end
+    RA = RA / frameLength;
+
 
 end

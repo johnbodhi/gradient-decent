@@ -141,7 +141,13 @@ while( PERSISTENCE < T )
     
     % dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
     
-    dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence. 
+    dataSet = readmatrix( 'testRGB (1).csv' ); % Unsupervised test sequence. 
+
+    % dataSet = readmatrix( 'testRGB (2).csv' ); % Unsupervised test sequence. 
+
+    % dataSet = readmatrix( 'testRGB (3).csv' ); % Unsupervised test sequence. 
+
+    % dataSet = readmatrix( 'testRGB (4).csv' ); % Unsupervised test sequence. 
     
     cd("C:\Users\johnbodhi\\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
     
