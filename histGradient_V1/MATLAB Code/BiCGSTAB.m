@@ -82,7 +82,6 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
         end
         
         RA(Z_,:,:) = ( RA(Z_,:,:) + Y_ ) ./ 2;
-
     else
 
         while( sum(sum(sum(V,1),2),3) < SUM )
@@ -159,8 +158,8 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                 RHO(1,1) = RHO(1,2);
     
                 kk = kk + 1;
-            end 
-    
+            end    
+
             WALK_(aa,bb,cc) = kk; kk = 1;
             
             ii = ii + 1;
@@ -171,8 +170,7 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
     
         EP_MU = 1; 
     
-        for j = 1:1:size(WALK,2)
-    
+        for j = 1:1:size(WALK,2)    
             for k = 2:1:size(WALK,1)
     
                 Z_(k,j) = WALK(1,j,k);
@@ -181,27 +179,30 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                     
                     break;                
                 end
-            end
-    
+            end    
         end
 
     end
 
-    RA = zeros(M,BINS,O); ii = 1;
+    RA = zeros(M,BINS,O); ii = 1; ll = 1;
 
-    for k = 1:1:O
+    for k = 1:1:size(classGroups,2)
         for j = 1:1:size(Z_,2)
             for i = 1:1:size(Z_,1)
         
                 if( Z_(i,j) ~= 0 )
 
-                    RA(ii,:,k) =  RA(ii,:,k) + Y_(Z_(i,j),:,k); 
+                    RA(ii,:,k) = RA(ii,:,k) + Y_(Z_(i,j),:,k); 
+
+                    ll = ll + 1;
                 else
 
                     break;
-                end                
+                end
+                
             end
-            ii = ii + 1;
+            RA(ii,:,k) = RA(ii,:,k) / ll; ll = 1;
+            ii = ii + 1; 
         end
         ii = 1;
     end
