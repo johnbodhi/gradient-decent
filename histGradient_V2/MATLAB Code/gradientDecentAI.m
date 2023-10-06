@@ -27,7 +27,7 @@ Groups  = 3; % Groups per classification (RGB)...
 
 classGroups = zeros( 1, Groups );
 
-Np = 100; Mp = 100; frameLength = Np * Mp; % Photo length, and width. 
+Np = 25; Mp = 25; frameLength = Np * Mp; % Photo length, and width. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -99,9 +99,13 @@ if ( Supervision )
 
     dataSet = readmatrix( 'trainRGB (1).csv' ); % Supervised training data.
 
+    % dataSet = readmatrix( 'trainRGB (3).csv' ); % Supervised training data.
+
 elseif( ~Supervision )
 
     dataSet = readmatrix( 'trainRGB (2).csv' );   % Unsupervised training data.
+
+    % dataSet = readmatrix( 'trainRGB (4).csv' );   % Unsupervised training data.
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -137,7 +141,13 @@ while( PERSISTENCE < T )
     
     % dataSet = readmatrix( 'verificationRGB.csv' ); % Supervised test sequence.
     
-    dataSet = readmatrix( 'testRGB.csv' ); % Unsupervised test sequence. 
+    dataSet = readmatrix( 'testRGB (1).csv' ); % Unsupervised test sequence. 
+
+    % dataSet = readmatrix( 'testRGB (2).csv' ); % Unsupervised test sequence. 
+
+    % dataSet = readmatrix( 'testRGB (3).csv' ); % Unsupervised test sequence. 
+
+    % dataSet = readmatrix( 'testRGB (4).csv' ); % Unsupervised test sequence. 
     
     cd("C:\Users\johnbodhi\\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
     

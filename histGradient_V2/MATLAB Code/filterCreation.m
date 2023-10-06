@@ -2,13 +2,13 @@ function [ RA ] = filterCreation( A )
 
     global classType classGroups
 
-    N = size(A,1); 
+    N   = size(A,1); 
     
-    M = size(classType,2); 
+    M   = size(classType,2); 
 
     SUM = size(classGroups,2)*N*M; 
     
-    B = zeros(N,M,size(classGroups,2));
+    B   = zeros(N,M,size(classGroups,2));
 
     % SUP = simpleNN(N,M); 
     
