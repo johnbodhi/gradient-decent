@@ -2,11 +2,11 @@ clear all; close all; clc;
 
 tic;
 
-cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Image Data");
+cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Image Data");
 
 photoToArray(); % Pre-process all images.
 
-cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code"); 
+cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\MATLAB Code"); 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -27,7 +27,7 @@ Groups  = 3; % Groups per classification (RGB)...
 
 classGroups = zeros( 1, Groups );
 
-Np = 25; Mp = 25; frameLength = Np * Mp; % Photo length, and width. 
+Np = 30; Mp = 30; frameLength = Np * Mp; % Photo length, and width. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -93,7 +93,7 @@ Observation = verificationList( N );
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
+cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Excel Data");
 
 if ( Supervision )
 
@@ -116,7 +116,7 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
+cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\MATLAB Code");
 
 classifierTraining( dataSet, N, Observation );
 
@@ -135,7 +135,7 @@ PERSISTENCE = 1; T = 100;
 
 while( PERSISTENCE < T )
 
-    cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V1\Data\Excel Data");
+    cd("C:\Users\johnbodhi\Documents\GitHub\gradient-decent\histGradient_V2\Data\Excel Data");
     
     % Test sequences not included in training data...
     
@@ -144,12 +144,8 @@ while( PERSISTENCE < T )
     dataSet = readmatrix( 'testRGB (1).csv' ); % Unsupervised test sequence. 
 
     % dataSet = readmatrix( 'testRGB (2).csv' ); % Unsupervised test sequence. 
-
-    % dataSet = readmatrix( 'testRGB (3).csv' ); % Unsupervised test sequence. 
-
-    % dataSet = readmatrix( 'testRGB (4).csv' ); % Unsupervised test sequence. 
     
-    cd("C:\Users\johnbodhi\\Documents\GitHub\gradient-decent\histGradient_V1\MATLAB Code");
+    cd("C:\Users\johnbodhi\\Documents\GitHub\gradient-decent\histGradient_V2\MATLAB Code");
     
     dataSet = histogramization( dataSet, N, Observation );  
     
