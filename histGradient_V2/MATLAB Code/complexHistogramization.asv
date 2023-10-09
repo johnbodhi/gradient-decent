@@ -7,49 +7,73 @@ function [ F ] = complexHistogramization( X, Y, Z )
         [ X, L ] = randomizeAll( X, Y ); % Randomize all photos.
     end
 
-    % Generate histograms...    
-
+    % Generate histograms...
+    
     % SCALE = floor( DATARANGE / BINS );
 
-    F_    = zeros(sum(Y),DATARANGE^2,size(classGroups,2)); H = 1;
+    F_    = zeros(sum(Y),DATARANGE^2,1); H = 1; jj = 1;
 
-    for k = 1:1:size(X,2)-1
-        for ii = 1:1:sum(Y)
-            X_(:,1) = X((ii-1)*frameLength+1:ii*frameLength,k);
-            for j = 0:1:DATARANGE
-                for i = 1:1:size(X_,1)
-                
-                    if( j == X_(i,1) )
 
-                        F_(ii,X_(i,1)+1,k) = H;
 
-                        H = H + 1;            
-                    end
-                end 
-                H = 1;
-            end
-        end
-    end
+   
+    for ii = 1:1:sum(Y)
 
-    if ( BINS < DATARANGE )
-
-        % F = zeros(sum(Y),BINS,size(classGroups,2));
-        % 
-        % for k = 1:1:size(F_,3)
-        %     for i = 1:1:size(F_,1)
-        %         for j = 1:1:BINS
-        % 
-        %             F(i,j,k) = sum(F_(i,(j-1)*SCALE+1:j*SCALE,k),2);
-        %         end
-        %     end
-        % end
+        X_(:,:) = X((ii-1)*frameLength+1:ii*frameLength,:);
         
-    else
+        while( jj < size(classGroups,2) )
+            
+            C_(uu,vv) = X_(ii,jj);
 
-        F = F_;
+            
+            
+            
+
+
+        end
+        
+        
+        
+        
+         
+        
+        for i = 0:1:DATARANGE
+            for j = 0:1:DATARANGE
+                for k = 1:1:size(C_,1)
+
+                    if( i == C_(k,1) && j == C_(k,2) ) 
+                        
+                        H = H + 1;
+                    end
+                end
+                F_(ii,jj,1) = H; H = 1;
+                
+                jj = jj + 1; 
+            end                
+        end
+
     end
 
-    F = F ./ frameLength;
+    % if ( BINS < DATARANGE )
+    % 
+    %     % F = zeros(sum(Y),BINS,size(classGroups,2));
+    %     % 
+    %     % for k = 1:1:size(F_,3)
+    %     %     for i = 1:1:size(F_,1)
+    %     %         for j = 1:1:BINS
+    %     % 
+    %     %             F(i,j,k) = sum(F_(i,(j-1)*SCALE+1:j*SCALE,k),2);
+    %     %         end
+    %     %     end
+    %     % end
+    % 
+    % else
+    % 
+    % F = F_;
+    % end
+
+    F = F_;
+
+    F = F ./ size(C_,1);
 
     F = cat(2,F,zeros(size(F,1),1,size(F,3)));
 
