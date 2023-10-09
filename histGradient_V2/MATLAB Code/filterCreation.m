@@ -6,7 +6,7 @@ function [ RA ] = filterCreation( A )
     
     M   = size(classType,2); 
 
-    SUM = size(classGroups,2)*N*M; 
+    SUM = size(classGroups,2) * N * M; 
     
     B   = zeros(N,M,size(classGroups,2));
 
