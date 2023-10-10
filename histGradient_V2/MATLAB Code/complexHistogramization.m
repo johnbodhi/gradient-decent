@@ -74,7 +74,7 @@ function [ F ] = complexHistogramization( X, Y, Z )
         jj = 1;
 
         aa = 1; bb = 1;
-        cc = 1; dd = 0;
+        cc = 1; dd = 1;
         uu = 1; vv = 1;
     end
 
