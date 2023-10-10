@@ -11,30 +11,53 @@ function [ F ] = complexHistogramization( X, Y, Z )
     
     % SCALE = floor( DATARANGE / BINS );
 
+    C_    = zeros(frameL)
+
     F_    = zeros(sum(Y),DATARANGE^2,1); H = 1; jj = 1;
 
-
-
+    aa = 1; bb = 1;
+    cc = 1; ss = 1;
+    uu = 1; vv = 1;    
    
     for ii = 1:1:sum(Y)
 
-        X_(:,:) = X((ii-1)*frameLength+1:ii*frameLength,:);
+        X_(:,:) = X((ii-1)*frameLength+1:ii*frameLength,:); N = size(X_,1);
         
-        while( jj < size(classGroups,2) )
+        while( ss <=  )
             
-            C_(uu,vv) = X_(ii,jj);
+            C_(uu,vv) = X_(aa,cc); 
+            
+            aa = aa + 1; 
+            uu = uu + 1;
 
-            
-            
-            
+            ss = ss + 1;
 
+            if( vv == 1 )
+            
+                if( aa >= size(X_,1) )
+    
+                    aa = 1; bb = bb + 1;
+                elseif( bb >= size(classGroups,2) )
+                    
+                    bb = 1; cc = cc + 1;
+                elseif( cc >= size(classGroups,2) )
+                    
+                    cc = 1; uu = 1; vv = vv + 1;                
+                end
+
+            elseif( vv > 1 )
+                
+                if( aa >= size(X_,1) )
+    
+                    aa = 1; cc = cc + 1;
+                elseif( cc >= size(classGroups,2) )
+                    
+                    cc = 1;    
+                end
+
+            end
 
         end
-        
-        
-        
-        
-         
         
         for i = 0:1:DATARANGE
             for j = 0:1:DATARANGE
