@@ -34,19 +34,41 @@ function [ F ] = complexHistogramization( X, Y, Z )
             if( vv <= 1 )
             
                 if( aa > size(X_,1) )
-    
-                    aa = 1; bb = bb + 1;
-                elseif( bb > size(classGroups,2) )
-                    
-                    bb = 1; cc = cc + 1;
-                elseif( cc > size(classGroups,2) )
 
-                    cc = 1; vv = vv + 1; uu = 1;          
+                    C_(uu,vv) = X_(aa,cc);
+
+                    aa = aa + 1;
+                    uu = uu + 1;
+                    dd = dd + 1;
+
+                elseif( aa > size(classGroups,2) && bb <= size(classGroups,2) )
+                    
+                    aa = 1; 
+                    
+                    bb = bb + 1;
+                    uu = uu + 1;
+                    dd = dd + 1;
+
+                elseif( bb > size(classGroups,2) && cc <= size(classGroups,2) )
+
+                    bb = 1; 
+
+                    cc = bb + 1;
+                    uu = uu + 1;
+                    dd = dd + 1;
+
+
+                    
+                elseif( cc > size(classGroups,2) )
+                    
+                    vv = vv + 1; uu = 1;          
                 end
                 
             elseif( vv > 1 )
                 
                 if( aa > size(X_,1) )
+
+                    C_(uu,vv) = X_(aa,cc);
     
                     aa = 1; cc = cc + 1;
                 elseif( cc > size(classGroups,2) )
@@ -65,7 +87,7 @@ function [ F ] = complexHistogramization( X, Y, Z )
                         
                         H = H + 1;
                     end
-                    
+
                 end
                 F_(ii,jj,1) = H; H = 0;
                 
