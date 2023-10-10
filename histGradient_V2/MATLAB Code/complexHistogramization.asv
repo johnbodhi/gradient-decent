@@ -13,81 +13,59 @@ function [ F ] = complexHistogramization( X, Y, Z )
 
     C_    = zeros(frameLength*size(classGroups,2)^2,2);
 
-    F_    = zeros(sum(Y),DATARANGE^2,1); H = 1; jj = 1;
-
-    aa = 1; bb = 1;
-    cc = 1; dd = 1;
-    uu = 1; vv = 1;    
+    F_    = zeros(sum(Y),DATARANGE^2,1); 
    
     for ii = 1:1:sum(Y)
 
-        X_(:,:) = X((ii-1)*frameLength+1:ii*frameLength,:);
+       X_(:,:) = X((ii-1)*frameLength+1:ii*frameLength,:);
+
+       ii = 1; jj = 1; kk = 1;
+       for j = 1:1:size(C_,2)
+           for i = 1:1:size(C_,1)
+              
+               
+               
+               if( j <= 1 )
+                    
+                   if( ii <= size(X_,1) )
+
+                       C_(i,j) = X_(ii,jj);
+
+                       ii = ii + 1;                       
+                   elseif( ii > size(X_,1) && kk < size(X_,2) )
+
+                       ii = 1; kk = kk + 1;
+                   elseif( kk >= size(X_,2) && jj < size(X_,2) )
+
+                       kk = 1; jj = jj + 1;
+                   end
+               
+               elseif( j >= 2 )
+
+                   if( ii <= size(X_,1) )
+
+                       C_(i,j) = X_(ii,jj);
+
+                       ii = ii + 1; 
+                   elseif( jj >= size(X_,2) )
+
+                       jj = 1;
+                   end
+
+               end               
+           end
+           jj = 1;
+       end
         
-        while( dd <= 2*size(C_,1) )
-            
-            C_(uu,vv) = X_(aa,cc); 
-            
-            aa = aa + 1;
-            uu = uu + 1;                      
-            dd = dd + 1;
-
-            if( vv <= 1 )
-            
-                if( aa > size(X_,1) )
-
-                    C_(uu,vv) = X_(aa,cc);
-
-                    aa = aa + 1;
-                    uu = uu + 1;
-                    dd = dd + 1;
-
-                elseif( aa > size(classGroups,2) && bb <= size(classGroups,2) )
-                    
-                    aa = 1; 
-                    
-                    bb = bb + 1;
-                    uu = uu + 1;
-                    dd = dd + 1;
-
-                elseif( bb > size(classGroups,2) && cc <= size(classGroups,2) )
-
-                    bb = 1; 
-
-                    cc = bb + 1;
-                    uu = uu + 1;
-                    dd = dd + 1;
-
-
-                    
-                elseif( cc > size(classGroups,2) )
-                    
-                    vv = vv + 1; uu = 1;          
-                end
-                
-            elseif( vv > 1 )
-                
-                if( aa > size(X_,1) )
-
-                    C_(uu,vv) = X_(aa,cc);
-    
-                    aa = 1; cc = cc + 1;
-                elseif( cc > size(classGroups,2) )
-                    
-                    cc = 1;    
-                end
-
-            end
-        end
-        
+        H = 1; jj = 1;
         for i = 0:1:DATARANGE-1
             for j = 0:1:DATARANGE-1
                 for k = 1:1:size(C_,1)
-
+        
                     if( i == C_(k,1) && j == C_(k,2) ) 
                         
                         H = H + 1;
                     end
-
                 end
                 F_(ii,jj,1) = H; H = 0;
                 
@@ -96,9 +74,6 @@ function [ F ] = complexHistogramization( X, Y, Z )
         end
         jj = 1;
 
-        aa = 1; bb = 1;
-        cc = 1; dd = 1;
-        uu = 1; vv = 1;
     end
 
     F = F_;

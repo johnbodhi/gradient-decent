@@ -24,12 +24,15 @@ function [ F ] = complexHistogramization( X, Y, Z )
         X_(:,:) = X((ii-1)*frameLength+1:ii*frameLength,:);
         
         while( dd <= 2*size(C_,1) )
+
+            if( uu <= frameLength*size(classGroups,2)^2 )
             
-            C_(uu,vv) = X_(aa,cc); 
-            
-            aa = aa + 1;
-            uu = uu + 1;                      
-            dd = dd + 1;
+                C_(uu,vv) = X_(aa,cc); 
+                
+                aa = aa + 1;
+                uu = uu + 1;                      
+                dd = dd + 1;
+            end
 
             if( vv <= 1 )
             
@@ -41,7 +44,8 @@ function [ F ] = complexHistogramization( X, Y, Z )
                     bb = 1; cc = cc + 1;
                 elseif( cc > size(classGroups,2) )
 
-                    cc = 1; vv = vv + 1; uu = 1;          
+                    cc = 1; uu = 1;
+                    vv = vv + 1;                              
                 end
                 
             elseif( vv > 1 )
@@ -53,8 +57,8 @@ function [ F ] = complexHistogramization( X, Y, Z )
                     
                     cc = 1;    
                 end
-
             end
+
         end
         
         for i = 0:1:DATARANGE-1
@@ -65,7 +69,6 @@ function [ F ] = complexHistogramization( X, Y, Z )
                         
                         H = H + 1;
                     end
-                    
                 end
                 F_(ii,jj,1) = H; H = 0;
                 
