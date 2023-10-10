@@ -1,6 +1,6 @@
 function [ F ] = complexHistogramization( X, Y, Z )
 
-    global frameLength classGroups DATARANGE BINS Supervision Randomized
+    global frameLength classGroups DATARANGE Supervision Randomized
 
     if ( Randomized )
 
@@ -16,40 +16,40 @@ function [ F ] = complexHistogramization( X, Y, Z )
     F_    = zeros(sum(Y),DATARANGE^2,1); H = 1; jj = 1;
 
     aa = 1; bb = 1;
-    cc = 1; ss = 1;
+    cc = 1; dd = 1;
     uu = 1; vv = 1;    
    
     for ii = 1:1:sum(Y)
 
         X_(:,:) = X((ii-1)*frameLength+1:ii*frameLength,:);
         
-        while( ss <= 2*size(C_,1) )
+        while( dd <= 2*size(C_,1) )
             
             C_(uu,vv) = X_(aa,cc); 
             
             aa = aa + 1;
-            uu = uu + 1;
-            ss = ss + 1;
+            uu = uu + 1;                      
+            dd = dd + 1;
 
-            if( vv == 1 )
+            if( vv <= 1 )
             
-                if( aa >= size(X_,1) )
+                if( aa > size(X_,1) )
     
                     aa = 1; bb = bb + 1;
-                elseif( bb >= size(classGroups,2) )
+                elseif( bb > size(classGroups,2) )
                     
                     bb = 1; cc = cc + 1;
-                elseif( cc >= size(classGroups,2) )
-                    
-                    cc = 1; uu = 1; vv = vv + 1;                
-                end
+                elseif( cc > size(classGroups,2) )
 
+                    cc = 1; vv = vv + 1; uu = 1;          
+                end
+                
             elseif( vv > 1 )
                 
-                if( aa >= size(X_,1) )
+                if( aa > size(X_,1) )
     
                     aa = 1; cc = cc + 1;
-                elseif( cc >= size(classGroups,2) )
+                elseif( cc > size(classGroups,2) )
                     
                     cc = 1;    
                 end
@@ -57,8 +57,8 @@ function [ F ] = complexHistogramization( X, Y, Z )
             end
         end
         
-        for i = 0:1:DATARANGE
-            for j = 0:1:DATARANGE
+        for i = 0:1:DATARANGE-1
+            for j = 0:1:DATARANGE-1
                 for k = 1:1:size(C_,1)
 
                     if( i == C_(k,1) && j == C_(k,2) ) 
@@ -66,31 +66,17 @@ function [ F ] = complexHistogramization( X, Y, Z )
                         H = H + 1;
                     end
                 end
-                F_(ii,jj,1) = H; H = 1;
+                F_(ii,jj,1) = H; H = 0;
                 
                 jj = jj + 1; 
             end                
         end
+        jj = 1;
 
+        aa = 1; bb = 1;
+        cc = 1; dd = 0;
+        uu = 1; vv = 1;
     end
-
-    % if ( BINS < DATARANGE )
-    % 
-    %     % F = zeros(sum(Y),BINS,size(classGroups,2));
-    %     % 
-    %     % for k = 1:1:size(F_,3)
-    %     %     for i = 1:1:size(F_,1)
-    %     %         for j = 1:1:BINS
-    %     % 
-    %     %             F(i,j,k) = sum(F_(i,(j-1)*SCALE+1:j*SCALE,k),2);
-    %     %         end
-    %     %     end
-    %     % end
-    % 
-    % else
-    % 
-    % F = F_;
-    % end
 
     F = F_;
 
