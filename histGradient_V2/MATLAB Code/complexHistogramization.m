@@ -27,10 +27,8 @@ function [ F ] = complexHistogramization( X, Y, Z )
             
             C_(uu,vv) = X_(aa,cc); 
             
-            aa = aa + 1; 
-
+            aa = aa + 1;
             uu = uu + 1;
-
             ss = ss + 1;
 
             if( vv == 1 )
@@ -57,7 +55,6 @@ function [ F ] = complexHistogramization( X, Y, Z )
                 end
 
             end
-
         end
         
         for i = 0:1:DATARANGE
