@@ -27,7 +27,7 @@ Groups  = 3; % Groups per classification (RGB)...
 
 classGroups = zeros( 1, Groups );
 
-Np = 25; Mp = 25; frameLength = Np * Mp; % Photo length, and width. 
+Np = 100; Mp = 100; frameLength = Np * Mp; % Photo length, and width. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

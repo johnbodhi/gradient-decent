@@ -2,7 +2,9 @@ function [ RA ] = SVM( dataSet, N, Observation )
 
     global Supervision Randomized Optimized Train
 
-    A = histogramization( dataSet, N, Observation ); 
+    Ar = histogramization( dataSet, N, Observation ); 
+
+    Ac = complexHistogramization( dataSet, N, Observation ); 
 
     if ( ( ~Supervision && Train && ~Randomized ) ||...
          ( Supervision && Train && Randomized ) )
