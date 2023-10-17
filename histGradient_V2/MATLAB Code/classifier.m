@@ -13,7 +13,7 @@ function [ D, E ] = classifier( dataSet, Observation )
 
         histData(1,1:size(dataSet,2),:) = dataSet(i,1:size(dataSet,2),:);  
 
-        histData     = frameSieve(histData); % Duplicate and re-label each frame.
+        % histData     = frameSieve(histData); % Duplicate and re-label each frame.
 
         Observation_ = histData(:,size(dataSet,2));
 

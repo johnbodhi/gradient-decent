@@ -9,7 +9,7 @@ function [ V ] = filterOptimization( dataSet, Observation )
     % of minimal target distributions 
     % among every class that are most efficient with maxmimal f-measures.
         
-    S = permn( [ 0 1 ], BINS );
+    S  = permn( [ 0 1 ], BINS );
 
     V_ = zeros(size(S,1),size(RA,2),size(RA,1),size(RA,3));
 
@@ -45,8 +45,10 @@ function [ V ] = filterOptimization( dataSet, Observation )
     SUM = size(classGroups,2)*N*M; 
 
     % UB  = simpleNN( dataSet );
+    
+    LAG = size(A,1)^(size(classGroups,2)-1)+1;
 
-    UB  = 0;
+    UB  = 0 + LAG;
 
     SUP = size(classGroups,2)*UB;
 
