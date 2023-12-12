@@ -12,7 +12,7 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
 
     V   = zeros( N, M, O );
 
-    % SUP = simpleNN( N, M ); 
+    % UB = simpleNN( N, M ); 
     
     UB  = 34912;
 
