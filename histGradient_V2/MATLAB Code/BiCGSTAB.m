@@ -38,13 +38,13 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
             
             RHO(1,1) = RHO_0;
     
-            P(:,1)   = R_0(:,1);            
+            P(:,1)   = R_0(:,1);          
     
             while( TOL <= LIMIT )
                 
                 V(:,1) = A(:,1).*P(:,1);
     
-    
+                
                 ALPHA  = RHO(1,1) / dot( R(:,1), V(:,1) );
     
                 H(:,1) = X(:,1) + ALPHA.*P(:,1);
@@ -84,11 +84,15 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
         RA(Z_,:,:) = ( RA(Z_,:,:) + Y_ ) ./ 2;
     else
 
+        B(:,1) = frameLength.*X_(1,:,1);
+        
+        X(:,1) = Y_(1,:,1);
+        
         while( sum(sum(sum(V,1),2),3) < SUM )
     
             K = ceil( ii / SUP ) + 1;
     
-            if( aa <= size(V,2) )
+            if( aa <= size(V,1) )
     
                 V(aa,1,K) = 1;
     
@@ -96,25 +100,25 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                 
                 A(:,1) = Y_(aa,:,K);            
                 
-            elseif( aa > size(V,3) && bb <= size(V,3) )
-    
-                V(bb,2,K) = 1; V(:,1,K) = 0;
+            elseif( aa > size(V,1) && bb <= size(V,1) )
                 
+                V(bb,2,K) = 1; V(:,1,K) = 0;
+    
                 bb = bb + 1; aa = 1;
                 
-                B(:,1) = frameLength.*X_(bb,:,K);           
+                X(:,1) = Y_(bb,:,K);
     
-            elseif( bb > size(V,1) && cc <= size(V,1) )
+            elseif( bb > size(V,1) && cc <= size(V,2) )
     
                 V(cc,3,K) = 1; V(:,2,K) = 0;
-    
+                
                 cc = cc + 1; bb = 1;
                 
-                X(:,1) = Y_(cc,:,K);
-    
+                B(:,1) = frameLength.*X_(cc,:,K); 
+                
             end
             
-            R_0(:,1) = B(:,1) - A(:,1).*X(:,1); 
+            R_0(:,1) = B(:,1) - A(:,1).*X(:,1);
             
             R(:,1)   = R_0(:,1);
     
