@@ -8,7 +8,7 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
 
     O   = size(classGroups,2);
 
-    SUM = N * M * O; 
+    CRIT = (N * M * O) - O*(N-M);
 
     V   = zeros( N, M, O );
 
@@ -88,7 +88,7 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
         
         X(:,1) = Y_(1,:,1);
         
-        while( sum(sum(sum(V,1),2),3) < SUM )
+        while( sum(sum(sum(V,1),2),3) < CRIT )
     
             K = ceil( ii / SUP ) + 1;
     
