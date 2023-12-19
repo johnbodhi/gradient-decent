@@ -42,17 +42,17 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
     
             while( TOL <= LIMIT )
                 
-                V(:,1) = A(:,1).*P(:,1);
-    
+                C(:,1) = A(:,1).*P(:,1);
                 
-                ALPHA  = RHO(1,1) / dot( R(:,1), V(:,1) );
+    
+                ALPHA  = RHO(1,1) / dot( R(:,1), C(:,1) );
     
                 H(:,1) = X(:,1) + ALPHA.*P(:,1);
     
-                S(:,1) = R(:,1) - ALPHA.*V(:,1);            
+                S(:,1) = R(:,1) - ALPHA.*V(:,1);        
     
                 T(:,1) = A(:,1).*S(:,1);
-    
+                
     
                 OMEGA  = dot( T(:,1), S(:,1) ) / dot( T(:,1), T(:,1) );
     
@@ -130,10 +130,10 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
     
             while( TOL <= LIMIT )
                 
-                V(:,1) = A(:,1).*P(:,1);
+                C(:,1) = A(:,1).*P(:,1);
+                
     
-    
-                ALPHA  = RHO(1,1) / dot( R(:,1), V(:,1) );
+                ALPHA  = RHO(1,1) / dot( R(:,1), C(:,1) );
     
                 H(:,1) = X(:,1) + ALPHA.*P(:,1);
     
@@ -216,5 +216,5 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
         end
         ii = 1;
     end
-
+    
 end
