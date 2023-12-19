@@ -8,15 +8,7 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
 
     O   = size(classGroups,2);
 
-    CRIT = (N * M * O) - O*(N-M);
-
     V   = zeros( N, M, O );
-
-    % UB = simpleNN( N, M ); 
-    
-    UB  = 34912;
-
-    SUP = size(classGroups,2) * UB;
     
     ii = 1; kk = 1;
 
