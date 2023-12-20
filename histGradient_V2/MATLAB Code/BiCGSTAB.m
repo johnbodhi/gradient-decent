@@ -170,28 +170,69 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
             ii = ii + 1;
         end
     
-        WALK_ = sort(WALK_, 1,'descend');
-        WALK_ = sort(WALK_,  3,'descend');
+        [WALK_, L] = sort(WALK_, 2);
         
-        for i = 1:1:size(WALK,1)
-            for j = 1:1:size(WALK,2)
+        for k = 1:1:size(WALK_,3)
+            for i = 1:1:size(WALK_,1)
                 
-                 WWALK(i,j) = mean(WALK_(i,j,:),3);
+                WALKA(i,k) = mean(WALK_(i,:,k),2);
+            end
+        end
+        
+        jj = 1;
+        for k = 1:1:size(WALK_,3)
+            for i = 1:1:size(WALK_,1)
+                
+                while( WALK_(i,:,k) )
+                
+                     [WALKB(i,jj,k), L(:,1)] = mode(WALK_(i,:,k),2);
+                     
+                     jj = jj + 1;
+                     
+                     for j = 1:1:size(L,1)
+                         
+                          WALK_(i,L(j,1),k) = NaN;
+                     end
+                     L = 0;
+                end 
+                jj = 1:
+            end
+        end
+        
+        ii = 1;
+        for k = 1:1:size(WALK_,3)
+            for j = 1:1:size(WALK_,2)
+                
+                while( WALK_(:,j,k) )
+                
+                     [WALKB(i,ii,k), L(:,1)] = mode(WALK_(:,j,k),1);
+                     
+                     jj = jj + 1;
+                     
+                     for i = 1:1:size(L,1)
+                         
+                          WALK_(j,L(i,1),k) = NaN;
+                     end
+                     L = 0;
+                end 
+                ii = 1:
             end
         end
     
-        EP_MU = 1; 
-    
-        for j = 1:1:size(WALK,2)    
-            for k = 2:1:size(WALK,1)
-    
-                Z_(k,j) = WALK(1,j,k);
+        EP_MU = 1;
         
-                if( ( WALK(1,j,k) - WALK(1,j,k-1) ) >= EP_MU )
+        ii = 1;
+        for j = 1:1:size(WALK,2)   
+            for i = 2:1:size(WALK,1)
+    
+                Z_(ii,j) = WALK(i,j); ii = ii + 1;
+        
+                if( ( WALK(i,j) - WALK(i-1,j) ) >= EP_MU )
                     
                     break;                
                 end
             end    
+            ii = 1;
         end
 
     end
@@ -210,7 +251,7 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
         
                 if( Z_(i,j) ~= 0 )
 
-                    RA(ii,:,k) = RA(ii,:,k) + Y_(Z_(i,j),:,k); 
+                    RA(ii,:,k) = RA(ii,:,k) + Y_(L,:,k); 
 
                     ll = ll + 1;
                 else
@@ -218,6 +259,7 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                     break;
                 end  
             end
+            
             
             RA(ii,:,k) = RA(ii,:,k) / ll; ll = 1;
             
