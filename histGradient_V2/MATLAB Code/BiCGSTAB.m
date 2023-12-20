@@ -169,10 +169,12 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
             
             ii = ii + 1;
         end
-    
-        [WALK_, L] = sort(WALK_(:,:,:,1), 2); 
         
-        W_ = WALK_(:,:,:,1);
+        for K = 1:1:size(classGroups,2)
+    
+        [WALK_, L] = sort(WALK_(:,:,:,K), 2); 
+        
+        W_ = WALK_(:,:,:,K);
         
         for k = 1:1:size(WALK_,3)
             for i = 1:1:size(WALK_,1)
@@ -255,8 +257,9 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                 end
             end
             
-            RAA(k,:,1) = RAA(k,:,1)/ll; 
-            RAB(k,:,1) = RAB(k,:,1)/ll;
-        end  
-    end  
+            RAA(k,:,K) = RAA(k,:,K)/ll; 
+            RAB(k,:,K) = RAB(k,:,K)/ll;
+        end
+        end
+    end 
 end
