@@ -170,7 +170,9 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
             ii = ii + 1;
         end
     
-        [WALK_, L] = sort(WALK_(:,:,:,1), 2); W_ = WALK_(:,:,:,1);
+        [WALK_, L] = sort(WALK_(:,:,:,1), 2); 
+        
+        W_ = WALK_(:,:,:,1);
         
         for k = 1:1:size(WALK_,3)
             for i = 1:1:size(WALK_,1)
@@ -194,8 +196,10 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                           W_(i,LA(j,1),k) = NaN;
                      end
                      L = 0;
+                     
                 end 
                 jj = 1:
+                
             end
         end
         
@@ -214,15 +218,16 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                           W_(j,LB(i,1),k) = NaN;
                      end
                      L = 0;
+                     
                 end 
                 ii = 1:
+                
             end
         end
     
-        EP_MUA = 1;
-        EP_MUB = 1;
+        EP_MU = 0.1;
         
-        ii = 1;
+        RA = zeros(M,BINS,O); ii = 1;
         
         for k = 1:1:size(WALK_,3)
             for j = 1:1:size(WALK_,2)   
@@ -230,50 +235,23 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                 
                     Z_(i-1,j,k,1) = WALKA(i,j,k) - WALKA(i-1,j,k);
                 
-                    Z_(i-1,j,k,2) = WALKB(j,i,k) - WALKB(j,i-1,k);
-                
-                    if( ( WALKA(i,j) - WALKA(i-1,j) ) >= EP_MUA ||...
-                            WALKB(j,i) - WALKB(j,i-1) ) >= EP_MUB )
+                    Z_(i-1,j,k,2) = WALKB(j,i,k) - WALKB(j,i-1,k);   
+         
                     
-                        break;                
+                    E(1,1) = mean(Z_(1:i-1,j,k,1),1)/mean(Z_(1:i,j,k,1),1);
+                    
+                    E(1,2) = mean(Z_(1:i-1,j,k,2),1)/mean(Z_(1:i,j,k,1),2);
+                    
+                    
+                    if( E(1,1) < EP_MU && E(1,2) < EP_MU )
+                    
+                        RA(k,:,1) = RA(k,:,1) + Y_(LA(i-1,1),:,1);
+                        
+                        RB(k,:,1) = RB(k,:,1) + Y_(LB(i-1,1),:,1);
                     end
+                    
                 end
             end
         end
-        
-
-    end
-
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    
-    
-    
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-    RA = zeros(M,BINS,O); ii = 1; ll = 1;
-
-    for k = 1:1:size(classGroups,2)
-        for j = 1:1:size(Z_,2)
-            for i = 1:1:size(Z_,1)
-        
-                if( Z_(i,j) ~= 0 )
-
-                    RA(ii,:,k) = RA(ii,:,k) + Y_(L,:,k); 
-
-                    ll = ll + 1;
-                else
-
-                    break;
-                end  
-            end
-            
-            
-            RA(ii,:,k) = RA(ii,:,k) / ll; ll = 1;
-            
-            ii = ii + 1; 
-        end
-        
-        ii = 1;
-    end
     
 end
