@@ -165,13 +165,20 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                 kk = kk + 1;
             end    
 
-            WALK_(aa,bb,cc) = kk; kk = 1;
+            WALK_(aa,bb,cc,K) = kk; kk = 1;
             
             ii = ii + 1;
         end
     
-        WALK  = sort(WALK_, 1,'descend');
-        WALK  = sort(WALK,  3,'descend');
+        WALK_ = sort(WALK_, 1,'descend');
+        WALK_ = sort(WALK_,  3,'descend');
+        
+        for i = 1:1:size(WALK,1)
+            for j = 1:1:size(WALK,2)
+                
+                 WALK(i,j) = mean(WALK_,3);
+            end
+        end
     
         EP_MU = 1; 
     
