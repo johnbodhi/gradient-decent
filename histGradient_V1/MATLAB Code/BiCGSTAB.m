@@ -171,12 +171,12 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
         end
     
         WALK_ = sort(WALK_, 1,'descend');
-        WALK_ = sort(WALK_,  3,'descend');
+        WALK_ = sort(WALK_, 3,'descend');
         
         for i = 1:1:size(WALK,1)
             for j = 1:1:size(WALK,2)
                 
-                 WALK(i,j) = mean(WALK_,3);
+                 WALK(i,j) = mean(WALK_(i,j,:),3);
             end
         end
     
