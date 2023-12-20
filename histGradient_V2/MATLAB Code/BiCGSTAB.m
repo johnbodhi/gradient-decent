@@ -7,8 +7,16 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
     M   = size(classType,2);
 
     O   = size(classGroups,2);
+    
+    % IT = simpleNN(N,M);
+    
+    IT = O*(N^(M-1)+M);
+    
+    % CONV = O*(N^O) - ( O*(N^O) - IT );
+    
+    % SUP = O*N^M
 
-    V   = zeros( N, M, O );
+    V  = zeros( N, M, O );
     
     ii = 1; kk = 1;
 
@@ -58,7 +66,7 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
     
                 TOL      = RHO(1,2) / RHO_0;
     
-    
+                
                 BETA     = ( RHO(1,2) / RHO(1,1) ) * ( ALPHA / OMEGA );
     
                 P(:,1)   = R(:,1) + BETA.*( P(:,1) - OMEGA.*V(:,1) );
@@ -74,15 +82,16 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
         end
         
         RA(Z_,:,:) = ( RA(Z_,:,:) + Y_ ) ./ 2;
+        
     else
 
         B(:,1) = frameLength.*X_(1,:,1);
         
         X(:,1) = Y_(1,:,1);
         
-        while( sum(sum(sum(V,1),2),3) < CRIT )
+        while( sum(sum(sum(V,1),2),3) < IT )
     
-            K = ceil( ii / SUP ) + 1;
+            K = floor( ii / IT ) + 1;
     
             if( aa <= size(V,1) )
     
@@ -200,12 +209,14 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                 else
 
                     break;
-                end
-                
+                end  
             end
+            
             RA(ii,:,k) = RA(ii,:,k) / ll; ll = 1;
+            
             ii = ii + 1; 
         end
+        
         ii = 1;
     end
     
