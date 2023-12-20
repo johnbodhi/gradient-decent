@@ -262,4 +262,6 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
         end
         end
     end 
+    
+    RA = ( RAA + RAB ) ./ 2;
 end
