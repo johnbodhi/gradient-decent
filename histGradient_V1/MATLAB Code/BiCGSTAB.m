@@ -170,7 +170,7 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
             ii = ii + 1;
         end
     
-        [WALK_, L] = sort(WALK_, 2); W_ = WALK_;
+        [WALK_, L] = sort(WALK_(:,:,:,1), 2); W_ = WALK_(:,:,:,1);
         
         for k = 1:1:size(WALK_,3)
             for i = 1:1:size(WALK_,1)
@@ -185,13 +185,13 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                 
                 while( WALK_(i,:,k) )
                 
-                     [WALKB(i,jj,k), L(:,1)] = mode(W_(i,:,k),2);
+                     [WALKB(i,jj,k), LA(:,1)] = mode(W_(i,:,k),2);
                      
                      jj = jj + 1;
                      
                      for j = 1:1:size(L,1)
                          
-                          WALK_(i,L(j,1),k) = NaN;
+                          W_(i,LA(j,1),k) = NaN;
                      end
                      L = 0;
                 end 
@@ -205,13 +205,13 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                 
                 while( WALK_(:,j,k) )
                 
-                     [WALKB(i,ii,k), L(:,1)] = mode(W_(:,j,k),1);
+                     [WALKB(i,ii,k), LB(:,1)] = mode(W_(:,j,k),1);
                      
                      jj = jj + 1;
                      
                      for i = 1:1:size(L,1)
                          
-                          WALK_(j,L(i,1),k) = NaN;
+                          W_(j,LB(i,1),k) = NaN;
                      end
                      L = 0;
                 end 
@@ -219,21 +219,28 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
             end
         end
     
-        EP_MU = 1;
+        EP_MUA = 1;
+        EP_MUB = 1;
         
         ii = 1;
-        for j = 1:1:size(WALK,2)   
-            for i = 2:1:size(WALK,1)
-    
-                Z_(ii,j) = WALK(i,j); ii = ii + 1;
         
-                if( ( WALK(i,j) - WALK(i-1,j) ) >= EP_MU )
+        for k = 1:1:size(WALK_,3)
+            for j = 1:1:size(WALK_,2)   
+                for i = 2:1:size(WALK_,1)
+                
+                    Z_(i-1,j,k,1) = WALKA(i,j,k) - WALKA(i-1,j,k);
+                
+                    Z_(i-1,j,k,2) = WALKB(j,i,k) - WALKB(j,i-1,k);
+                
+                    if( ( WALKA(i,j) - WALKA(i-1,j) ) >= EP_MUA ||...
+                            WALKB(j,i) - WALKB(j,i-1) ) >= EP_MUB )
                     
-                    break;                
+                        break;                
+                    end
                 end
-            end    
-            ii = 1;
+            end
         end
+        
 
     end
 
