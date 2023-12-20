@@ -163,7 +163,7 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                 RHO(1,1) = RHO(1,2);
     
                 kk = kk + 1;
-            end    
+            end 
 
             WALK_(aa,bb,cc,K) = kk; kk = 1;
             
@@ -227,20 +227,21 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
     
         EP_MU = 0.1;
         
-        RA = zeros(M,BINS,O); ii = 1;
+        RA = zeros(M,BINS,O); 
         
+        ii = 1; ll= 1;
         for k = 1:1:size(WALK_,3)
-            for j = 1:1:size(WALK_,2)   
+            for j = 1:1:size(WALK_,2)
                 for i = 2:1:size(WALK_,1)
                 
                     Z_(i-1,j,k,1) = WALKA(i,j,k) - WALKA(i-1,j,k);
                 
-                    Z_(i-1,j,k,2) = WALKB(j,i,k) - WALKB(j,i-1,k);   
+                    Z_(i-1,j,k,2) = WALKB(j,i,k) - WALKB(j,i-1,k);             
          
                     
                     E(1,1) = mean(Z_(1:i-1,j,k,1),1)/mean(Z_(1:i,j,k,1),1);
                     
-                    E(1,2) = mean(Z_(1:i-1,j,k,2),1)/mean(Z_(1:i,j,k,1),2);
+                    E(1,2) = mean(Z_(1:i-1,j,k,2),1)/mean(Z_(1:i,j,k,2),1);
                     
                     
                     if( E(1,1) < EP_MU && E(1,2) < EP_MU )
@@ -248,10 +249,14 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                         RA(k,:,1) = RA(k,:,1) + Y_(LA(i-1,1),:,1);
                         
                         RB(k,:,1) = RB(k,:,1) + Y_(LB(i-1,1),:,1);
+                        
+                        ll = ll + 1;
                     end
-                    
                 end
             end
-        end
-    
+            
+            RAA(k,:,1) = RAA(k,:,1)/ll; 
+            RAB(k,:,1) = RAB(k,:,1)/ll;
+        end  
+    end  
 end
