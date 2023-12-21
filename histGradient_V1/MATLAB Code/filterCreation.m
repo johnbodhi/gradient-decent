@@ -6,9 +6,11 @@ function [ RA ] = filterCreation( A )
     
     M   = size(classType,2); 
 
-    SUM = size(classGroups,2)*N*M; 
+    O   = size(classGroups,2);
+
+    SUM = O*N^(M+V); 
     
-    B   = zeros(N,M,size(classGroups,2));
+    B   = zeros(N,M,O);
 
     % SUP = simpleNN(N,M); 
     
