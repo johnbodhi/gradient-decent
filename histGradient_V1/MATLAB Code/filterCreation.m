@@ -8,15 +8,11 @@ function [ RA ] = filterCreation( A )
 
     O   = size(classGroups,2);
 
-    SUM = O*N^(M+V); 
+    IT  = O*N^(M+V); 
     
     B   = zeros(N,M,O);
 
-    % SUP = simpleNN(N,M); 
-    
-    UB  = 1171591994624;
-
-    SUP = size(classGroups,2)*UB;
+    % SUP = simpleNN(N,M);
 
     V   = (size(A,1) - size(classType,2)); % Pattern limit...
 
@@ -42,11 +38,11 @@ function [ RA ] = filterCreation( A )
 
     rr = 1; xx = 1;
     
-    T = 0.95;
+    T = 1.0;
 
-    while( sum(sum(sum(B,1),2),3) < SUM )
+    while( sum(sum(sum(B,1),2),3) < IT )
 
-        K = ceil( ii / SUP ) + 1;
+        K = ceil( ii / IT ) + 1;
 
         if( aa <= size(V,1) )
 
