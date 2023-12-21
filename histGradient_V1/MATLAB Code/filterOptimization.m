@@ -59,7 +59,7 @@ function [ V ] = filterOptimization( dataSet, Observation )
 
     rr = 1; 
 
-    T = 0.95;
+    T = 1.0;
 
     % We need to convolve! This is the shave, or keying.
 
