@@ -12,10 +12,6 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
     
     IT = O*(N^(M-1)+M);
     
-    % CONV = O*(N^O) - ( O*(N^O) - IT );
-    
-    % SUP = O*N^M
-
     V  = zeros( N, M, O );
     
     ii = 1; kk = 1;
@@ -161,6 +157,7 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                 P(:,1)   = R(:,1) + BETA.*( P(:,1) - OMEGA.*V(:,1) );
     
                 RHO(1,1) = RHO(1,2);
+                
     
                 kk = kk + 1;
             end 
@@ -170,96 +167,96 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
             ii = ii + 1;
         end
         
-        for K = 1:1:size(classGroups,2)
+        for K = 1:1:O
     
-        [WALK_, L] = sort(WALK_(:,:,:,K), 2); 
+            [WALK_, L] = sort(WALK_(:,:,:,K), 2); 
         
-        W_ = WALK_(:,:,:,K);
+            W_ = WALK_(:,:,:,K);
         
-        for k = 1:1:size(WALK_,3)
-            for i = 1:1:size(WALK_,1)
+            for k = 1:1:size(WALK_,3)
+                for i = 1:1:size(WALK_,1)
                 
-                WALKA(i,k) = mean(WALK_(i,:,k),2);
-            end
-        end
-        
-        jj = 1;
-        for k = 1:1:size(WALK_,3)
-            for i = 1:1:size(WALK_,1)
-                
-                while( WALK_(i,:,k) )
-                
-                     [WALKB(i,jj,k), LA(:,1)] = mode(W_(i,:,k),2);
-                     
-                     jj = jj + 1;
-                     
-                     for j = 1:1:size(L,1)
-                         
-                          W_(i,LA(j,1),k) = NaN;
-                     end
-                     L = 0;
-                     
-                end 
-                jj = 1:
-                
-            end
-        end
-        
-        W_ = WALK_; ii = 1;
-        for k = 1:1:size(WALK_,3)
-            for j = 1:1:size(WALK_,2)
-                
-                while( WALK_(:,j,k) )
-                
-                     [WALKB(i,ii,k), LB(:,1)] = mode(W_(:,j,k),1);
-                     
-                     jj = jj + 1;
-                     
-                     for i = 1:1:size(L,1)
-                         
-                          W_(j,LB(i,1),k) = NaN;
-                     end
-                     L = 0;
-                     
-                end 
-                ii = 1:
-                
-            end
-        end
-    
-        EP_MU = 0.1;
-        
-        RA = zeros(M,BINS,O); 
-        
-        ii = 1; ll= 1;
-        for k = 1:1:size(WALK_,3)
-            for j = 1:1:size(WALK_,2)
-                for i = 2:1:size(WALK_,1)
-                
-                    Z_(i-1,j,k,1) = WALKA(i,j,k) - WALKA(i-1,j,k);
-                
-                    Z_(i-1,j,k,2) = WALKB(j,i,k) - WALKB(j,i-1,k);             
-         
-                    
-                    E(1,1) = mean(Z_(1:i-1,j,k,1),1)/mean(Z_(1:i,j,k,1),1);
-                    
-                    E(1,2) = mean(Z_(1:i-1,j,k,2),1)/mean(Z_(1:i,j,k,2),1);
-                    
-                    
-                    if( E(1,1) < EP_MU && E(1,2) < EP_MU )
-                    
-                        RA(k,:,1) = RA(k,:,1) + Y_(LA(i-1,1),:,1);
-                        
-                        RB(k,:,1) = RB(k,:,1) + Y_(LB(i-1,1),:,1);
-                        
-                        ll = ll + 1;
-                    end
+                    WALKA(i,k) = mean(WALK_(i,:,k),2);
                 end
             end
+        
+            jj = 1;
+            for k = 1:1:size(WALK_,3)
+                for i = 1:1:size(WALK_,1)
+                
+                    while( WALK_(i,:,k) )
+                
+                         [WALKB(i,jj,k), LA(:,1)] = mode(W_(i,:,k),2);
+                     
+                         jj = jj + 1;
+                      
+                         for j = 1:1:size(L,1)
+                         
+                              W_(i,LA(j,1),k) = NaN;
+                         end
+                         L = 0;
+                     
+                    end 
+                    jj = 1:
+                
+                end
+            end
+         
+            W_ = WALK_(:,:,:,K); ii = 1;
+            for k = 1:1:size(WALK_,3)
+                for j = 1:1:size(WALK_,2)
+                
+                    while( WALK_(:,j,k) )
+                
+                         [WALKB(i,ii,k), LB(:,1)] = mode(W_(:,j,k),1);
+                     
+                         jj = jj + 1;
+                     
+                         for i = 1:1:size(L,1)
+                         
+                              W_(j,LB(i,1),k) = NaN;
+                         end
+                         L = 0;
+                     
+                    end 
+                    ii = 1:
+                
+                end
+            end
+    
+            EP_MU = 0.1;
+        
+            RA = zeros(M,BINS,O); 
+        
+            ii = 1; ll= 1;
+            for k = 1:1:size(WALK_,3)
+                for j = 1:1:size(WALK_,2)
+                    for i = 2:1:size(WALK_,1)
+                
+                        Z_(i-1,j,k,1) = WALKA(i,j,k) - WALKA(i-1,j,k);
+                
+                        Z_(i-1,j,k,2) = WALKB(j,i,k) - WALKB(j,i-1,k);             
+         
+                    
+                        E(1,1) = mean(Z_(1:i-1,j,k,1),1)/mean(Z_(1:i,j,k,1),1);
+                    
+                        E(1,2) = mean(Z_(1:i-1,j,k,2),1)/mean(Z_(1:i,j,k,2),1);
+                    
+                    
+                        if( E(1,1) < EP_MU && E(1,2) < EP_MU )
+                    
+                            RA(k,:,1) = RA(k,:,1) + Y_(LA(i-1,1),:,1);
+                        
+                            RB(k,:,1) = RB(k,:,1) + Y_(LB(i-1,1),:,1);
+                        
+                            ll = ll + 1;
+                        end
+                    end
+                end
             
-            RAA(k,:,K) = RAA(k,:,K)/ll; 
-            RAB(k,:,K) = RAB(k,:,K)/ll;
-        end
+                RAA(k,:,K) = RAA(k,:,K)/ll; 
+                RAB(k,:,K) = RAB(k,:,K)/ll;
+            end
         end
     end 
     
