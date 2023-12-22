@@ -186,7 +186,7 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                 
                     while( WALK_(i,:,k) )
                 
-                         [WALKB(i,jj,k), LA(:,1)] = mode(W_(i,:,k),2);
+                         [WALKA(i,jj,k), LA(:,1)] = mode(W_(i,:,k),2);
                      
                          jj = jj + 1;
                       
