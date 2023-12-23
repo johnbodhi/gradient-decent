@@ -1,6 +1,6 @@
 function [ RA ] = BiCGSTAB( X_, Y_ )
 
-    global classType classGroups BINS frameLength
+    global classType classGroups BINS frameLength Verification
 
     N   = size(Y_,1); 
     
@@ -79,7 +79,7 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
         
         RA(Z_,:,:) = ( RA(Z_,:,:) + Y_ ) ./ 2;
         
-    else
+    elseif( Verification && N > 1 )
 
         B(:,1) = frameLength.*X_(1,:,1);
         
@@ -169,16 +169,9 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
         
         for K = 1:1:O
     
-            [WALK_, L] = sort(WALK_(:,:,:,K), 2); 
+            [WALK_,L] = sort(WALK_(:,:,:,K), 2); 
         
             W_ = WALK_(:,:,:,K);
-        
-            for k = 1:1:size(WALK_,3)
-                for i = 1:1:size(WALK_,1)
-                
-                    WALKA(i,k) = mean(WALK_(i,:,k),2);
-                end
-            end
         
             jj = 1;
             for k = 1:1:size(WALK_,3)
@@ -238,9 +231,9 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                         Z_(i-1,j,k,2) = WALKB(j,i,k) - WALKB(j,i-1,k);             
          
                     
-                        E(1,1) = mean(Z_(1:i-1,j,k,1),1)/mean(Z_(1:i,j,k,1),1);
+                        E(1,1) = Z_(1:i-1,j,k,1)/Z_(1:i,j,k,1);
                     
-                        E(1,2) = mean(Z_(1:i-1,j,k,2),1)/mean(Z_(1:i,j,k,2),1);
+                        E(1,2) = Z_(1:i-1,j,k,2)/Z_(1:i,j,k,2);
                     
                     
                         if( E(1,1) < EP_MU && E(1,2) < EP_MU )
@@ -251,14 +244,21 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                         
                             ll = ll + 1;
                         end
+                        
                     end
                 end
             
-                RAA(k,:,K) = RAA(k,:,K)/ll; 
+                RAA(k,:,K) = RAA(k,:,K)/ll;
                 RAB(k,:,K) = RAB(k,:,K)/ll;
             end
+            
         end
+        RA = ( RAA + RAB ) ./ 2;
+        
+    elseif( ~X_ )
+        
+        
+        
     end 
     
-    RA = ( RAA + RAB ) ./ 2;
 end
