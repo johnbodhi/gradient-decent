@@ -177,9 +177,9 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
             for k = 1:1:size(WALK_,3)
                 for i = 1:1:size(WALK_,1)
                 
-                    while( WALK_(i,:,k) )
-                
-                         [WALKA(i,jj,k), LA(:,1)] = mode(W_(i,:,k),2);
+                    while( WALK_(i,:,k) )                                                   
+                         
+                         [WALKA(i,jj,k), LA(:,1)] = find(W_(i,:,k) == mode(W_(i,:,k),2))
                      
                          jj = jj + 1;
                       
@@ -201,7 +201,7 @@ function [ RA ] = BiCGSTAB( X_, Y_ )
                 
                     while( WALK_(:,j,k) )
                 
-                         [WALKB(i,ii,k), LB(:,1)] = mode(W_(:,j,k),1);
+                         [WALKB(i,ii,k), LB(:,1)] = find(W_(i,:,k) == mode(W_(i,:,k),2));
                      
                          jj = jj + 1;
                      
