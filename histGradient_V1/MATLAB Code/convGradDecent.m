@@ -12,9 +12,7 @@ function [ RA ] = convGradDecent( A )
     
     B   = zeros(N,M,O);
 
-    % SUP = simpleNN(N,M);
-
-    V = N - M; % Pattern limit...
+    V   = N - M; % Pattern limit...
 
     % Convoltuion with a sub-gradient!!
 
@@ -27,7 +25,7 @@ function [ RA ] = convGradDecent( A )
 
     rr = 1; xx = 1;
     
-    T = 0.99;
+    T = 1.0;
 
     while( sum(sum(sum(B,1),2),3) < IT )
 
@@ -49,7 +47,7 @@ function [ RA ] = convGradDecent( A )
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
-                if( ACC > T )
+                if( ACC >= T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
@@ -75,7 +73,7 @@ function [ RA ] = convGradDecent( A )
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
-                if( ACC > T )
+                if( ACC >= T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
@@ -101,7 +99,7 @@ function [ RA ] = convGradDecent( A )
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
-                if( ACC > T )
+                if( ACC >= T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end%
@@ -127,7 +125,7 @@ function [ RA ] = convGradDecent( A )
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
-                if( ACC > T )
+                if( ACC >= T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
@@ -153,7 +151,7 @@ function [ RA ] = convGradDecent( A )
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E );
 
-                if( ACC > T )
+                if( ACC >= T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
@@ -179,7 +177,7 @@ function [ RA ] = convGradDecent( A )
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
-                if( ACC > T )
+                if( ACC >= T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
@@ -205,7 +203,7 @@ function [ RA ] = convGradDecent( A )
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E );
 
-                if( ACC > T )
+                if( ACC >= T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
@@ -231,7 +229,7 @@ function [ RA ] = convGradDecent( A )
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E );
 
-                if( ACC > T )
+                if( ACC >= T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
