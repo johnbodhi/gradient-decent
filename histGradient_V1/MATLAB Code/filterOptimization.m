@@ -42,13 +42,13 @@ function [ V ] = filterOptimization( dataSet, Observation )
     
     M = size(classType,2); 
 
-    SUM = size(classGroups,2)*N*M; 
+    O = size(classGroups,2)
 
-    % UB  = simpleNN( dataSet );
+    SUM = N*M*O;
 
-    UB  = 0;
+    % IT  = simpleNN( dataSet );
 
-    SUP = size(classGroups,2)*UB;
+    IT = O*N^M;
 
     ii = 1;
 
@@ -63,7 +63,7 @@ function [ V ] = filterOptimization( dataSet, Observation )
 
     % We need to convolve! This is the shave, or keying.
 
-    while( sum(sum(sum(B,1),2),3) < SUM )
+    while( sum(sum(sum(B,1),2),3) < IT )
 
         Ka = ceil( aa / size(S,1) )+1;
         Kb = ceil( bb / size(S,1) )+1;
