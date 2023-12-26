@@ -43,7 +43,7 @@ function [ RA ] = convGradDecent( A )
     
                 RA(2,:,K) = RA(2,:,K) + C; RA = RA / aa;
     
-                [ D, E ] = classifier( A, Observation );
+                [ D, E ] = classifier( A, L );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
@@ -69,7 +69,7 @@ function [ RA ] = convGradDecent( A )
                  
                 RA(3,:,K)  = RA(3,:,K) + C; RA = RA / bb;
                
-                [ D, E ] = classifier( A, Observation );
+                [ D, E ] = classifier( A, L );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
@@ -95,7 +95,7 @@ function [ RA ] = convGradDecent( A )
                  
                 RA(4,:,K) = RA(4,:,K) + C; RA = RA / cc;
                               
-                [ D, E ] = classifier( A, Observation );
+                [ D, E ] = classifier( A, L );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
@@ -121,7 +121,7 @@ function [ RA ] = convGradDecent( A )
                  
                 RA(5,:,K) = RA(5,:,K) + C; RA = RA / dd;
                 
-                [ D, E ] = classifier( A, Observation );
+                [ D, E ] = classifier( A, L );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
@@ -147,7 +147,7 @@ function [ RA ] = convGradDecent( A )
                  
                 RA(6,:,K)  = RA(6,:,K) + C; RA = RA / ee; 
     
-                [ D, E ] = classifier( A, Observation );
+                [ D, E ] = classifier( A, L );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E );
 
@@ -173,7 +173,7 @@ function [ RA ] = convGradDecent( A )
                  
                 RA(7,:,K) = RA(7,:,K) + C; RA = RA / ff;
                 
-                [ D, E ] = classifier( A, Observation );
+                [ D, E ] = classifier( A, L );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
@@ -199,7 +199,7 @@ function [ RA ] = convGradDecent( A )
                  
                 RA(8,:,K) = RA(8,:,K) + C; RA = RA / gg; 
     
-                [ D, E ] = classifier( A, Observation );
+                [ D, E ] = classifier( A, L );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E );
 
@@ -225,7 +225,7 @@ function [ RA ] = convGradDecent( A )
                  
                 RA(9,:,K) = RA(9,:,K) + C; RA = RA / hh; 
                
-                [ D, E ] = classifier( A, Observation );
+                [ D, E ] = classifier( A, L );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E );
 
