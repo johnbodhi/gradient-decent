@@ -14,18 +14,7 @@ function [ RA ] = convGradDecent( A )
 
     % SUP = simpleNN(N,M);
 
-    V   = (size(A,1) - size(classType,2)); % Pattern limit...
-
-    % Shift initial entries for faster convergence...
-
-    Z(:,1) = (1:1:size(A,1)); 
-    
-    L(:,1) = Z;
-
-    for j = 2:1:size(classType,2)
-
-        L(:,j) = circshift(Z,j-1);
-    end
+    V = N - M; % Pattern limit...
 
     % Convoltuion with a sub-gradient!!
 
@@ -38,7 +27,7 @@ function [ RA ] = convGradDecent( A )
 
     rr = 1; xx = 1;
     
-    T = 1.0;
+    T = 0.99;
 
     while( sum(sum(sum(B,1),2),3) < IT )
 
