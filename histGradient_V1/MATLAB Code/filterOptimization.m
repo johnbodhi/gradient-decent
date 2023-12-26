@@ -42,9 +42,7 @@ function [ V ] = filterOptimization( dataSet, Observation )
     
     M = size(classType,2); 
 
-    O = size(classGroups,2)
-
-    SUM = N*M*O;
+    O = size(classGroups,2);
 
     % IT  = simpleNN( dataSet );
 
