@@ -9,7 +9,7 @@ function [ V ] = filterOptimization( dataSet, Observation )
     % of minimal target distributions 
     % among every class that are most efficient with maxmimal f-measures.
         
-    S = permn( [ 0 1 ], BINS );
+    S  = permn( [ 0 1 ], BINS );
 
     V_ = zeros(size(S,1),size(RA,2),size(RA,1),size(RA,3));
 
@@ -38,15 +38,15 @@ function [ V ] = filterOptimization( dataSet, Observation )
     % We need to apply a sub-gradient within the SVM to optimize the filter
     % efficiency.
 
-    N = size(dataSet,1); 
+    N  = size(dataSet,1); 
     
-    M = size(classType,2); 
+    M  = size(classType,2); 
+    
+    O  = size(classGroups,2);
 
-    O = size(classGroups,2);
+    IT = O*N^M; 
 
-    % IT  = simpleNN( dataSet );
-
-    IT = O*N^M;
+    % UB  = simpleNN( dataSet );
 
     ii = 1;
 
