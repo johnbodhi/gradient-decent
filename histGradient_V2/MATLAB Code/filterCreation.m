@@ -1,4 +1,4 @@
-function [ RA ] = filterCreation( A )
+function [ RA ] = convGradDecent( A )
 
     global classType classGroups
 
@@ -6,28 +6,13 @@ function [ RA ] = filterCreation( A )
     
     M   = size(classType,2); 
 
-    SUM = size(classGroups,2) * N * M; 
+    O   = size(classGroups,2);
+
+    IT  = O*N^(M+V); 
     
-    B   = zeros(N,M,size(classGroups,2));
+    B   = zeros(N,M,O);
 
-    % SUP = simpleNN(N,M); 
-    
-    UB  = 1171591994624;
-
-    SUP = size(classGroups,2)*UB;
-
-    V   = (size(A,1) - size(classType,2)); % Pattern limit...
-
-    % Shift initial entries for faster convergence...
-
-    Z(:,1) = (1:1:size(A,1)); 
-    
-    L(:,1) = Z;
-
-    for j = 2:1:size(classType,2)
-
-        L(:,j) = circshift(Z,j-1);
-    end
+    V   = N - M; % Pattern limit...
 
     % Convoltuion with a sub-gradient!!
 
@@ -40,11 +25,11 @@ function [ RA ] = filterCreation( A )
 
     rr = 1; xx = 1;
     
-    T = 0.95;
+    T = 1.0;
 
-    while( sum(sum(sum(B,1),2),3) < SUM )
+    while( sum(sum(sum(B,1),2),3) < IT )
 
-        K = ceil( ii / SUP ) + 1;
+        K = ceil( ii / IT ) + 1;
 
         if( aa <= size(V,1) )
 
@@ -62,7 +47,7 @@ function [ RA ] = filterCreation( A )
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
-                if( ACC > T )
+                if( ACC >= T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
@@ -88,7 +73,7 @@ function [ RA ] = filterCreation( A )
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
-                if( ACC > T )
+                if( ACC >= T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
@@ -114,10 +99,10 @@ function [ RA ] = filterCreation( A )
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
-                if( ACC > T )
+                if( ACC >= T )
 
                     A(xx,1) = ACC; xx = xx + 1;
-                end
+                end%
     
                 A = circshift(A,1);
                 
@@ -140,7 +125,7 @@ function [ RA ] = filterCreation( A )
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
-                if( ACC > T )
+                if( ACC >= T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
@@ -166,7 +151,7 @@ function [ RA ] = filterCreation( A )
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E );
 
-                if( ACC > T )
+                if( ACC >= T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
@@ -192,7 +177,7 @@ function [ RA ] = filterCreation( A )
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
-                if( ACC > T )
+                if( ACC >= T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
@@ -218,7 +203,7 @@ function [ RA ] = filterCreation( A )
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E );
 
-                if( ACC > T )
+                if( ACC >= T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
@@ -244,7 +229,7 @@ function [ RA ] = filterCreation( A )
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E );
 
-                if( ACC > T )
+                if( ACC >= T )
 
                     A(xx,1) = ACC; xx = xx + 1;
                 end
