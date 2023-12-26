@@ -38,19 +38,15 @@ function [ V ] = filterOptimization( dataSet, Observation )
     % We need to apply a sub-gradient within the SVM to optimize the filter
     % efficiency.
 
-    N = size(dataSet,1); 
+    N  = size(dataSet,1); 
     
-    M = size(classType,2); 
+    M  = size(classType,2); 
+    
+    O  = size(classGroups,2);
 
-    SUM = size(classGroups,2)*N*M; 
+    IT = O*N^M; 
 
     % UB  = simpleNN( dataSet );
-    
-    LAG = size(A,1)^(size(classGroups,2)-1)+1;
-
-    UB  = 0 + LAG;
-
-    SUP = size(classGroups,2)*UB;
 
     ii = 1;
 
@@ -61,11 +57,11 @@ function [ V ] = filterOptimization( dataSet, Observation )
 
     rr = 1; 
 
-    T = 0.95;
+    T = 1.0;
 
     % We need to convolve! This is the shave, or keying.
 
-    while( sum(sum(sum(B,1),2),3) < SUM )
+    while( sum(sum(sum(B,1),2),3) < IT )
 
         Ka = ceil( aa / size(S,1) )+1;
         Kb = ceil( bb / size(S,1) )+1;
