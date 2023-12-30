@@ -12,7 +12,7 @@ function [ RA ] = convGradDecent( A )
     
     B   = zeros(N,M,O);
 
-    V   = N - M; % Pattern limit...
+    V   = zeros(N-M,1); % Pattern limit...
 
     % Convoltuion with a sub-gradient!!
 
