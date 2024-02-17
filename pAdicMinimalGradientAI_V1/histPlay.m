@@ -51,7 +51,7 @@ RA = zeros(size(classType,2)+BOOST,BINS+BOOST,size(classGroups,2)+BOOST);
 % krylov subspace for a single filter update with a pre existing filter,
 % or we can generate an initial condition for a supergroup of classes,
 % and proceed with further sample sets with the same method or with
-% gradient decent. This is error correction, and real-time classification.
+% gradient decent. This is error correction.
 
 % [ RA ] = BiCGSTAB( RA, A_ );
 
