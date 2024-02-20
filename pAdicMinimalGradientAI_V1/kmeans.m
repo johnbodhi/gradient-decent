@@ -1,8 +1,8 @@
 function [ Y ] = kmeans( dataSet, l )
 
-global classGroups classType GFLAG RA BPI KFLAG
+global classGroups classType RA BPI BFLAG
 
-    S = dataSet;
+    S = dataSet(:,1:end-1,:);
 
     V = size(RA,1)*size(dataSet,2);
 
@@ -10,7 +10,8 @@ global classGroups classType GFLAG RA BPI KFLAG
 
     ii = 1; jj = 1; N = 1;
 
-    W  = zeros( size(classType,2), 3, size(classGroups,2) );
+    W  = zeros(size(classType,2), size(classGroups,2), ...
+        size(classGroups,2));
 
     % We need to weight our centroids, and backpropagate the
     % following gradient for every other class in a group.
@@ -24,11 +25,11 @@ global classGroups classType GFLAG RA BPI KFLAG
 
             elseif ( ii == 2 )
 
-                if( KFLAG )
+                if( BFLAG )
     
                     W(ii,:,kk) = 1e0;
 
-                elseif( ~KFLAG )
+                elseif( ~BFLAG )
 
                     W(ii,:,kk) = 1e2; % Backprop...
 
@@ -46,7 +47,7 @@ global classGroups classType GFLAG RA BPI KFLAG
             ii = 1;
         end
 
-        n = l( ii, 1 );
+        n = l(ii, 1);
        
         % We need to mask the batch indexes.
 
@@ -88,11 +89,13 @@ global classGroups classType GFLAG RA BPI KFLAG
                 
                         if ( TA == BPI(1,1) )
                 
-                            D( i, j, k ) = ( ( S( i, j, k ) - RA( BPI(1,1), j, k ) )^p )^( 1 / p );  
+                            D( i, j, k ) = ( ( S( i, j, k ) -...
+                                RA( BPI(1,1), j, k ) )^p )^( 1 / p );  
                             
                         elseif ( TB == BPI(1,2) )
                 
-                            D( i, j, k ) = ( ( S( i, j, k ) - RA( BPI(1,2), j, k ) )^p )^( 1 / p );
+                            D( i, j, k ) = ( ( S( i, j, k ) -...
+                                RA( BPI(1,2), j, k ) )^p )^( 1 / p );
                             
                         end            
                     end
@@ -119,7 +122,8 @@ global classGroups classType GFLAG RA BPI KFLAG
 %                     for j = 1:C-1                    
 %                         for i = 1:size( X, 1 )
 %         
-%                             D( i, j, ii, k ) = ( ( X( i, j ) - RA( ii, j, k ) )^p )^( 1 / p );  
+%                             D( i, j, ii, k ) = ( ( X( i, j ) -...
+%                                RA( ii, j, k ) )^p )^( 1 / p );  
 %                         end
 %                     end    
 % 
@@ -131,27 +135,33 @@ global classGroups classType GFLAG RA BPI KFLAG
 % 
 %             [~,W] = min(Z);
 %        
-%             Ci = mean(D(:,1,W)); Cj = mean(D(:,2,W)); Ck = mean(D(:,3,W)); 
+%             Ci = mean(D(:,1,W)); Cj = mean(D(:,2,W));
+%             Ck = mean(D(:,3,W)); 
 %     
 %             Cn = [ Ci Cj Ck ];  
         end
         
-        for k = 1:1:size(BPI,2)
-            for j = 1:size(S,3)
+        for bp = 1:1:size(BPI,2)
+            for k = 1:1:size(Cn,2)
                 for i = 1:size(S,1)
+                    for j = 1:size(S,2)
     
-                    H( i, j, k ) = ( ( S( i, j, k ) - Cn( k, 1 ) )^p )^(1/p); 
-                end
-            end   
+                        H( i, j, k, bp ) = ( ( S( i, j, k ) -...
+                            Cn( bp, k ) )^p )^(1/p); 
+                    end
+                end   
+            end
         end
 
-        Y = H(:,:,:); Y = cat(1,Y,H(:,:,2));
+        Y = H(:,:,:,1); Y = cat(1,Y,H(:,:,:,2));
 
         ii = ii + 1; jj = jj + 1;
     end
+    
+    for k = 1:1:size(Y,3)
+        for i = 1:1:V
 
-    for i = 1:1:V
-
-        Y(i,end,1) = l(i, 1); % Re-append labels for completeness...
+            Y(i,end,k) = l(i, 1); % Re-append labels for completeness...
+        end
     end
 end
