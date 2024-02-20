@@ -1,8 +1,6 @@
-function [ RA ] = buildManifold( A, l )
+function [ RA ] = buildManifold(A, l)
 
-    global classType classGroups BINS RA BPI ii ij KFLAG
-    
-    BFLAG = 1;
+    global classType classGroups BINS RA BPI ii ij BFLAG
     
     for j = 1:1:size(classType,2)
        for k = 1:1:size(classGroups,2)
@@ -63,7 +61,7 @@ function [ RA ] = buildManifold( A, l )
                 % append temporary labels to the sample space, and 
                 % and store them for the convergence criterion.
                 
-                RA(BPI(1,1),2:end,K) = mean(F(1:aa,:,K-1),1);
+                RA(BPI(1,1),2:end,K) = mean(F(1:aa,:,K-1),1); BFLAG = 1;
     
                 [ D, E ] = classifier( F, l );
                 
@@ -95,7 +93,7 @@ function [ RA ] = buildManifold( A, l )
                 
                 % TL_(:,2:) = F(:,end,:); F = F(:,1:end-1,:);
                  
-                RA(BPI(1,2),2:end,K) = mean(F(1:bb,:,K-1),1);
+                RA(BPI(1,2),2:end,K) = mean(F(1:bb,:,K-1),1); BFLAG = 0;
                
                 [ D, E ] = classifier( F, l );
                 
