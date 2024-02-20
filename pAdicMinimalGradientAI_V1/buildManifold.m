@@ -2,7 +2,7 @@ function [ RA ] = buildManifold( A, l )
 
     global classType classGroups BINS RA BPI ii ij KFLAG
     
-    KFLAG = 1;
+    BFLAG = 1;
     
     for j = 1:1:size(classType,2)
        for k = 1:1:size(classGroups,2)
