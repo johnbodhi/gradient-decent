@@ -8,7 +8,7 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
     O   = size(classGroups,2);
     
-    CONTAINMENT  = 4; % Average containment limit... (0.25N)
+    CONTAINMENT  = 4; % Objective function containment limit... (0.25N)
     
     IT  = O*N*M;
     
