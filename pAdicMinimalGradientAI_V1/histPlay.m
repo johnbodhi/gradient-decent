@@ -111,7 +111,7 @@ while( B_ )
             % samples to be unused or used repetitively in a binary 
             % categorification.
             
-            % [ RA, TL ] = decisionTree();
+            % [ RA, TL_ ] = decisionTree();
         else
             
             B_ = B_ - 1;        
