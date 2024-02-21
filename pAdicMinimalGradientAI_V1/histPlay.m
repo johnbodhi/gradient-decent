@@ -92,6 +92,8 @@ NN = sum((1:1:N));
 
 B_ = size(classGroups,2); % Convergence criterion.
 
+%{
+
 while( B_ )
     
     RA = cat(1,RA,zeros(size(classType,2),BINS,size(classGroups,2)));
@@ -117,7 +119,9 @@ while( B_ )
     end
 end
 
-[ RA ] = filterOptimization(RA, A_, l );
+[ RA ] = filterOptimization(RA, A_, l ); 
+
+%}
 
 % We now have a preconditioned, or optimized, array that we can 
 % send into Krylov Subspace. This may hasten verification, or
@@ -126,8 +130,6 @@ end
 BOOST = 0;
 
 RA = zeros(size(classType,2)+BOOST,BINS+BOOST,size(classGroups,2)+BOOST);
-
-RA = RA(2:end,2:end,2:end);
 
 [ RA ] = BiCGSTAB( RA, A_ );
 
