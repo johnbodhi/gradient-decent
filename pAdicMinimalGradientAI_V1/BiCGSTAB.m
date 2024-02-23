@@ -10,7 +10,7 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
     
     CONTAINMENT  = 4; % Objective function containment limit... (0.25N)
     
-    IT  = O*N*M;
+    IT  = O*N^M;
     
     V   = zeros( N, M, O );
     
@@ -18,10 +18,12 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
     aa = 1; bb = 1; cc = 1;
 
-    TOL = 1; LIMIT = 1e-3; 
+    TOL = 10; LIMIT = 1e-3; 
 
     if( N == 1 )
-
+        
+        %{
+        
         X_ = frameLength.*X_; A = Y_;
 
         for ii = 1:1:size(X_,1)
@@ -80,15 +82,17 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
         
         RA(Z_,:,:) = ( RA(Z_,:,:) + Y_ ) ./ 2;
         
+        %}
+        
     elseif( N > 1 )
 
-        B(:,1) = frameLength.*X_(1,:,1);
+        B(:,1) = frameLength.*Y_(1,:,1);
         
         X(:,1) = Y_(1,:,1);
             
         ii = 1;
         
-        while( sum(sum(sum(V,1),2),3) < IT )
+        while( sum(sum(sum(V,1),2),3) <= IT )
     
             Ks = floor( ii / IT )+1;
     
@@ -97,7 +101,7 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
                 V(aa,1,Ks) = 1;
                     
                 A(:,1) = Y_(aa,:,Ks);
-    
+                
                 aa = aa + 1;                          
                 
             elseif( aa > size(V,1) && bb <= size(V,1) )
@@ -124,7 +128,7 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
             
             R(:,1)   = R_0(:,1);
     
-            RHO_0    = dot(R_0(:,1), R_0(:,1)); 
+            RHO_0    = dot(R_0(:,1), R_0(:,1));
             
             RHO(1,1) = RHO_0;
     
@@ -139,7 +143,7 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
     
                 H(:,1) = X(:,1) + ALPHA.*P(:,1);
     
-                S(:,1) = R(:,1) - ALPHA.*V(:,1);            
+                S(:,1) = R(:,1) - ALPHA.*C(:,1);            
     
                 T(:,1) = A(:,1).*S(:,1);
     
@@ -154,12 +158,12 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
                 RHO(1,2) = dot( R_0(:,1), R(:,1) );
     
     
-                TOL      = RHO(1,2) / RHO_0;
+                TOL      = abs( RHO(1,2) / RHO_0 );
     
     
                 BETA     = ( RHO(1,2) / RHO(1,1) ) * ( ALPHA / OMEGA );
     
-                P(:,1)   = R(:,1) + BETA.*( P(:,1) - OMEGA.*V(:,1) );
+                P(:,1)   = R(:,1) + BETA.*( P(:,1) - OMEGA.*C(:,1) );
     
                 RHO(1,1) = RHO(1,2);
                     
