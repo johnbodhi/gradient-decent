@@ -18,7 +18,7 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
 
     aa = 1; bb = 1; cc = 1;
 
-    TOL = 10; LIMIT = 1e-3; 
+    TOL = 1; LIMIT = 1e-3; 
 
     if( N == 1 )
         
@@ -167,13 +167,13 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
     
                 RHO(1,1) = RHO(1,2);
                     
-                
+           
                 kk = kk + 1;
             end 
 
             WALK_(aa,bb,cc,Ks) = kk; kk = 1;
             
-            ii = ii + 1;
+            ii = ii + 1; TOL = 1;
         end
         
         for K = 1:1:size(classGroups,2)
