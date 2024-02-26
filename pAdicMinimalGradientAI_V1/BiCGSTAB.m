@@ -1,173 +1,68 @@
 function [ Z_ ] = BiCGSTAB( Y_ )
 
-    global classType classGroups BINS frameLength
-
+    global classType classGroups BINS frameLength...
+        TOL LIMIT
+    
     N   = size(Y_,1); 
     
     M   = size(classType,2)+1;
 
     O   = size(classGroups,2);
     
-    CONTAINMENT = 0.25*N; % Objective function containment limit.
+    
+    CONTAINMENT = 0.5*N; % Objective function containment limit.
     
     IT  = floor(N^((M-1)+CONTAINMENT/N));
     
+    
     V   = zeros( N, M );
+    
     
     ii = 1; kk = 1;
 
     aa = 1; bb = 1; cc = 1;
+    
 
     TOL = 1; LIMIT = 1e-2;
-
-    if( N == 1 )
+    
+    
+    B(:,1) = frameLength.*Y_(1,:);
         
-        %{
-        
-        X_ = frameLength.*X_; A = Y_;
-
-        for ii = 1:1:size(X_,1)
-
-            R_0(:,1) = X_(ii,:,1) - Y_(1,:,1).*Y_(1,:,1);
-            
-            R(:,1)   = R_0(:,1);
+    X(:,1) = Y_(1,:);
     
-            RHO_0    = dot(R_0(:,1), R_0(:,1)); 
-            
-            RHO(1,1) = RHO_0;
+    while( sum(sum(V,1),2) < IT )
     
-            P(:,1)   = R_0(:,1);          
+        if( aa <= size(V,1) )
     
-            while( TOL >= LIMIT )
-                
-                C(:,1) = A(:,1).*P(:,1);
-                
-    
-                ALPHA  = RHO(1,1) / dot( R(:,1), C(:,1) );
-    
-                H(:,1) = X(:,1) + ALPHA.*P(:,1);
-    
-                S(:,1) = R(:,1) - ALPHA.*V(:,1);        
-    
-                T(:,1) = A(:,1).*S(:,1);
-                
-    
-                OMEGA  = dot( T(:,1), S(:,1) ) / dot( T(:,1), T(:,1) );
-    
-                X(:,1) = H(:,1) + OMEGA(:,1).*S(:,1);
-    
-                R(:,1) = S(:,1) - OMEGA(:,1).*T(:,1);
-    
-    
-                RHO(1,2) = dot( R_0(:,1), R(:,1) );
-    
-    
-                TOL      = RHO(1,2) / RHO_0;
-    
-                
-                BETA     = ( RHO(1,2) / RHO(1,1) ) * ( ALPHA / OMEGA );
-    
-                P(:,1)   = R(:,1) + BETA.*( P(:,1) - OMEGA.*V(:,1) );
-    
-                RHO(1,1) = RHO(1,2);
-                
-    
-                kk = kk + 1;
-            end 
-    
-            WALK_(ii,1) = kk; kk = 1;        
-        end
-        
-        [ ~, Z_ ] = min(WALK_);
-        
-        RA(Z_,:,:) = ( RA(Z_,:,:) + Y_ ) ./ 2;
-        
-        %}
-        
-    elseif( N > 1 )
-
-        B(:,1) = frameLength.*Y_(1,:,1);
-        
-        X(:,1) = Y_(1,:,1);
-        
-        while( sum(sum(V,1),2) <= IT )
-    
-            if( aa <= size(V,1) )
-    
-                V(aa,1) = 1
+            V(aa,1) = 1;
                     
-                A(:,1) = Y_(aa,:);
+            A(:,1) = Y_(aa,:);
                 
-                aa = aa + 1;            
+            WALK_(aa,bb,cc) = BiCGSTAB_(A,X,B);
                 
-            elseif( aa > size(V,1) && bb <= size(V,1) )
+            aa = aa + 1;
+        
+        elseif( aa > size(V,1) && bb < size(V,1) )
                 
-                V(bb,2) = 1; V(:,1) = 0;
+            V(bb,2) = 1; V(:,1) = 0;
     
-                X(:,1) = Y_(bb,:);
+            X(:,1) = Y_(bb,:);
+                
+            WALK_(aa,bb,cc) = BiCGSTAB_(A,X,B);
+                
+            bb = bb + 1; aa = 1;
+        
+        elseif( bb > size(V,1) && cc < CONTAINMENT )
+                
+            V(cc,3) = 1; V(:,2) = 0;
                     
-                bb = bb + 1; aa = 1;
-    
-            elseif( bb > size(V,1) && cc <= CONTAINMENT )
-    
-                V(cc,3) = 1; V(:,2) = 0;
+            Y_ = monteCarlo(Y_);
                     
-                Y_ = monteCarlo(Y_);
-                    
-                B(:,1) = frameLength.*mean(Y_(1:cc,:),1);
-                    
-                cc = cc + 1; bb = 1;
+            B(:,1) = frameLength.*mean(Y_(1:cc,:),1);
                 
-            end
-            
-            R_0(:,1) = B(:,1) - A(:,1).*X(:,1);
-            
-            R(:,1)   = R_0(:,1);
-    
-            RHO_0    = dot(R_0(:,1), R_0(:,1));
-            
-            RHO(1,1) = RHO_0;
-    
-            P(:,1)   = R_0(:,1);
-    
-            while( TOL >= LIMIT )
+            WALK_(aa,bb,cc) = BiCGSTAB_(A,X,B);
                 
-                C(:,1) = A(:,1).*P(:,1); 
-                
-    
-                ALPHA  = RHO(1,1) / dot( R(:,1), C(:,1) );
-    
-                H(:,1) = X(:,1) + ALPHA.*P(:,1);
-    
-                S(:,1) = R(:,1) - ALPHA.*C(:,1);            
-    
-                T(:,1) = A(:,1).*S(:,1);
-    
-    
-                OMEGA  = dot( T(:,1), S(:,1) ) / dot( T(:,1), T(:,1) );
-    
-                X(:,1) = H(:,1) + OMEGA(:,1).*S(:,1);
-    
-                R(:,1) = S(:,1) - OMEGA(:,1).*T(:,1);
-    
-    
-                RHO(1,2) = dot( R_0(:,1), R(:,1) );
-    
-    
-                TOL      = abs( RHO(1,2) / RHO_0 );
-    
-    
-                BETA     = ( RHO(1,2) / RHO(1,1) ) * ( ALPHA / OMEGA );
-    
-                P(:,1)   = R(:,1) + BETA.*( P(:,1) - OMEGA.*C(:,1) );
-    
-                RHO(1,1) = RHO(1,2);
-                    
-                kk = kk + 1;
-            end 
-            WALK_(aa,bb,cc) = kk; kk = 1; 
-                
-            TOL = 1;
+            cc = cc + 1; bb = 1;
         end
     end
             
@@ -229,37 +124,40 @@ function [ Z_ ] = BiCGSTAB( Y_ )
     EP_MU = 0.9; % We can  step through an epsilon vector as well once 
                  % we have experience...
         
-    RA = zeros(M,BINS);
+    RA = zeros(M,BINS); RB = zeros(M,BINS);
         
-    ii = 1; ll = 1;
+    ll = 1;
     for k = 1:1:size(WALK_,3)
         for i = 2:1:size(WALK_,1)
                         
             Z_(i-1,j,k,1) = WALKA(j,i,k) - WALKA(j,i-1,k);
             
             Z_(i-1,j,k,2) = WALKB(i,j,k) - WALKB(i-1,j,k);
+            
                         
-            E(1,1) = Z_(i-1,j,k,1)/Z_(i,j,k,1);
+            E(1,1) = Z_(i-1,j,k,1) / Z_(i,j,k,1);
                     
-            E(1,2) = Z_(i-1,j,k,2)/Z_(i,j,k,2);
+            E(1,2) = Z_(i-1,j,k,2) / Z_(i,j,k,2);
+            
                     
             if( E(1,1) >= EP_MU && E(1,2) >= EP_MU )
             
-                RA(k,:,K) = RA(k,:,K) + Y_(LA(1,i-1,k),:,K);
+                RA(k,:) = RA(k,:) + Y_(LA(1,i-1,k),:);
                
-                RB(k,:,K) = RB(k,:,K) + Y_(LB(1,i-1,k),:,K);
+                RB(k,:) = RB(k,:) + Y_(LB(1,i-1,k),:);
              
                 ll = ll + 1;
             end  
         end
             
-        RAA(k,:) = RAA(k,:) / ll;
+        RA(k,:) = RA(k,:) / ll;
            
-        RAB(k,:) = RAB(k,:) / ll;
+        RB(k,:) = RB(k,:) / ll;
                 
         ll = 1;
     end
-    Z_ = ( RAA + RAB ) ./ 2;
+    Z_ = ( RA + RB ) ./ 2;
+    
 end
      
     
