@@ -43,15 +43,15 @@ end
 % We need to boost our filter allocation to have globally 
 % defined values in our learning rate.
 
-BOOST = 0;
-
-RA = zeros(size(classType,2)+BOOST,BINS+BOOST,size(classGroups,2)+BOOST);
-
 % We can pass the sample set into a convolutional version of 
-% krylov subspace for a single filter update with a pre existing filter,
+% krylov subspace for a single filter update with a pre-existing filter,
 % or we can generate an initial condition for a supergroup of classes,
 % and proceed with further sample sets with the same method or with
 % gradient decent. This is error correction.
+
+% BOOST = 0;
+
+% RA = zeros(size(classType,2)+BOOST,BINS+BOOST,size(classGroups,2)+BOOST);
 
 % [ RA ] = BiCGSTAB( RA, A_ );
 
@@ -131,9 +131,11 @@ BOOST = 0;
 
 RA = zeros(size(classType,2)+BOOST,BINS+BOOST,size(classGroups,2)+BOOST);
 
-[ RA ] = BiCGSTAB( RA, A_ );
+% RA = RA(2:end,2:end,2:end);
+
+A_ = mean(A_(:,:,:),3);
+
+[ RA ] = BiCGSTAB( A_ );
 
 toc
-
-
 
