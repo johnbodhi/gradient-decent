@@ -1,24 +1,24 @@
-function [ Z_ ] = BiCGSTAB( X_, Y_ )
+function [ Z_ ] = BiCGSTAB( Y_ )
 
     global classType classGroups BINS frameLength
 
     N   = size(Y_,1); 
     
-    M   = size(classType,2);
+    M   = size(classType,2)+1;
 
     O   = size(classGroups,2);
     
-    CONTAINMENT  = 4; % Objective function containment limit... (0.25N)
+    CONTAINMENT = 0.25*N; % Objective function containment limit.
     
-    IT  = O*N^M;
+    IT  = floor(N^((M-1)+CONTAINMENT/N));
     
-    V   = zeros( N, M, O );
+    V   = zeros( N, M );
     
     ii = 1; kk = 1;
 
     aa = 1; bb = 1; cc = 1;
 
-    TOL = 1; LIMIT = 1e-3; 
+    TOL = 1; LIMIT = 1e-2;
 
     if( N == 1 )
         
@@ -89,36 +89,32 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
         B(:,1) = frameLength.*Y_(1,:,1);
         
         X(:,1) = Y_(1,:,1);
-            
-        ii = 1;
         
-        while( sum(sum(sum(V,1),2),3) <= IT )
-    
-            Ks = floor( ii / IT )+1;
+        while( sum(sum(V,1),2) <= IT )
     
             if( aa <= size(V,1) )
     
-                V(aa,1,Ks) = 1;
+                V(aa,1) = 1
                     
-                A(:,1) = Y_(aa,:,Ks);
+                A(:,1) = Y_(aa,:);
                 
-                aa = aa + 1;                          
+                aa = aa + 1;            
                 
             elseif( aa > size(V,1) && bb <= size(V,1) )
                 
-                V(bb,2,Ks) = 1; V(:,1,Ks) = 0;
+                V(bb,2) = 1; V(:,1) = 0;
     
-                X(:,1) = Y_(bb,:,Ks);
+                X(:,1) = Y_(bb,:);
                     
                 bb = bb + 1; aa = 1;
     
             elseif( bb > size(V,1) && cc <= CONTAINMENT )
     
-                V(cc,3,Ks) = 1; V(:,2,Ks) = 0;
+                V(cc,3) = 1; V(:,2) = 0;
                     
                 Y_ = monteCarlo(Y_);
                     
-                B(:,1) = frameLength.*mean(Y_(1:cc,:,Ks),1);
+                B(:,1) = frameLength.*mean(Y_(1:cc,:),1);
                     
                 cc = cc + 1; bb = 1;
                 
@@ -136,7 +132,7 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
     
             while( TOL >= LIMIT )
                 
-                C(:,1) = A(:,1).*P(:,1);
+                C(:,1) = A(:,1).*P(:,1); 
                 
     
                 ALPHA  = RHO(1,1) / dot( R(:,1), C(:,1) );
@@ -167,102 +163,103 @@ function [ Z_ ] = BiCGSTAB( X_, Y_ )
     
                 RHO(1,1) = RHO(1,2);
                     
-           
                 kk = kk + 1;
             end 
-
-            WALK_(aa,bb,cc,Ks) = kk; kk = 1;
-            
-            ii = ii + 1; TOL = 1;
+            WALK_(aa,bb,cc) = kk; kk = 1; 
+                
+            TOL = 1;
         end
+    end
+            
+    % We need to sort the minimum walk accumulations in the 
+    % form of a chart, and a transpose chart.
         
-        for K = 1:1:size(classGroups,2)
+    W_ = WALK_(:,:,:);
         
-            W_ = WALK_(:,:,:,K);
-        
-            jj = 1;
-            for k = 1:1:size(WALK_,3)
-                for i = 1:1:size(WALK_,1)
+    jj = 1;
+    for k = 1:1:size(WALK_,3)
+        for i = 1:1:size(WALK_,1)
                 
-                    while( WALK_(i,:,k) )                                                   
+             while( W_(i,:,k) )                                                   
                          
-                         [WALKA(i,jj,k), LA(i,jj,k)] = ...
-                             find(W_(i,:,k) == min(W_(i,:,k),2));
+                 [ WA, LA ] = find(W_(i,:,k) == min(W_(i,:,k),2));
+                         
+                 WALKA(i,jj,k) = size(find(WA),2);
                      
-                         jj = jj + 1;
+                 jj = jj + 1;
                       
-                         for j = 1:1:size(LA,2)
+                 for j = 1:1:size(LA,2)
                          
-                             W_(i,LA(i,j,k),k) = NaN;
-                         end
-                         L = 0;
-                     
-                    end 
-                    jj = 1;
-                        
-                end
-            end
-         
-            W_ = WALK_(:,:,:,K); 
-            
-            ii = 1;
-            for k = 1:1:size(WALK_,3)
-                for j = 1:1:size(WALK_,2)
-                
-                    while( WALK_(:,j,k) )
-                
-                         [WALKB(ii,j,k), LB(j,ii,k)] = ...
-                             find(W_(:,j,k) == min(W_(:,j,k),1));
-                     
-                         ii = ii + 1;
-                     
-                         for i = 1:1:size(L,1)
-                         
-                             W_(j,LB(i,j,k),k) = NaN;
-                         end
-                         L = 0;
-                     
-                    end 
-                    ii = 1;
-                
-                end
-            end
-            
-            EP_MU = 0.9;
-        
-            RA = zeros(M,BINS,O);
-        
-            ii = 1; ll = 1;
-            for k = 1:1:size(WALK_,3)
-                for i = 2:1:size(WALK_,1)
-                        
-                    Z_(i-1,j,k,1) = WALKA(j,i,k) - WALKA(j,i-1,k);
-                
-                    Z_(i-1,j,k,2) = WALKB(i,j,k) - WALKB(i-1,j,k);
-                        
-                    E(1,1) = Z_(i-1,j,k,1)/Z_(i,j,k,1);
-                    
-                    E(1,2) = Z_(i-1,j,k,2)/Z_(i,j,k,2);
-                    
-                    
-                    if( E(1,1) >= EP_MU && E(1,2) >= EP_MU )
-                    
-                        RA(k,:,K) = RA(k,:,K) + Y_(LA(1,i-1,k),:,K);
-                        
-                        RB(k,:,K) = RB(k,:,K) + Y_(LB(1,i-1,k),:,K);
-                       
-                        ll = ll + 1;
-                    end  
+                     W_(i,LA(1,j),k) = NaN;
                  end
+                 LA = 0;
+             end 
+             jj = 1;
+        end
+    end
+         
+    W_ = WALK_(:,:,:); 
             
-                 RAA(k,:,K) = RAA(k,:,K)/ll;
+    ii = 1;
+    for k = 1:1:size(WALK_,3)
+        for j = 1:1:size(WALK_,2)
                 
-                 RAB(k,:,K) = RAB(k,:,K)/ll;
+            while( W_(:,j,k) )
                 
-                 ll = 1;
-            end
-         end
-    end 
-    Z_ = ( RAA + RAB ) ./ 2; 
-    
+               [ WB, LB ] = find(W_(:,j,k) == min(W_(:,j,k),1));
+                         
+               WALKB(i,ii,k) = size(find(WB),2);
+                     
+               ii = ii + 1;
+                     
+               for i = 1:1:size(LB,2)
+                         
+                   W_(j,LB(1,i),k) = NaN;
+               end
+               LB = 0;
+            end 
+            ii = 1;
+        end
+    end
+            
+    % We need to separate the walk accumulation deltas from eachother
+    % according to an average edge amplitude. This is the discrimination
+    % value for a class.
+            
+    EP_MU = 0.9; % We can  step through an epsilon vector as well once 
+                 % we have experience...
+        
+    RA = zeros(M,BINS);
+        
+    ii = 1; ll = 1;
+    for k = 1:1:size(WALK_,3)
+        for i = 2:1:size(WALK_,1)
+                        
+            Z_(i-1,j,k,1) = WALKA(j,i,k) - WALKA(j,i-1,k);
+            
+            Z_(i-1,j,k,2) = WALKB(i,j,k) - WALKB(i-1,j,k);
+                        
+            E(1,1) = Z_(i-1,j,k,1)/Z_(i,j,k,1);
+                    
+            E(1,2) = Z_(i-1,j,k,2)/Z_(i,j,k,2);
+                    
+            if( E(1,1) >= EP_MU && E(1,2) >= EP_MU )
+            
+                RA(k,:,K) = RA(k,:,K) + Y_(LA(1,i-1,k),:,K);
+               
+                RB(k,:,K) = RB(k,:,K) + Y_(LB(1,i-1,k),:,K);
+             
+                ll = ll + 1;
+            end  
+        end
+            
+        RAA(k,:) = RAA(k,:) / ll;
+           
+        RAB(k,:) = RAB(k,:) / ll;
+                
+        ll = 1;
+    end
+    Z_ = ( RAA + RAB ) ./ 2;
 end
+     
+    
