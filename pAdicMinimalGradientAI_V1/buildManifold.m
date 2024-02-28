@@ -17,13 +17,17 @@ function [ RA ] = buildManifold(A, l)
 
     O   = size(classGroups,2);
     
-    V   = zeros(N-M,1); % Stencil limit...
     
-    IT  = O*N*M; 
+    CCONTAINMENT = 0.25*N;
+    
+    V   = zeros(N-CONTAINMENT,1); % Stencil limit...
+    
+    IT  = N*M;
     
     B   = zeros(N,M,O);
     
     X   = zeros(N,BINS+1,O,1);
+    
 
     % Convoltution with a sub-gradient!!
 
@@ -35,17 +39,16 @@ function [ RA ] = buildManifold(A, l)
     
     MM = zeros(1,size(classGroups,2));
 
-    while( sum(sum(sum(B,1),2),3) < IT )
-
-        K = ceil( ii / IT ) + 1;
+    while( sum(sum(B,1),2) < IT )
 
         if( aa <= size(V,1) )
 
-            B(aa,1,K) = 1;
+            B(aa,1) = 1;
 
             for q = 1:1:size(A,1)
                 
-                % We can utilize monte carlo methods in the convergence.
+                % We can utilize Monte Carlo methods
+                % in the convergence.
                 
                 % A = cat(2,A,TL_);
                 
@@ -54,26 +57,26 @@ function [ RA ] = buildManifold(A, l)
                 % TL_(:,1,:) = F(:,end,:); F = F(:,1:end-1,:);
                 
                 % We need to track the samples used in the 
-                % construction of the filter to enssure they
+                % construction of the filter to ensure they
                 % are unique or exclusive, in that every sample is
-                % used in thefilters construction, and used no more 
+                % used in the filters construction, and used no more 
                 % than once. To accomplish this we
                 % append temporary labels to the sample space, and 
                 % and store them for the convergence criterion.
                 
-                RA(BPI(1,1),2:end,K) = mean(F(1:aa,:,K-1),1); BFLAG = 1;
+                RA(BPI(1,1),2:end) = mean(F(1:aa,:),1); BFLAG = 1;
     
                 [ D, E ] = classifier( F, l );
                 
-                [ ~, ~, ACC(K), ~ ] = fMeasure( D, E ); 
+                [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
-                if( ACC(K) >= T )
+                if( ACC >= T )
                     
-                    [ ~, MM(K)] = max(ACC);
+                    [ ~, MM] = max(ACC);
                 
-                    X(:,1:end-1,K) = RA; 
+                    X(:,1:end-1) = RA; 
                     
-                    X(:,end,K) = TL_(:,1,K);  
+                    X(:,end) = TL_(:,1);  
                 end
                 F  = circshift(A,1); TL_ = circshift(TL_,1);
                 
@@ -81,9 +84,9 @@ function [ RA ] = buildManifold(A, l)
             end
             aa = aa + 1;
 
-        elseif( aa > size(V,1) && bb <= size(V,1) )
+        elseif( aa > size(V,1) && bb < size(V,1) )
 
-            B(bb,2,K) = 1; B(:,1,K) = 0;
+            B(bb,2) = 1; B(:,1) = 0;
 
             for q = 1:1:size(A,1)
                 
@@ -93,24 +96,23 @@ function [ RA ] = buildManifold(A, l)
                 
                 % TL_(:,2:) = F(:,end,:); F = F(:,1:end-1,:);
                  
-                RA(BPI(1,2),2:end,K) = mean(F(1:bb,:,K-1),1); BFLAG = 0;
+                RA(BPI(1,2),2:end) = mean(F(1:bb,:),1); BFLAG = 0;
                
                 [ D, E ] = classifier( F, l );
                 
-                [ ~, ~, ACC(K), ~ ] = fMeasure( D, E ); 
+                [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
-                if( ACC(K) >= T )
+                if( ACC >= T )
                     
-                    [ ~, MM(K)] = max(ACC);
+                    [ ~, MM] = max(ACC);
                 
-                    X(:,1:end-1,K) = RA; 
+                    X(:,1:end-1) = RA; 
                     
-                    X(:,end,K) = TL_(:,2,K);      
+                    X(:,end) = TL_(:,2);      
                 end
                 F  = circshift(A,1); TL_ = circshift(TL_,1);
                 
                 l  = circshift(l,1);
-                
             end     
             bb = bb + 1; aa = 1;
             
