@@ -1,42 +1,37 @@
 function [ Z_ ] = BiCGSTAB( Y_ )
 
-    global classType classGroups BINS frameLength...
-        TOL LIMIT
+    global classType classGroups BINS frameLength TOL LIMIT
     
-    N   = size(Y_,1); 
+        
+    N   = 0.5*size(Y_,1); 
     
     M   = size(classType,2)+1;
-
-    O   = size(classGroups,2);
     
     
     CONTAINMENT = 0.5*N; % Objective function containment limit.
     
-    IT  = floor(N^((M-1)+CONTAINMENT/N));
-    
+    IT  = N*M-CONTAINMENT;
     
     V   = zeros( N, M );
-    
     
     ii = 1; kk = 1;
 
     aa = 1; bb = 1; cc = 1;
-    
 
     TOL = 1; LIMIT = 1e-2;
-    
     
     B(:,1) = frameLength.*Y_(1,:);
         
     X(:,1) = Y_(1,:);
     
+    
     F = sum(sum(V,1),2);
     
-    while( F <= IT )
+    while( F < IT )
     
-        if( aa <= size(V,1) )
+        if( aa <= N )
     
-            V(aa,1) = 1;
+            V(aa,1) = 1
                     
             A(:,1) = Y_(aa,:);
                 
@@ -44,7 +39,7 @@ function [ Z_ ] = BiCGSTAB( Y_ )
                 
             aa = aa + 1;
         
-        elseif( aa > size(V,1) && bb < size(V,1) )
+        elseif( aa >= N && bb <= N )
                 
             V(bb,2) = 1; V(:,1) = 0;
     
@@ -54,7 +49,7 @@ function [ Z_ ] = BiCGSTAB( Y_ )
                 
             bb = bb + 1; aa = 1;
         
-        elseif( bb > size(V,1) && cc < CONTAINMENT )
+        elseif( bb >= N && cc <= CONTAINMENT )
                 
             V(cc,3) = 1; V(:,2) = 0;
                     
