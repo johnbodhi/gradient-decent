@@ -30,7 +30,9 @@ function [ Z_ ] = BiCGSTAB( Y_ )
         
     X(:,1) = Y_(1,:);
     
-    while( sum(sum(V,1),2) < IT )
+    F = sum(sum(V,1),2);
+    
+    while( F <= IT )
     
         if( aa <= size(V,1) )
     
@@ -63,7 +65,10 @@ function [ Z_ ] = BiCGSTAB( Y_ )
             WALK_(aa,bb,cc) = BiCGSTAB_(A,X,B);
                 
             cc = cc + 1; bb = 1;
+            
         end
+        F = sum(sum(V,1),2)
+        
     end
             
     % We need to sort the minimum walk accumulations in the 
@@ -128,28 +133,29 @@ function [ Z_ ] = BiCGSTAB( Y_ )
         
     ll = 1;
     for k = 1:1:size(WALK_,3)
-        for i = 2:1:size(WALK_,1)
+        for j = 1:1:size(WALK_,2)
+            for i = 2:1:size(WALK_,1)
                         
-            Z_(i-1,j,k,1) = WALKA(j,i,k) - WALKA(j,i-1,k);
+                Z_(i-1,j,k,1) = WALKA(j,i,k) - WALKA(j,i-1,k);
             
-            Z_(i-1,j,k,2) = WALKB(i,j,k) - WALKB(i-1,j,k);
+                Z_(i-1,j,k,2) = WALKB(i,j,k) - WALKB(i-1,j,k);
             
                         
-            E(1,1) = Z_(i-1,j,k,1) / Z_(i,j,k,1);
+                E(1,1) = Z_(i-1,j,k,1) / Z_(i,j,k,1);
                     
-            E(1,2) = Z_(i-1,j,k,2) / Z_(i,j,k,2);
+                E(1,2) = Z_(i-1,j,k,2) / Z_(i,j,k,2);
             
                     
-            if( E(1,1) >= EP_MU && E(1,2) >= EP_MU )
+                if( E(1,1) >= EP_MU && E(1,2) >= EP_MU )
             
-                RA(k,:) = RA(k,:) + Y_(LA(1,i-1,k),:);
+                    RA(k,:) = RA(k,:) + Y_(LA(1,i-1,k),:);
                
-                RB(k,:) = RB(k,:) + Y_(LB(1,i-1,k),:);
+                    RB(k,:) = RB(k,:) + Y_(LB(1,i-1,k),:);
              
-                ll = ll + 1;
-            end  
-        end
-            
+                    ll = ll + 1;
+                end
+            end
+        end     
         RA(k,:) = RA(k,:) / ll;
            
         RB(k,:) = RB(k,:) / ll;
@@ -159,5 +165,3 @@ function [ Z_ ] = BiCGSTAB( Y_ )
     Z_ = ( RA + RB ) ./ 2;
     
 end
-     
-    
