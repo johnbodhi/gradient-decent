@@ -14,11 +14,13 @@ function [ Z_ ] = convolutionalMatrixEquation( Y_ )
     
     V   = zeros( N, M );
     
+    
     ii = 1; kk = 1;
 
     aa = 1; bb = 1; cc = 1;
 
     TOL = 1; LIMIT = 1e-2;
+    
     
     B(:,1) = frameLength.*Y_(1,:);
         
@@ -31,7 +33,7 @@ function [ Z_ ] = convolutionalMatrixEquation( Y_ )
     
         if( aa <= N )
     
-            V(aa,1) = 1
+            V(aa,1) = 1;
                     
             A(:,1) = Y_(aa,:);
                 
@@ -62,78 +64,38 @@ function [ Z_ ] = convolutionalMatrixEquation( Y_ )
             cc = cc + 1; bb = 1;
             
         end
-        F = sum(sum(V,1),2)
+        F = sum(sum(V,1),2);
         
     end
             
     % We need to sort the minimum walk accumulations in the 
     % form of a chart, and a transpose chart.
         
-    W_ = WALK_(:,:,:);
-        
-    jj = 1;
-    for k = 1:1:size(WALK_,3)
-        for i = 1:1:size(WALK_,1)
-                
-             while( W_(i,:,k) )                                                   
-                         
-                 [ WA, LA ] = find(W_(i,:,k) == min(W_(i,:,k),2));
-                         
-                 WALKA(i,jj,k) = size(find(WA),2);
-                     
-                 jj = jj + 1;
-                      
-                 for j = 1:1:size(LA,2)
-                         
-                     W_(i,LA(1,j),k) = NaN;
-                 end
-                 LA = 0;
-             end 
-             jj = 1;
-        end
-    end
-         
     W_ = WALK_(:,:,:); 
-            
-    ii = 1;
-    for k = 1:1:size(WALK_,3)
-        for j = 1:1:size(WALK_,2)
-                
-            while( W_(:,j,k) )
-                
-               [ WB, LB ] = find(W_(:,j,k) == min(W_(:,j,k),1));
-                         
-               WALKB(i,ii,k) = size(find(WB),2);
-                     
-               ii = ii + 1;
-                     
-               for i = 1:1:size(LB,2)
-                         
-                   W_(j,LB(1,i),k) = NaN;
-               end
-               LB = 0;
-            end 
-            ii = 1;
-        end
-    end
-            
+    
+    [WA,LA] = sort(W_,2);
+    
+    [WB,LB] = sort(W_,1);
+        
     % We need to separate the walk accumulation deltas from eachother
     % according to an average edge amplitude. This is the discrimination
     % value for a class.
             
-    EP_MU = 0.9; % We can  step through an epsilon vector as well once 
+    EP_MU = 0.1; % We can  step through an epsilon vector as well once 
                  % we have experience...
         
     RA = zeros(M,BINS); RB = zeros(M,BINS);
+    
+    Z_ = zeros(size(W_,1),size(W_,2),size(W_,3),2);
         
-    ll = 1;
+    ll = 0;
     for k = 1:1:size(WALK_,3)
         for j = 1:1:size(WALK_,2)
             for i = 2:1:size(WALK_,1)
                         
-                Z_(i-1,j,k,1) = WALKA(j,i,k) - WALKA(j,i-1,k);
+                Z_(i-1,j,k,1) = WA(j,i,k) - WA(j,i-1,k);
             
-                Z_(i-1,j,k,2) = WALKB(i,j,k) - WALKB(i-1,j,k);
+                Z_(i-1,j,k,2) = WB(i,j,k) - WB(i-1,j,k);
             
                         
                 E(1,1) = Z_(i-1,j,k,1) / Z_(i,j,k,1);
@@ -141,21 +103,27 @@ function [ Z_ ] = convolutionalMatrixEquation( Y_ )
                 E(1,2) = Z_(i-1,j,k,2) / Z_(i,j,k,2);
             
                     
-                if( E(1,1) >= EP_MU && E(1,2) >= EP_MU )
+                if( E(1,1) <= EP_MU && E(1,2) <= EP_MU )
             
-                    RA(k,:) = RA(k,:) + Y_(LA(1,i-1,k),:);
+                    RA(k,:) = RA(k,:) + Y_(LA(j,i-1,k),:);
                
-                    RB(k,:) = RB(k,:) + Y_(LB(1,i-1,k),:);
+                    RB(k,:) = RB(k,:) + Y_(LB(i-1,j,k),:);
              
                     ll = ll + 1;
                 end
-            end
-        end     
-        RA(k,:) = RA(k,:) / ll;
-           
-        RB(k,:) = RB(k,:) / ll;
                 
-        ll = 1;
+            end
+        end
+        
+        if( ll )
+            
+            RA(k,:) = RA(k,:) / ll;
+           
+            RB(k,:) = RB(k,:) / ll;
+            
+            ll = 0;
+        end
+        
     end
     Z_ = ( RA + RB ) ./ 2;
     
