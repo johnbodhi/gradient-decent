@@ -1,6 +1,6 @@
 clc; clear all; close all; tic
 
-global frameLength classType classGroups RA B_...
+global frameLength classType classGroups BOOST RA B_...
     DATARANGE BINS Randomized Supervision...
     BPI ii ij N
 
@@ -17,7 +17,9 @@ A  = readmatrix('trainRGB (4).csv');
 % We want to homogenize the data, and organize the samples 
 % symmetrically or asymmetrically into a single array.
 
-A_ = histogramization(A,N,[]);
+A_ = histogramization(A,N,[]); A_ = mean(A_(:,:,:),3);
+
+% A_ = complexHistogramization(A,N,[]); 
 
 C_ = zeros(size(A_,1),size(A_,2),size(A_,3));
 
@@ -49,15 +51,11 @@ end
 % and proceed with further sample sets with the same method or with
 % gradient decent. This is error correction.
 
-% BOOST = 0;
-
-% RA = zeros(size(classType,2)+BOOST,BINS+BOOST,size(classGroups,2)+BOOST);
-
-% [ RA ] = BiCGSTAB( RA, A_ );
-
 % These are objective labels, however the data may or may not be labeled.
 
 l = [ 1; 1; 1; 1; 2; 2; 2; 2; 3; 3; 3; 3; 4; 4; 4; 4 ]; % Optional labels...
+
+% A_ = monteCarlo(A);
 
 % We need to define initial conditions of our filter without knowing 
 % what we are sampling, with or without supervision. For this, we use
@@ -80,17 +78,23 @@ l = [ 1; 1; 1; 1; 2; 2; 2; 2; 3; 3; 3; 3; 4; 4; 4; 4 ]; % Optional labels...
 % failing to avoid repetition in the averages, or yield results
 % that depend on overly exclusive averages.
 
-ii = 1; ij = 2;
+ii = 2; ij = 3;
 
 BPI = [ ii ij ];
 
 BOOST = 1;
 
-RA = zeros(size(classType,2)+BOOST,BINS+BOOST,size(classGroups,2)+BOOST);
+RA = zeros(size(classType,2)+BOOST,BINS+BOOST,size(classGroups,2)-2+BOOST);
 
 NN = sum((1:1:N));
 
 B_ = size(classGroups,2); % Convergence criterion.
+
+A_ = mean(A_(:,:,:),3);
+
+[ RA, TL_ ] = buildManifold( A_, l ); 
+
+[ RA ] = filterOptimization(RA, A_, l );
 
 %{
 
@@ -114,7 +118,7 @@ while( B_ )
             % [ RA, TL_ ] = decisionTree();
         else
             
-            B_ = B_ - 1;        
+            % B_ = B_ - 1; % Color
         end
     end
 end
@@ -135,7 +139,6 @@ RA = zeros(size(classType,2)+BOOST,BINS+BOOST,size(classGroups,2)+BOOST);
 
 A_ = mean(A_(:,:,:),3);
 
-[ RA ] = BiCGSTAB( A_ );
+[ RA ] = convolutionalMatrixEquation( A_ );
 
 toc
-
