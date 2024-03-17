@@ -1,12 +1,10 @@
-function [ RA ] = buildManifold(A, l)
+function [ RA, TL_ ] = buildManifold(A, l)
 
-    global classType classGroups BINS RA BPI ii ij BFLAG
+    global classType classGroups BINS RA Q BPI ii ij BFLAG
     
     for j = 1:1:size(classType,2)
-       for k = 1:1:size(classGroups,2)
            
-            TL_(:,j,k) = (1:1:size(A,1)); % Sample tracking labels.
-        end
+        TL_(:,j) = (1:1:size(A,1)); % Sample tracking labels.
     end
     
     F   = A;
@@ -18,26 +16,29 @@ function [ RA ] = buildManifold(A, l)
     O   = size(classGroups,2);
     
     
-    CCONTAINMENT = 0.25*N;
+    CONTAINMENT = 0.25*N;
     
-    V   = zeros(N-CONTAINMENT,1); % Stencil limit...
+    V   = zeros(N-CONTAINMENT,M); % Stencil limit...
     
-    IT  = N*M;
+    IT  = N^M;
     
-    B   = zeros(N,M,O);
     
-    X   = zeros(N,BINS+1,O,1);
+    B   = zeros(N,M);
+    
+    X   = zeros(N,BINS+1,2);
     
 
     % Convoltution with a sub-gradient!!
-
+    
     ii = 1;
 
     aa = 1; bb = 1; 
     
     T  = 1.0;
     
-    MM = zeros(1,size(classGroups,2));
+    % MM = zeros(1,size(classGroups,2));
+   
+    F = sum(sum(B,1),2);
 
     while( sum(sum(B,1),2) < IT )
 
@@ -50,21 +51,16 @@ function [ RA ] = buildManifold(A, l)
                 % We can utilize Monte Carlo methods
                 % in the convergence.
                 
-                % A = cat(2,A,TL_);
+                A = cat(2,A,TL_);
                 
-                % F = monteCarlo(A); 
+                F = monteCarlo(A); 
                 
-                % TL_(:,1,:) = F(:,end,:); F = F(:,1:end-1,:);
+                TL_(:,1) = F(:,end); F = F(:,1:end-2);
                 
-                % We need to track the samples used in the 
-                % construction of the filter to ensure they
-                % are unique or exclusive, in that every sample is
-                % used in the filters construction, and used no more 
-                % than once. To accomplish this we
-                % append temporary labels to the sample space, and 
-                % and store them for the convergence criterion.
                 
-                RA(BPI(1,1),2:end) = mean(F(1:aa,:),1); BFLAG = 1;
+                RA(BPI(1,1),2:end,2) = mean(F(1:aa,:),1); 
+                
+                Q = RA; BFLAG = 1;
     
                 [ D, E ] = classifier( F, l );
                 
@@ -72,11 +68,11 @@ function [ RA ] = buildManifold(A, l)
 
                 if( ACC >= T )
                     
-                    [ ~, MM] = max(ACC);
+                    [ ~, MM ] = max(ACC);
                 
-                    X(:,1:end-1) = RA; 
+                    X(:,1:end-1,:) = RA; 
                     
-                    X(:,end) = TL_(:,1);  
+                    X(:,end,:) = TL_(:,1);  
                 end
                 F  = circshift(A,1); TL_ = circshift(TL_,1);
                 
@@ -84,19 +80,22 @@ function [ RA ] = buildManifold(A, l)
             end
             aa = aa + 1;
 
-        elseif( aa > size(V,1) && bb < size(V,1) )
+        elseif( aa >= size(V,1) && bb < size(V,1) )
 
             B(bb,2) = 1; B(:,1) = 0;
 
             for q = 1:1:size(A,1)
                 
-                % A = cat(2,A,TL_);
+                A = cat(2,A,TL_);
                 
-                % F = monteCarlo(A); 
+                F = monteCarlo(A); 
                 
-                % TL_(:,2:) = F(:,end,:); F = F(:,1:end-1,:);
+                TL_(:,2) = F(:,end); F = F(:,1:end-1);
+                
                  
-                RA(BPI(1,2),2:end) = mean(F(1:bb,:),1); BFLAG = 0;
+                RA(BPI(1,2),2:end,2) = mean(F(1:bb,:),1);
+
+                Q = RA; BFLAG = 0;
                
                 [ D, E ] = classifier( F, l );
                 
@@ -104,11 +103,11 @@ function [ RA ] = buildManifold(A, l)
 
                 if( ACC >= T )
                     
-                    [ ~, MM] = max(ACC);
+                    [ ~, MM ] = max(ACC);
                 
-                    X(:,1:end-1) = RA; 
+                    X(:,1:end-1,:) = RA; 
                     
-                    X(:,end) = TL_(:,2);      
+                    X(:,end,:) = TL_(:,2);      
                 end
                 F  = circshift(A,1); TL_ = circshift(TL_,1);
                 
@@ -118,13 +117,10 @@ function [ RA ] = buildManifold(A, l)
             
         end  
         ii = ii + 1;
-        
+
+        F = sum(sum(B,1),2); 
     end
-    
-    for k = 1:1:size(X,3)
-        RA = X(:,:,k); 
-    end
-    Q = RA;
+    RA = X(:,:,:); Q = RA;
     
     ii = ii + 2; ij = ij + 2;
 end
