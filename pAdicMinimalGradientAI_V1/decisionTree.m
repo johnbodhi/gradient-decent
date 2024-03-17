@@ -6,7 +6,7 @@ clear all; close all; clc; tic
  
 % N = size(A,1); M = size(A,2);
 
-N = 10; M = N;
+N = 15; M = N; % Maximal for N odd...
 for j = 1:M
     for i = 1:N
          if( i < j || i == j)
@@ -162,7 +162,7 @@ UP = 0; DOWN = 1;
 
 DIRECTION = [UP DOWN]; % [ Toward the vertex. Toward the edge. ]
 
-for kk = 1:1:size(Z,1)
+for kk = 1:1:size(Z,2) % for kk = 1:1:1
     
     if( DIRECTION(1,1) )
         
@@ -186,11 +186,11 @@ for kk = 1:1:size(Z,1)
     
     S = R(ii,jj,kk);
 
-    for j = 1:1:Z(kk)
+    for j = 1:1:Z(floor(N/2)+1)
         
         for i = 1:1:size(V,1)
             
-            % [C, IC, Cn, ICn] = gradientDecentAI();
+            % [Cn, ICn] = minimalGradientAI( A );
     
             if( ~V(i,j,kk) ) % if( Cn && ~ICn )
         
@@ -198,15 +198,20 @@ for kk = 1:1:size(Z,1)
         
                     jj = jj + 1; 
                     
-                    % R(ii,jj,kk) = Cn;
+                end           
+                
+                 % R(ii,jj,kk) = 0;
         
-                    S = S + R(ii,jj,kk);  
-                   
-                end                  
+                 S = S + R(ii,jj,kk);  
+                 
+                 % [ A ] = increaseDataSets(A);
+                    
+                 % [ A ] = monteCarlo(A);
                              
-            elseif( V(i,j,kk) )
+            elseif( V(i,j,kk) ) % elseif( ( ~Cn && ICn ) || ( Cn && ICn ) )
         
-                if( ii > N - M + 1 && jj <= N - 1 ) % if( ( ~Cn && ICn ) || ( Cn && ICn ) )
+        
+                if( ii > N - M + 1 && jj <= N - 1 )
         
                     if( DIRECTION(1,1) )
                         
@@ -227,9 +232,9 @@ for kk = 1:1:size(Z,1)
                     % data to correct the averages, or populate the minimizer / objective 
                     % function.
                     
-                    % monteCarlo(A);
+                    % [ A ] = increaseDataSets(A);
                     
-                    % increaseDataSets(A);
+                    % [ A ] = monteCarlo(A);
                     
                     S = S + R(ii,jj,kk);     
                    
