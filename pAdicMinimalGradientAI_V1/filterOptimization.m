@@ -1,4 +1,4 @@
-function [ RA ] = filterOptimization( RA, A, l)
+function [ RA ] = filterOptimization( RA, A, l )
     
     global BINS
 
@@ -33,24 +33,26 @@ function [ RA ] = filterOptimization( RA, A, l)
 
     % We need to reshape for a more efficient mapping...
 
-    V = cat(1,V_(:,:,:,1),V_(:,:,:,2),V_(:,:,:,3));
+    % V = cat(1,V_(:,:,:,1),V_(:,:,:,2),V_(:,:,:,3));
 
     % We need to apply a sub-gradient within the SVM to optimize 
     % the filter efficiency.
 
     % We need to convolve! This is the shave, or keying.
     
-    N = size(RA,1);
+    N = size(V,1);
     
     M = size(V,1);
     
-    O = size(RA,3);
+    % O = size(RA,3);
     
-    IT  = N*M*O; 
+    IT  = N^M; 
     
-    B   = zeros(N,M,O);
+    B   = zeros(N,M);
     
-    T = 1.0;
+    T   = 1.0;
+    
+    NN  = floor(0.75*BINS); % Preconditioning limit...
     
     for i = 2:1:size(RA,1)
       
@@ -58,47 +60,43 @@ function [ RA ] = filterOptimization( RA, A, l)
 
         aa = 1; bb = 1; 
 
-        while( sum(sum(sum(B,1),2),3) < IT )
-        
-            K  = ceil( ii / IT )+1;
-            Ka = ceil( aa / size(S,1) )+1;
-            Kb = ceil( bb / size(S,1) )+1;
+        while( sum(sum(B,1),2) < IT )
 
             if( aa <= size(V,1) )
             
-                B(aa,1,K) = 1;
+                B(aa,1) = 1;
 
-                RA(i,2:end,Ka) = V(aa,:,1);
+                RA(i-1,2:end,2) = V(aa,:,1);
 
                 aa = aa + 1;
             
                 [ D, E ] = classifier( A, l );
             
-                [ ~, ~, ACC(K), ~ ] = fMeasure( D, E ); 
+                [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
             
-                if( ACC(K) >= T )
+                if( ACC >= T && sum(S(aa,:),2) <= NN )
             
-                    [ ~, M(K) ] = max(ACC);
+                    [ ~, MM ] = max(ACC);
                 
-                    X(:,:,K) = RA;         
+                    X(:,:,2) = RA;         
                 end
             elseif( aa > size(V,1) && bb <= size(V,1) )
             
-                B(bb,2,K) = 1; B(:,1,K) = 0;
+                B(bb,2) = 1; B(:,1) = 0;
              
-                RA(i,2:end,Kb) = V(bb,:,2); 
+                RA(i,2:end,2) = V(bb,:,2); 
 
                 bb = bb + 1; aa = 1;
             
                 [ D, E ] = classifier( A, l );
             
-                [ ~, ~, ACC(K), ~ ] = fMeasure( D, E ); 
+                [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
             
-                if( ACC(K) >= T )
+                if( ACC >= T && sum(S(bb,:),2) <= NN )
             
-                    [ ~, M(K) ] = max(ACC);
+                    [ ~, MM ] = max(ACC);
                 
-                    X(:,:,K) = RA;         
+                    X(:,:,2) = RA;         
                 end
             end
             ii = ii + 1;
@@ -106,11 +104,12 @@ function [ RA ] = filterOptimization( RA, A, l)
         end
     end
     
+    %{
     for k = 2:1:size(RA,3)
         
         RA(2:end,2:end,k) = X(:,:,k-1); 
     end
-    Q = RA;
+    %}
+    Q = X;
     
 end
-    
