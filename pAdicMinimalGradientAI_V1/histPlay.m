@@ -78,15 +78,9 @@ l = [ 1; 1; 1; 1; 2; 2; 2; 2; 3; 3; 3; 3; 4; 4; 4; 4 ]; % Optional labels...
 % failing to avoid repetition in the averages, or yield results
 % that depend on overly exclusive averages.
 
-ii = 2; ij = 3;
-
-BPI = [ ii ij ];
-
 BOOST = 1;
 
 RA = zeros(size(classType,2)+BOOST,BINS+BOOST,size(classGroups,2)-2+BOOST);
-
-NN = sum((1:1:N));
 
 B_ = size(classGroups,2); % Convergence criterion.
 
@@ -95,6 +89,8 @@ A_ = mean(A_(:,:,:),3);
 [ RA, TL_ ] = buildManifold( A_, l ); 
 
 [ RA ] = filterOptimization(RA, A_, l );
+
+% NN = sum((1:1:N));
 
 %{
 
@@ -131,6 +127,8 @@ end
 % send into Krylov Subspace. This may hasten verification, or
 % classification of new data.
 
+%{
+
 BOOST = 0;
 
 RA = zeros(size(classType,2)+BOOST,BINS+BOOST,size(classGroups,2)+BOOST);
@@ -140,5 +138,7 @@ RA = zeros(size(classType,2)+BOOST,BINS+BOOST,size(classGroups,2)+BOOST);
 A_ = mean(A_(:,:,:),3);
 
 [ RA ] = convolutionalMatrixEquation( A_ );
+
+%}
 
 toc
