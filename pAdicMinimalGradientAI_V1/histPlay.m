@@ -21,6 +21,8 @@ A_ = histogramization(A,N,[]); A_ = mean(A_(:,:,:),3);
 
 % A_ = complexHistogramization(A,N,[]); 
 
+DELTA = fHMM(A_);
+
 C_ = zeros(size(A_,1),size(A_,2),size(A_,3));
 
 D_ = zeros(size(A_,1),size(A_,2),size(A_,3));
