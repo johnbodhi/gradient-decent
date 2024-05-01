@@ -1,15 +1,19 @@
-function [ RA, TL_ ] = buildManifold(A, l)
+function [ RA, TL_ ] = CNN(A_, l)
 
     global classType classGroups BINS RA Q BPI ii ij BFLAG
+    
+    ii = 2; ij = 3;
+
+    BPI = [ ii ij ];
     
     for j = 1:1:size(classType,2)
            
         TL_(:,j) = (1:1:size(A,1)); % Sample tracking labels.
     end
     
-    F   = A;
+    F   = A_;
 
-    N   = size(A,1);
+    N   = size(A_,1);
     
     M   = size(classType,2); 
 
@@ -29,14 +33,12 @@ function [ RA, TL_ ] = buildManifold(A, l)
     
 
     % Convoltution with a sub-gradient!!
-    
-    ii = 1;
 
     aa = 1; bb = 1; 
     
-    T  = 1.0;
+    T  = 1.0; ii = 1;
     
-    % MM = zeros(1,size(classGroups,2));
+    % MM = zeros(1,size(classGroups,2)); % Random forest expansion...
    
     F = sum(sum(B,1),2);
 
@@ -46,12 +48,12 @@ function [ RA, TL_ ] = buildManifold(A, l)
 
             B(aa,1) = 1;
 
-            for q = 1:1:size(A,1)
+            for q = 1:1:size(A_,1)
                 
                 % We can utilize Monte Carlo methods
                 % in the convergence.
                 
-                A = cat(2,A,TL_);
+                A = cat(2,A_,TL_);
                 
                 F = monteCarlo(A); 
                 
@@ -60,11 +62,13 @@ function [ RA, TL_ ] = buildManifold(A, l)
                 
                 RA(BPI(1,1),2:end,2) = mean(F(1:aa,:),1); 
                 
-                Q = RA; BFLAG = 1;
+                Q = RA; BFLAG = 0;
+
     
                 [ D, E ] = classifier( F, l );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
+
 
                 if( ACC >= T )
                     
@@ -72,7 +76,7 @@ function [ RA, TL_ ] = buildManifold(A, l)
                 
                     X(:,1:end-1,:) = RA; 
                     
-                    X(:,end,:) = TL_(:,1);  
+                    X(:,end,:) = TL_(:,1); aa_ = aa; 
                 end
                 F  = circshift(A,1); TL_ = circshift(TL_,1);
                 
@@ -84,9 +88,9 @@ function [ RA, TL_ ] = buildManifold(A, l)
 
             B(bb,2) = 1; B(:,1) = 0;
 
-            for q = 1:1:size(A,1)
+            for q = 1:1:size(A_,1)
                 
-                A = cat(2,A,TL_);
+                A = cat(2,A_,TL_);
                 
                 F = monteCarlo(A); 
                 
@@ -95,19 +99,35 @@ function [ RA, TL_ ] = buildManifold(A, l)
                  
                 RA(BPI(1,2),2:end,2) = mean(F(1:bb,:),1);
 
-                Q = RA; BFLAG = 0;
+                Q = RA; BFLAG = 1;
                
+
                 [ D, E ] = classifier( F, l );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
                 if( ACC >= T )
                     
-                    [ ~, MM ] = max(ACC);
-                
-                    X(:,1:end-1,:) = RA; 
+                    WALK_(ii,1) =...
+                        BiCGSTAB_(RA(BPI(1,1),:,:),[],RA(BPI(1,2),:,:));
                     
-                    X(:,end,:) = TL_(:,2);      
+                        ii = ii + 1;
+                        
+                    if( ~size(find( TL_(1:aa_,1) == TL_(1:bb,2)),2) )
+                        
+                        X_(ii,1:end-1,:) = RA;
+                    end
+         
+                    if( q == N )
+                        
+                        [ ~, MM ] = max(ACC);
+                        
+                        [ ~, I ]  = min(WALK);
+                        
+                        X(:,1:end-1,:) = X_(I,:,:);
+                    
+                        X(:,end,:) = TL_(:,2);
+                    end
                 end
                 F  = circshift(A,1); TL_ = circshift(TL_,1);
                 
@@ -116,11 +136,9 @@ function [ RA, TL_ ] = buildManifold(A, l)
             bb = bb + 1; aa = 1;
             
         end  
-        ii = ii + 1;
 
         F = sum(sum(B,1),2); 
     end
     RA = X(:,:,:); Q = RA;
     
-    ii = ii + 2; ij = ij + 2;
 end
