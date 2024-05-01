@@ -6,12 +6,12 @@ clear all; close all; clc; tic
  
 % N = size(A,1); M = size(A,2);
 
-N = 15; M = N; % Maximal for N odd...
+N = 10; M = N; % Maximal for N odd...
 for j = 1:M
     for i = 1:N
          if( i < j || i == j)
  
-            A( i, j ) = randi( [ 10,99 ] );
+            A( i, j ) = randi( [ 1, 100 ] )/100;
             % A( i, j ) = 0;
          end
      end
@@ -162,7 +162,7 @@ UP = 0; DOWN = 1;
 
 DIRECTION = [UP DOWN]; % [ Toward the vertex. Toward the edge. ]
 
-for kk = 1:1:size(Z,2) % for kk = 1:1:1
+for kk = 1:1:size(Z,2)
     
     if( DIRECTION(1,1) )
         
@@ -186,29 +186,21 @@ for kk = 1:1:size(Z,2) % for kk = 1:1:1
     
     S = R(ii,jj,kk);
 
-    for j = 1:1:Z(floor(N/2)+1)
+    for j = 1:1:Z(kk)
         
         for i = 1:1:size(V,1)
-            
-            % [Cn, ICn] = minimalGradientAI( A );
     
-            if( ~V(i,j,kk) ) % if( Cn && ~ICn )
+            if( ~V(i,j,kk) )
         
                 if( jj <= N - 1 )
         
                     jj = jj + 1; 
                     
                 end           
-                
-                 % R(ii,jj,kk) = 0;
         
                  S = S + R(ii,jj,kk);  
                  
-                 % [ A ] = increaseDataSets(A);
-                    
-                 % [ A ] = monteCarlo(A);
-                             
-            elseif( V(i,j,kk) ) % elseif( ( ~Cn && ICn ) || ( Cn && ICn ) )
+            elseif( V(i,j,kk) )
         
         
                 if( ii > N - M + 1 && jj <= N - 1 )
@@ -222,19 +214,6 @@ for kk = 1:1:size(Z,2) % for kk = 1:1:1
                     end
                     
                     jj = jj + 1;
-                    
-                    % R(ii,jj,kk) = ICn;
-                    
-                    % We can run extra Monte Carlo methods / 
-                    % add more data and re-calculate the filter averages.
-                    % This is reinforcement learning, or defecit correction since 
-                    % we need to reinforce the categories causing errors with more
-                    % data to correct the averages, or populate the minimizer / objective 
-                    % function.
-                    
-                    % [ A ] = increaseDataSets(A);
-                    
-                    % [ A ] = monteCarlo(A);
                     
                     S = S + R(ii,jj,kk);     
                    
