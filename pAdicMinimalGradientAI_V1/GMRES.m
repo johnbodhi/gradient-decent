@@ -38,22 +38,10 @@ function [ Z_ ] = GMRES( Y_ )
             A(:,1) = Y_(aa,:);
                 
             WALK_(aa,bb) = BiCGSTAB_(A,[],B);
+            
+            % WALK_(aa,bb) = fHMM(A);
                 
             aa = aa + 1;
-        
-        %{ 
-            
-            elseif( aa >= N && bb <= N )
-                
-            V(bb,2) = 1; V(:,1) = 0;
-    
-            X(:,1) = Y_(bb,:);
-                
-            WALK_(aa,bb,cc) = BiCGSTAB_(A,X,B);
-                
-            bb = bb + 1; aa = 1;
-            
-        %}
         
         elseif( aa >= N && bb <= CONTAINMENT )
                 
@@ -64,6 +52,8 @@ function [ Z_ ] = GMRES( Y_ )
             B(:,1) = frameLength.*mean(Y_(1:cc,:),1);
                 
             WALK_(aa,bb) = BiCGSTAB_(A,[],B);
+            
+            % WALK_(aa,bb) = fHMM(A);
                 
             bb = bb + 1; aa = 1;
             
@@ -75,7 +65,7 @@ function [ Z_ ] = GMRES( Y_ )
     % We need to sort the minimum walk accumulations in the 
     % form of a chart, and a transpose chart.
         
-    W_ = WALK_( :, :, : ); 
+    W_ = WALK_( :, : ); 
     
     [ Z_ ] = averageMapping( W_ );
     
