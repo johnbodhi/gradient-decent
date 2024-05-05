@@ -1,10 +1,12 @@
-function [ S_ ] = BiCGSTAB ( A, X, B )
+function [ S_ ] = BiCGSTAB_( A, X, B )
     
     global TOL LIMIT
     
     S_ = 0;
     
-    R_0(:,1) = B(:,1) - A(:,1).*X(:,1);
+    % R_0(:,1) = B(:,1) - A(:,1).*X(:,1);
+    
+    R_0(:,1) = B(:,1) - A(:,1);
             
     R(:,1)   = R_0(:,1);
     
@@ -16,20 +18,20 @@ function [ S_ ] = BiCGSTAB ( A, X, B )
     
     while( TOL >= LIMIT )
                 
-        C(:,1) = A(:,1).*P(:,1); 
+        C(:,1) = A(:,1).*P(:,1);
                 
         ALPHA  = RHO(1,1) / dot( R(:,1), C(:,1) );
     
-        H(:,1) = X(:,1) + ALPHA.*P(:,1);
+        % H(:,1) = X(:,1) + ALPHA.*P(:,1);
     
-        S(:,1) = R(:,1) - ALPHA.*C(:,1);            
+        S(:,1) = R(:,1) - ALPHA.*C(:,1);           
     
         T(:,1) = A(:,1).*S(:,1);
     
     
         OMEGA  = dot( T(:,1), S(:,1) ) / dot( T(:,1), T(:,1) );
     
-        X(:,1) = H(:,1) + OMEGA(:,1).*S(:,1);
+        % X(:,1) = H(:,1) + OMEGA(:,1).*S(:,1);
     
         R(:,1) = S(:,1) - OMEGA(:,1).*T(:,1);
     
