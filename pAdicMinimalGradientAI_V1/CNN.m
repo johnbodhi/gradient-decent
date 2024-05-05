@@ -17,7 +17,7 @@ function [ RA, TL_ ] = CNN(A_, l)
     
     M   = size(classType,2); 
 
-    O   = size(classGroups,2);
+    % O   = size(classGroups,2);
     
     
     CONTAINMENT = 0.25*N;
@@ -72,15 +72,14 @@ function [ RA, TL_ ] = CNN(A_, l)
 
                 if( ACC >= T )
                     
-                    [ ~, MM ] = max(ACC);
+                    % [ ~, MM ] = max(ACC);
                 
-                    X(:,1:end-1,:) = RA; 
+                    X(BPI(1,1),1:end-1,1) = RA; 
                     
-                    X(:,end,:) = TL_(:,1); aa_ = aa; 
+                    X(BPI(1,1),end,1) = TL_(:,1); aa_ = aa; 
                 end
                 F  = circshift(A,1); TL_ = circshift(TL_,1);
                 
-                l  = circshift(l,1);
             end
             aa = aa + 1;
 
@@ -115,29 +114,29 @@ function [ RA, TL_ ] = CNN(A_, l)
                         
                     if( ~size(find( TL_(1:aa_,1) == TL_(1:bb,2)),2) )
                         
-                        X_(ii,1:end-1,:) = RA;
+                        X_(ii,1:end-1,1) = RA;
                     end
          
                     if( q == N )
                         
-                        [ ~, MM ] = max(ACC);
+                        % [ ~, MM ] = max(ACC);
                         
                         [ ~, I ]  = min(WALK);
                         
-                        X(:,1:end-1,:) = X_(I,:,:);
+                        X(BPI(1,2),1:end-1,1) = X_(I,:,:);
                     
-                        X(:,end,:) = TL_(:,2);
+                        X(BPI(1,2),end,1) = TL_(1:bb,2);
                     end
+                    
                 end
                 F  = circshift(A,1); TL_ = circshift(TL_,1);
                 
-                l  = circshift(l,1);
             end     
             bb = bb + 1; aa = 1;
             
-        end  
+        end
 
-        F = sum(sum(B,1),2); 
+        F = sum(sum(B,1),2);
     end
     RA = X(:,:,:); Q = RA;
     
