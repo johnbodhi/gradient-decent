@@ -27,9 +27,9 @@ global RA BPI BFLAG
 
                 BPI(1,1) = 0; 
 
-            elseif( ~BFLAG )
+            elseif( ~BFLAG ) % Backprop...
 
-                W(ii,:) = 1e2; % Backprop...
+                W(ii,:) = 1e2; 
 
                 BPI(1,2) = 0; 
                 
