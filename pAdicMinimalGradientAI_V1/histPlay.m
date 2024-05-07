@@ -1,26 +1,30 @@
 clc; clear all; close all; tic
 
 global frameLength classType classGroups BOOST RA B_...
-    DATARANGE BINS Randomized Supervision...
-    BPI ii ij N
+    DATARANGE BINS Randomized Supervision Noise...
+    BPI ii ij
 
 frameLength = 1250; classType = [0 0]; classGroups = [0 0 0]; 
 
-DATARANGE = 256; BINS = 16; Randomized = 0; Supervision = 0;
+DATARANGE = 256; BINS = 16;
 
-% Objective labels.
+Randomized = 0; Supervision = 0; Noise = 0;
 
-l = [ 1; 1; 1; 1; 2; 2; 2; 2; 3; 3; 3; 3; 4; 4; 4; 4 ]; N = 16;
+% Objective labels...
+
+l = [ 1; 1; 1; 1; 2; 2; 2; 2; 3; 3; 3; 3; 4; 4; 4; 4 ];
+  
+N = size(l,1);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-A  = readmatrix('trainRGB (1).csv');
+A  = readmatrix('trainRGB (1).csv'); N = floor ( A / frameLength );
 
-A_ = histogramization(A,N,[]); A_ = mean(A_(:,:,:),3);
+A_ = histogramization(A,N,l); A_ = mean(A_(:,:,:),3);
 
 % A_ = complexHistogramization(A,N,[]); 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 C_ = zeros(size(A_,1),size(A_,2),size(A_,3));
 
@@ -35,7 +39,7 @@ end
 
 for k = 1:1:size(A_,3)
     
-   G(:,:,k)  = C_(:,:,k); 
+   G(:,:,k)  = C_(:,:,k);
    
    Gj(:,:,k) = D_(:,:,k);
 end
@@ -46,9 +50,11 @@ BOOST = 1;
 
 RA = zeros(size(classType,2)+BOOST,BINS+BOOST,size(classGroups,2)-2+BOOST);
 
-[ RA, TL_ ] = CNN( A_, l ); 
+[ RA ] = CNN( A_ );
 
-[ RA ] = filterOptimization(RA, A_, l );
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+[ RA ] = filterOptimization( RA, A_ );
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -60,6 +66,19 @@ RA = zeros(size(classType,2)+BOOST,BINS+BOOST,size(classGroups,2)+BOOST);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-DELTA = fHMM(A_);
+Noise = 1;
+
+if( Noise )
+        
+    AWGN = rand([size(A_,1),size(A_,2)]);
+        
+    A_ = A_ + AWGN;
+ end
+
+[ A ] = denoise( A_ );
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+decisionTree(); % Ensemble
 
 toc
