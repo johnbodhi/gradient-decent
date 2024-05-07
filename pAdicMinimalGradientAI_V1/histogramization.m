@@ -1,10 +1,11 @@
 function [ F ] = histogramization( X, Y, Z )
 
-    global frameLength classGroups DATARANGE BINS Supervision Randomized
+    global frameLength classGroups DATARANGE BINS Supervision Randomized...
+        Noise
 
     if ( Randomized )
 
-        [ X, L ] = randomizeAll( X, Y ); % Randomize all photos.
+        [ X ] = monteCarlo( dataSet ); % Randomize all samples...
     end
 
     % Generate histograms...
@@ -48,7 +49,14 @@ function [ F ] = histogramization( X, Y, Z )
         F = F_;
     end
 
-    % F = F ./ frameLength;
+    F = F ./ frameLength;
+    
+    if( Noise )
+        
+        AWGN = rand([size(F,1),size(F,2),size(F,3)]);
+        
+        F = F + AWGN;
+    end
 
     % F = cat(2,F,zeros(size(F,1),1,size(F,3)));
 
@@ -74,4 +82,5 @@ function [ F ] = histogramization( X, Y, Z )
             ( ~Randomized && ~Supervision ) )
         
     end
+    
 end
