@@ -3,14 +3,14 @@ function [ Z_ ] = GMRES( Y_ )
     global classType BINS frameLength TOL LIMIT M
     
         
-    N   = 0.5*size(Y_,1); 
+    N   = size(Y_,1); 
     
     M   = size(classType,2)+1;
     
     
     CONTAINMENT = 0.5*N; % Objective function containment limit.
     
-    IT  = N^(M-CONTAINMENT);
+    IT  = N^CONTAINMENT;
     
     V   = zeros( N, M );
     
@@ -18,6 +18,7 @@ function [ Z_ ] = GMRES( Y_ )
     ii = 1; kk = 1;
 
     aa = 1; bb = 1; cc = 1;
+    
 
     TOL = 1; LIMIT = 1e-2;
     
@@ -38,8 +39,6 @@ function [ Z_ ] = GMRES( Y_ )
             A(:,1) = Y_(aa,:);
                 
             WALK_(aa,bb) = BiCGSTAB_(A,[],B);
-            
-            % WALK_(aa,bb) = fHMM(A);
                 
             aa = aa + 1;
         
@@ -49,11 +48,9 @@ function [ Z_ ] = GMRES( Y_ )
                     
             Y_ = monteCarlo(Y_);
                     
-            B(:,1) = frameLength.*mean(Y_(1:cc,:),1);
+            B(:,1) = frameLength.*mean(Y_(1:bb,:),1);
                 
             WALK_(aa,bb) = BiCGSTAB_(A,[],B);
-            
-            % WALK_(aa,bb) = fHMM(A);
                 
             bb = bb + 1; aa = 1;
             
@@ -67,6 +64,8 @@ function [ Z_ ] = GMRES( Y_ )
         
     W_ = WALK_( :, : ); 
     
-    [ Z_ ] = averageMapping( W_ );
+    [W,~] = sort(W_,1);
     
+    Z_ = min(W(1,:));
+   
 end
