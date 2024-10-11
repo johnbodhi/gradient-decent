@@ -2,15 +2,17 @@ clc; clear all; close all; tic
 
 global frameLength classType classGroups BOOST RA...
     DATARANGE BINS Randomized Supervision Noise...
-    Transitions...
+     Deterministic Probabalistic...
 
 frameLength = 1250; classType = [0 0]; classGroups = [0 0 0]; 
 
 DATARANGE = 256; BINS = 16;
 
-Randomized = 0; Supervision = 0; Noise = 0;
+Supervision = 0; 
 
-Transitions = 0;
+Randomized = 0; Noise = 0;
+
+Deterministic = 1; Probabalistic = 0;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
