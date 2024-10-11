@@ -32,7 +32,7 @@ N = floor( size(A,1) / frameLength );
 
 A_ = complexHistogramization(A,N,[]);
 
-A_ = tansitionHistogramization(A,N,[]); 
+% A_ = tansitionHistogramization(A,N,[]); 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
