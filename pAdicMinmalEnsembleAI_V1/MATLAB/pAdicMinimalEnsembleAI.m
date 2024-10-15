@@ -9,11 +9,9 @@ Deterministic = 1; Probabalistic = 0;
 
 classType = [0 0]; classGroups = [0 0 0]; 
 
-frameLength = 1250; DATARANGE = 256; BINS = 16;
-
+frameLength = 10000; DATARANGE = 256; BINS = 16;
 
 Supervision = 0; Randomized = 0; Noise = 0;
-
 
 GD = 1; BiCGSTAB = 0; HMM = 0;
 

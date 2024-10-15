@@ -1,6 +1,6 @@
 function [ Z ] = gradientDecent( F )
 
-    global RA
+    global RA BPI
 
     Y = F(:,:,:);
 
@@ -79,5 +79,16 @@ function [ Z ] = gradientDecent( F )
         ii = ii + 1;
     end
 
-    [ ~, Z ] = min(S(:,1)); % Decisions are not constrained to groups. 
+    [ ~, Z ] = min(S(BPI(1,1):BPI(1,2),1)); % Decisions are not constrained to groups. 
+
+     if( Z == 1 )
+
+        Z = BPI(1,1);
+
+    elseif ( Z == 2 )
+
+        Z = BPI(1,2);
+        
+    end
+
 end

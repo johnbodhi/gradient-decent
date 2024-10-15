@@ -105,8 +105,7 @@ function [ RA ] = CNN(A_, l)
                     % prior classification segment contained in the filter
                     % manifold...
                     
-                    WALK_(jj,1) = BiCGSTAB_(...
-                        RA(BPI(1,1),:,:), [], RA(BPI(1,2),:,:)); 
+                    WALK_(jj,1) = BiCGSTAB_( RA(BPI(1,1),:,:), [], RA(BPI(1,2),:,:)); 
                         jj = jj + 1;
 
                     % We need to reinforce exlusivity of the samples 
