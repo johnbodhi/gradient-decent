@@ -31,7 +31,7 @@ function [ RA ] = CNN( A_ )
     X   = zeros(N,BINS+1,2);
     
 
-    % Convoltution with a sub-gradient!!
+    % Convolution with a sub-gradient!!
 
     aa = 1; bb = 1; ss = 0;
     
