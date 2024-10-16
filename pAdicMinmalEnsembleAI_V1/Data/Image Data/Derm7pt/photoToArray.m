@@ -2,9 +2,9 @@ clear all; close all; clc;
 
 % Training sequences...
 
-% A1l = "C:\Users\jmgar\OneDrive\Documents\GitHub\gradient-decent\pAdicMinmalEnsembleAI_V1\Data\Image Data\Derm7pt\train\A1l"; 
-% 
-% A2l = "C:\Users\jmgar\OneDrive\Documents\GitHub\gradient-decent\pAdicMinmalEnsembleAI_V1\Data\Image Data\Derm7pt\train\A2l"; 
+A1l = "C:\Users\jmgar\OneDrive\Documents\GitHub\gradient-decent\pAdicMinmalEnsembleAI_V1\Data\Image Data\Derm7pt\train\A1l"; 
+
+A2l = "C:\Users\jmgar\OneDrive\Documents\GitHub\gradient-decent\pAdicMinmalEnsembleAI_V1\Data\Image Data\Derm7pt\train\A2l"; 
 
 
 % Test sequences...
@@ -30,35 +30,35 @@ for j = 1:size(str1_,2)
 end
 
 
-% N = 100; M = 100; l = 1;
+N = 100; M = 100; l = 1;
 
-% for p = 1:size( IMAGES, 2 )
+for p = 1:size( IMAGES, 2 )
+
+     cd( directoryArr( p ) )
+
+     for k = 1:numImages( p )
+
+        RGB = imread( IMAGES( k, p ) ); 
+
+        RGB = imresize( RGB, [ N, M ] ); 
 % 
-%      cd( directoryArr( p ) )
-% 
-%      for k = 1:numImages( p )
-% 
-%         RGB = imread( IMAGES( k, p ) ); 
-% 
-%         RGB = imresize( RGB, [ N, M ] ); 
-% % 
-% %         I = rgb2gray( RGB );
-% %     
-% %         BW  = edge( I, 'Canny' );    
-% 
-%          h = imshow( IMAGES( k, p ) );
-% 
-%          im = imagemodel( h );    
-% 
-%          % Resized RGB vector...
-% 
-%          for j = 1:N
-%              for i = 1:M          
-%                  pixels( l, 1:3 ) = getPixelValue( im, i, j );
-%                  pixels( l, 4:4 ) = p;
-%                  l = l + 1;
-%              end
-%          end     
-%     end          
-% end
-% dataSet = pixels;
+%         I = rgb2gray( RGB );
+%     
+%         BW  = edge( I, 'Canny' );    
+
+         h = imshow( IMAGES( k, p ) );
+
+         im = imagemodel( h );    
+
+         % Resized RGB vector...
+
+         for j = 1:N
+             for i = 1:M          
+                 pixels( l, 1:3 ) = getPixelValue( im, i, j );
+                 pixels( l, 4:4 ) = p;
+                 l = l + 1;
+             end
+         end     
+    end          
+end
+dataSet = pixels;

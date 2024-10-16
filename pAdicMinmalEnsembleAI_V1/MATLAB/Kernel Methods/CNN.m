@@ -51,7 +51,7 @@ function [ RA ] = CNN(A_, l)
                 
                 A = cat(2,A_,TL_);
                 
-                F = monteCarlo(A); 
+                F = monteCarlo(A); A = 0;
                 
                 F = F(:,1:end-1); TL_(:,1) = F(:,end); 
                 
@@ -72,7 +72,7 @@ function [ RA ] = CNN(A_, l)
 
                     Q = X; % Filter reset.
                 end
-                A_  = circshift(A,1); TL_ = circshift(TL_,1);
+                A_  = circshift(A_,1); TL_ = circshift(TL_,1);
                 
             end
             aa = aa + 1;
@@ -85,7 +85,7 @@ function [ RA ] = CNN(A_, l)
                 
                 A = cat(2,A_,TL_);
                 
-                F = monteCarlo(A); 
+                F = monteCarlo(A); A = 0;
                 
                 F = F(:,1:end-1); TL_(:,2) = F(:,end); 
                 
@@ -101,11 +101,12 @@ function [ RA ] = CNN(A_, l)
 
                 if( ACC >= T )
 
-                    % We neeed to find the closest non-zero length from the
+                    % We neeed to find the closest non-zero length(s) from the
                     % prior classification segment contained in the filter
                     % manifold...
                     
-                    WALK_(jj,1) = BiCGSTAB_( RA(BPI(1,1),:,:), [], RA(BPI(1,2),:,:)); 
+                    WALK_( jj, 1 ) = BiCGSTAB_( RA(BPI(1,1),:,:), [], RA(BPI(1,2),:,:) ); 
+
                         jj = jj + 1;
 
                     % We need to reinforce exlusivity of the samples 
@@ -134,7 +135,7 @@ function [ RA ] = CNN(A_, l)
 
                         for i = 1:1:bb
 
-                            if( K(i,1) == K(i,2) && K(i,1) ~= 0 && K(i,2) ~= 0 )
+                            if( K(i,1) == K(i,2) && ( K(i,1) ~= 0 && K(i,2) ~= 0 ) )
 
                                 ss = ss + 1;
                             end
@@ -142,6 +143,7 @@ function [ RA ] = CNN(A_, l)
                         end
                            
                     end
+                    K = 0;
 
                     if( ~ss )
 
@@ -151,15 +153,28 @@ function [ RA ] = CNN(A_, l)
           
                     if( q == N )
                         
-                        [ ~, I ]  = min(WALK_(:,1));
+                        [ ~, I ]  = min( WALK_(:,1) );
                         
                         X(BPI(1,2),1:end-1,1) = X_(I,:,:);
+
+                        % We need to remove the exclusive values of the
+                        % sample set from the pool to accelerate 
+                        % convergence of the convolution...
+
+                        uu = 1;
+                        for i = 1:1:size(A_,1)
+                            
+                            if( A_(i,end,1) ~= K(i,1) || A_(i,end,1) ~= K(i,2) )
+
+                                A(uu,:,1) = A_(i,:,1); uu = uu + 1;
+                            end                           
+                        end                        
                    
                     end
                     Q = X; % Filter reset.
                     
                 end
-                A_  = circshift(A,1); TL_ = circshift(TL_,1);
+                A_  = circshift(A_,1); TL_ = circshift(TL_,1);
                 
             end     
             bb = bb + 1; aa = 1; 

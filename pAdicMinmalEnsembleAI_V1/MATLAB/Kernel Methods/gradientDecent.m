@@ -30,8 +30,8 @@ function [ Z ] = gradientDecent( F )
         for j = 2:1:size(Y,2)
             for i = 2:1:size(Y,1)
                 
-                % eps( i, j, k ) = Y( i, j, k ) + eps_; % Constant step size.
-                eps( i, j, k ) = eps_;              % Constant step size.
+                % eps( i, j, k ) = Y( i, j, k ) + eps_; % Non-constant step size.
+                eps( i, j, k ) = eps_;                  % Constant step size.
             end
         end
     end
