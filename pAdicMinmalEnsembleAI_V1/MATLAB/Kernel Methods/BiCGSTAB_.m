@@ -75,7 +75,6 @@ function [ S_ ] = BiCGSTAB_( A, ~, B )
 
     elseif ( Z == 2 )
 
-        Z = BPI(1,2);
-        
+        Z = BPI(1,2);        
     end
 end

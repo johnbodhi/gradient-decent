@@ -19,7 +19,7 @@ function [ RA ] = CNN(A_, l)
     end
 
 
-    CONTAINMENT = 0.25*N;
+    CONTAINMENT = floor(0.25*N);
     
     V   = zeros(N-CONTAINMENT,M); % Stencil limit...
     
@@ -53,7 +53,7 @@ function [ RA ] = CNN(A_, l)
                 
                 F = monteCarlo(A); 
                 
-                TL_(:,1) = F(:,end); F = F(:,1:end-2);
+                F = F(:,1:end-1); TL_(:,1) = F(:,end); 
                 
                 
                 RA(BPI(1,1),2:end,2) = W(1,:,1).*mean(F(1:aa,:),1); 
@@ -87,7 +87,7 @@ function [ RA ] = CNN(A_, l)
                 
                 F = monteCarlo(A); 
                 
-                TL_(:,2) = F(:,end); F = F(:,1:end-1);
+                F = F(:,1:end-1); TL_(:,2) = F(:,end); 
                 
                  
                 RA(BPI(1,2),2:end,2) = W(2,:,1).*mean(F(1:bb,:),1);
