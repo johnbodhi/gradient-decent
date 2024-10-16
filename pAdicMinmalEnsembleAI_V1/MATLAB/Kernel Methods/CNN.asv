@@ -19,11 +19,11 @@ function [ RA ] = CNN( A_ )
     end
 
 
-    CONTAINMENT = floor(0.50 * N);
+    CONTAINMENT = floor(0.25*N);
     
     V   = zeros(N-CONTAINMENT,M); % Stencil limit...
     
-    IT  = size(V,1)^M;
+    IT  = N^M;
     
     
     B   = zeros(N,M);

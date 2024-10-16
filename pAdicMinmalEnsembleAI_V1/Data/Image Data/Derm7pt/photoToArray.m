@@ -2,16 +2,12 @@ clear all; close all; clc;
 
 % Training sequences...
 
-A1l = "C:\Users\jmgar\OneDrive\Documents\GitHub\gradient-decent\pAdicMinmalEnsembleAI_V1\Data\Image Data\Derm7pt\train\A1l"; 
-
-A2l = "C:\Users\jmgar\OneDrive\Documents\GitHub\gradient-decent\pAdicMinmalEnsembleAI_V1\Data\Image Data\Derm7pt\train\A2l"; 
-
+train = "C:\Users\jmgar\OneDrive\Documents\GitHub\gradient-decent\pAdicMinmalEnsembleAI_V1\Data\Image Data\Derm7pt\train"; 
 
 % Test sequences...
 
-% A1l = "C:\Users\jmgar\OneDrive\Documents\GitHub\gradient-decent\pAdicMinmalEnsembleAI_V1\Data\Image Data\Derm7pt\test\A1l";
+% test = "C:\Users\jmgar\OneDrive\Documents\GitHub\gradient-decent\pAdicMinmalEnsembleAI_V1\Data\Image Data\Derm7pt\test\A1l";
 
-% A2l = "C:\Users\jmgar\OneDrive\Documents\GitHub\gradient-decent\pAdicMinmalEnsembleAI_V1\Data\Image Data\Derm7pt\test\A2l";  
 
 directoryArr = [ A1l A2l ];
 
