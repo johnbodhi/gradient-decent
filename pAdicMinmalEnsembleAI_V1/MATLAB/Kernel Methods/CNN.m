@@ -1,6 +1,10 @@
 function [ RA ] = CNN( A_ )
 
-    global classType classGroups BINS RA W Q BPI ii ij BFLAG
+    global classType classGroups BINS...
+        RA W Q BPI ii ij BFLAG...
+        GD BiCGSTAB
+
+    GD = 1; BiCGSTAB = 0;    
     
     ii = 2; ij = 3;
 
@@ -34,9 +38,11 @@ function [ RA ] = CNN( A_ )
 
     % Convolution with a sub-gradient!!
 
-    aa = 1; bb = 1; ss = 0;
+    aa = 1; bb = 1; 
     
-    T  = 1.0; jj = 1;
+    T  = 1.0;
+    
+    ss = 0; jj = 1;
 
 
     while( sum(sum(B,1),2) < IT )
