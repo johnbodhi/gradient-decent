@@ -31,25 +31,30 @@ global RA BPI BFLAG
                 
             end
         end
+        
     end
 
-    for i = 1:1:size(S,1)
+
+    for k = 1:1:size(BPI,2)
+
         for j = 1:1:size(S,2)
-    
-            if ( BPI(1,1) )
-    
-                D( i, j ) = ( ( S( i, j ) - RA( BPI(1,1), j, 2 ) )^2 )^( 0.5 );  
-                
-            elseif ( BPI(1,2) )
-    
-                D( i, j ) = ( ( S( i, j) - RA( BPI(1,2), j, 2 ) )^2 )^( 0.5 );
-                
+            for i = 1:1:size(S,1)
+        
+                if ( BPI(1,1) )
+        
+                    D( i, j, k ) = ( ( S( i, j, k ) - RA( BPI(1,1), j, 2 ) )^2 )^( 0.5 );  
+                    
+                elseif ( BPI(1,2) )
+        
+                    D( i, j, k ) = ( ( S( i, j, k ) - RA( BPI(1,2), j, 2 ) )^2 )^( 0.5 );
+                    
+                end    
+
             end
         end
-
-        Cn(i,:) = W(i,1) * mean(D(i,:));
-    end
-         
+    
+        Cn(k,:) = W(k,1) * mean(D(1,:,k));         
+    end       
      
     for i = 2:size(S,1)
         for j = 2:size(S,2)
