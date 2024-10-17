@@ -59,7 +59,7 @@ function [ RA ] = CNN( A_ )
                 
                 RA(BPI(1,1),2:end,2) = W(1,:,1).*mean(F(1:aa,:),1); 
                 
-                BFLAG = 1;
+                BFLAG = 1; % Back propagation index for k-means.
 
     
                 [ D, E ] = classifier( F, l );
@@ -185,6 +185,8 @@ function [ RA ] = CNN( A_ )
             bb = bb + 1; aa = 1; 
             
         end
+        % We need to increment the backpropagation indexes by two for the
+        % next set of comparisons, and reset the dual space walk index.
         ii = ii + 2; ij = ij + 2; jj = 1;
 
     end
