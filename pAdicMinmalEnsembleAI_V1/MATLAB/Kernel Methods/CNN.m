@@ -16,7 +16,7 @@ function [ RA ] = CNN( A_ )
 
     for j = 1:1:M
            
-        TL_(:,j) = (1:1:N); % Sample tracking labels. ( supervision ).
+        TL_(:,j) = (1:1:N); % Sample tracking labels (supervision).
     end
 
 
