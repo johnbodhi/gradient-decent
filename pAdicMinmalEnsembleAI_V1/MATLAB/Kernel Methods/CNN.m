@@ -68,7 +68,7 @@ function [ RA ] = CNN( A_ )
                 BFLAG = 1; % Back propagation condition for k-means.
 
     
-                [ D, E ] = classifier( F, l );
+                [ D, E ] = classifier( F );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
@@ -102,7 +102,7 @@ function [ RA ] = CNN( A_ )
                 BFLAG = 0;
                
 
-                [ D, E ] = classifier( F, l );
+                [ D, E ] = classifier( F );
                 
                 [ ~, ~, ACC, ~ ] = fMeasure( D, E ); 
 
@@ -179,7 +179,8 @@ function [ RA ] = CNN( A_ )
 
                                 A(uu,:,1) = A_(i,:,1); uu = uu + 1;
                             end                           
-                        end                        
+                        end  
+                        N = size(A,1);
                    
                     end
                     Q = X; % Filter reset.

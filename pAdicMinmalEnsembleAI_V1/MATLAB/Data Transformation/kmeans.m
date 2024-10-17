@@ -1,4 +1,4 @@
-function [ Y ] = kmeans( dataSet, l_ )
+function [ Y ] = kmeans( dataSet )
 
 global RA BPI BFLAG
 
@@ -7,7 +7,7 @@ global RA BPI BFLAG
     W = zeros(size(RA,1),size(RA,2));
 
     % We need to weight our centroids, and backpropagate the
-    % following sub-gradient for every class.
+    % following signal for every class.
 
     for i = 1:1:size(W,2)
     

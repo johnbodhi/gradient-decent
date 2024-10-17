@@ -1,4 +1,4 @@
-function [ D, E ] = classifier( dataSet, l )
+function [ D, E ] = classifier( dataSet )
     
     global RA Q Supervision
 
@@ -15,14 +15,14 @@ function [ D, E ] = classifier( dataSet, l )
 
         l_ = histData(:,end,:);
 
+        % We can utilize non-stationary RA during classification to
+        % monitor dissimilarity between objects.
+
         RA = Q; % We need to reset RA between classes...
 
-        % We can utilize non-stationary RA during classification to
-        % monitor dissimilarity between objects...
+        histData = kmeans(histData); % k-means the split frame.
 
-        histData = kmeans(histData, l_ ); % k-means image data set.
-
-        frameD = frameDecision( histData ); D = D + 1; % Take image to classify in the gradient.
+        frameD = frameDecision(histData); D = D + 1; % classify frame with the gradient.
         
         if( Supervision )
 

@@ -26,7 +26,7 @@ for j = 1:size(str1_,2)
 end
 
 
-N = 100; M = 100; l = 1;
+N = 50; M = 50; l = 1;
 
 for p = 1:size( IMAGES, 2 )
 
