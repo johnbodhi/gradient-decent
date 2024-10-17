@@ -65,7 +65,7 @@ function [ RA ] = CNN( A_ )
                 
                 RA(BPI(1,1),2:end,2) = W(1,:,1).*mean(F(1:aa,:),1); 
                 
-                BFLAG = 1; % Back propagation index for k-means.
+                BFLAG = 1; % Back propagation condition for k-means.
 
     
                 [ D, E ] = classifier( F, l );
