@@ -4,32 +4,30 @@ global RA BPI BFLAG
 
     S = dataSet(:,1:end-1,:);
 
-    V = size(BPI,2)*size(dataSet,2); N = 1;
-
-    p = 2;
+    N = size(BPI,2)*size(dataSet,2);
 
     W = zeros(size(RA,1),size(RA,2));
 
     % We need to weight our centroids, and backpropagate the
     % following gradient for every other class in a group.
 
-    for ii = 1:1:size(W,2)
+    for i = 1:1:size(W,2)
     
-        if ( ii == 1 )
+        if ( i == 1 )
 
-            W(ii,:) = 1e0;
+            W(i,:) = 1e0;
 
-        elseif ( ii == 2 )
+        elseif ( i == 2 )
 
             if( BFLAG )
 
-                W(ii,:) = 1e0;
+                W(i,:) = 1e0;
 
                 BPI(1,1) = 0; 
 
             elseif( ~BFLAG ) % Backprop...
 
-                W(ii,:) = 1e2; 
+                W(i,:) = 1e2; 
 
                 BPI(1,2) = 0; 
                 
@@ -38,23 +36,23 @@ global RA BPI BFLAG
         
     end
   
-    for ii = 1:1:(N*V)  % Modified convergence criterion.
+    for l = 1:1:N
 
         for k = 1:1:size(BPI,2)
+
             for j = 1:1:size(S,2)
                 for i = 1:1:size(S,1)
             
                     if ( BPI(1,1) )
             
-                        D( i, j, k ) = ( ( S( i, j, k ) -...
-                            RA( BPI(1,1), j, 2 ) )^p )^( 1 / p );  
+                        D( i, j, k ) = ( ( S( i, j, k ) - RA( BPI(1,1), j, 2 ) )^2 )^( 0.5 );  
                         
                     elseif ( BPI(1,2) )
             
-                        D( i, j, k ) = ( ( S( i, j, k ) -...
-                            RA( BPI(1,2), j, 2 ) )^p )^( 1 / p );
+                        D( i, j, k ) = ( ( S( i, j, k ) - RA( BPI(1,2), j, 2 ) )^2 )^( 0.5 );
                         
-                    end                    
+                    end    
+
                 end
             end
         
@@ -66,8 +64,7 @@ global RA BPI BFLAG
         for i = 2:size(S,1)
             for j = 2:size(S,2)
 
-                H( i, j, 2 ) = ( ( S( i, j, 2 ) - ...
-                    Cn( i-1, 1 ) )^p )^(1/p); 
+                H( i, j, 2 ) = ( ( S( i, j, 2 ) - Cn( i-1, 1 ) )^2 )^( 0.5 ); 
             end
         end
         Y = H(:,:,:); 
