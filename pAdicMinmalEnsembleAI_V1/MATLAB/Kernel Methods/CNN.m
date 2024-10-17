@@ -13,9 +13,10 @@ function [ RA ] = CNN( A_ )
 
     O   = size(classGroups,2);
 
+
     for j = 1:1:M
            
-        TL_(:,j) = (1:1:N); % Sample tracking labels.
+        TL_(:,j) = (1:1:N); % Sample tracking labels. ( supervision ).
     end
 
 
@@ -44,7 +45,7 @@ function [ RA ] = CNN( A_ )
 
             B(aa,1) = 1;
 
-            for q = 1:1:N
+            for q = 1:1:N 
                 
                 % We can utilize Monte Carlo methods
                 % in a stencil to hasten convergence.
@@ -68,7 +69,7 @@ function [ RA ] = CNN( A_ )
 
                 if( ACC >= T )
                 
-                    X(BPI(1,1),1:end-1,1) = RA; aa_ = aa; 
+                    X(BPI(1,1),1:end-1,1) = RA(:,:,:); aa_ = aa; 
 
                     Q = X; % Filter reset.
                 end
@@ -105,9 +106,7 @@ function [ RA ] = CNN( A_ )
                     % prior classification segment contained in the filter
                     % manifold...
                     
-                    WALK_( jj, 1 ) = BiCGSTAB_( RA(BPI(1,1),:,:), [], RA(BPI(1,2),:,:) ); 
-
-                        jj = jj + 1;
+                    WALK_( jj, 1 ) = BiCGSTAB_( RA(BPI(1,1),:,:), [], RA(BPI(1,2),:,:) ); jj = jj + 1;
 
                     % We need to reinforce exlusivity of the samples 
                     % in the averages comprising the filter.
@@ -145,9 +144,15 @@ function [ RA ] = CNN( A_ )
                     end
                     K = 0;
 
+                    % If the gradient exists for some subset of mutually exclusive
+                    % labels, we assign a new filter to the array of new filters that
+                    % have at least met the accuracy threshold criteria. We
+                    % can then choose which filter is most minimum, ie. the
+                    % prior classes dual subset.
+
                     if( ~ss )
 
-                        X_(1,1:end-1,1) = RA(:,:,:);
+                        X_(jj,1:end-1,1) = RA(:,:,:);
                     end
 
           
