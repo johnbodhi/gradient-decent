@@ -25,7 +25,7 @@ N = floor( size(A,1) / frameLength );
 
 A_ = histogramization(A,N,[]); A_ = mean(A_(:,:,:),3);
 
-A_ = complexHistogramization(A,N,[]);
+% A_ = complexHistogramization(A,N,[]);
 
 % A_ = tansitionHistogramization(A,N,[]); 
 
