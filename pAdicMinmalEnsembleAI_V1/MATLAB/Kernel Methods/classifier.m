@@ -26,7 +26,7 @@ function [ D, E ] = classifier( dataSet )
 
         % We need an F1 metric which doesn't depend the on accumulation
         % TP, and FP. We can decompose the averages to observe the constituents, 
-        % and compare minimums statistically.
+        % and compare minimums statistically via walk values in phase space.
         
         if( Supervision )
 
