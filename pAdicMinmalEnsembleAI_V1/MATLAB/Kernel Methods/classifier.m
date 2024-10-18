@@ -24,7 +24,7 @@ function [ D, E ] = classifier( dataSet )
 
         frameD = frameDecision(histData); D = D + 1; % classify frame with the gradient. 
 
-        % We need an F1 metric which doesn't depend the on accumulation
+        % We need an F1 metric which doesn't depend the on accumulating
         % TP, and FP. We can decompose the averages to observe the constituents, 
         % and compare minimums statistically via walk values in phase space.
         
