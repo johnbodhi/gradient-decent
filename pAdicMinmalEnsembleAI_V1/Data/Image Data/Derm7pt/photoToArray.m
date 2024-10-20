@@ -2,16 +2,16 @@ clear all; close all; clc;
 
 % Training sequences...
 
-train = "C:\Users\jmgar\OneDrive\Documents\GitHub\gradient-decent\pAdicMinmalEnsembleAI_V1\Data\Image Data\Derm7pt\train"; 
+% train = "C:\Users\jmgar\OneDrive\Documents\GitHub\gradient-decent\pAdicMinmalEnsembleAI_V1\Data\Image Data\Derm7pt\train"; 
 
 % Test sequences...
 
-% test = "C:\Users\jmgar\OneDrive\Documents\GitHub\gradient-decent\pAdicMinmalEnsembleAI_V1\Data\Image Data\Derm7pt\test\A1l";
+test = "C:\Users\jmgar\OneDrive\Documents\GitHub\gradient-decent\pAdicMinmalEnsembleAI_V1\Data\Image Data\Derm7pt\test";
 
 
-directoryArr = [ A1l A2l ];
+directoryArr = [ test ];
 
-str1_ = [ "A1l (" "A2l (" ];
+str1_ = [ "test" ];
 
 for j = 1:size(str1_,2)
     cd( directoryArr( j ) );
