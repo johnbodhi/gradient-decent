@@ -3,9 +3,14 @@ function [ F ] = complexHistogramization( X,Y,Z )
     global frameLength classGroups DATARANGE...
         Supervision Randomized
 
+   if ( Noise )
+    
+        [ X ] = addNoise( X );
+    end 
+
     if ( Randomized )
 
-       [ X ] = monteCarlo( X ); % Randomize all photos.
+        [ X ] = monteCarlo( X ); % Randomize all samples...
     end
 
     % Generate histograms...

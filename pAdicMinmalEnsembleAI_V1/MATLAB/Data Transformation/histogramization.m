@@ -3,9 +3,14 @@ function [ F ] = histogramization( X, Y, Z )
     global frameLength classGroups DATARANGE BINS Supervision Randomized...
         Noise
 
+    if ( Noise )
+    
+        [ X ] = addNoise( X );
+    end 
+
     if ( Randomized )
 
-        [ X ] = monteCarlo( dataSet ); % Randomize all samples...
+        [ X ] = monteCarlo( X ); % Randomize all samples...
     end
 
     % Generate histograms...
