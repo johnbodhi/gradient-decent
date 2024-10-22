@@ -1,24 +1,17 @@
 clear all; close all; clc; tic
 
-A = [ 3 0 0 0; 7 4 0 0; 2 4 6 0; 8 5 9 3 ]; 
-% A = readmatrix("triangle_small.csv"); 
-% A = csvread("triangle_large.csv"); 
- 
-N = size(A,1); M = size(A,2);
-
-%{
 N = 10; M = N; % Maximal for N odd...
 for j = 1:M
     for i = 1:N
          if( i < j || i == j)
  
-            A( i, j ) = randi( [ 1, 100 ] )/100;
+            A( i, j ) = randi( [ 0, N ] );
             % A( i, j ) = 0;
          end
      end
 end
 A = A';
-%}
+
 
 % Flip matrix A to take advantage of symmetry.
 

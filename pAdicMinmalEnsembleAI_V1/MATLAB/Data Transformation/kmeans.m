@@ -1,13 +1,10 @@
-function [ Y ] = kmeans( dataSet )
+function [ H ] = kmeans( dataSet )
 
-global RA BPI BFLAG
+    global RA BPI BFLAG
 
     S = dataSet(:,1:end-1,:);
 
     W = zeros(size(RA,1),size(RA,2));
-
-    % We need to weight our centroids, and backpropagate the
-    % following signal for every class.
 
     for i = 1:1:size(W,2)
     
@@ -50,13 +47,10 @@ global RA BPI BFLAG
         Cn(i,:) = W(i,1) * mean(D(i,:));
     end
          
-     
     for i = 2:size(S,1)
         for j = 2:size(S,2)
 
             H( i, j, 2 ) = ( ( S( i, j, 2 ) - Cn( i-1, 1 ) )^2 )^( 0.5 ); 
         end
-    end
-    Y = H(:,:,:);
-
+    end    
 end
