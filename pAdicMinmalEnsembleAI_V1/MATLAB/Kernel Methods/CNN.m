@@ -16,7 +16,7 @@ function [ RA ] = CNN( A_ )
     M   = size(classType,2); 
 
     O   = size(classGroups,2);
-
+    
 
     for j = 1:1:M
            
@@ -57,8 +57,6 @@ function [ RA ] = CNN( A_ )
                 % in a stencil to hasten convergence.
                 
                 A = cat(2,A_,TL_);
-
-                % A = noise(A);
                 
                 F = monteCarlo(A); A = 0;
                 
