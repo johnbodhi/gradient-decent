@@ -25,17 +25,13 @@ N = floor( size(A,1) / frameLength );
 
 if ( Deterministic )
 
-    % CNN
-
-    A_ = histogramization(A,N,[]); A_ = mean(A_(:,:,:),3);
+    % A_ = histogramization(A,N,[]); A_ = mean(A_(:,:,:),3);
     
     % A_ = complexHistogramization(A,N,[]);
 
 elseif ( Probabalistic )
 
-    % HMM / CNN
-
-    A_ = tansitionHistogramization(A,N,[]);
+    A_ = tansitionHistogramization(A,N,[]); 
 
 end
 

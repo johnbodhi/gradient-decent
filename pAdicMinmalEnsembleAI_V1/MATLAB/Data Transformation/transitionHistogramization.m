@@ -15,5 +15,8 @@ function [ A_ ] = transitionHistogramization( X, Y, Z )
 
     
 
+
+    
+
     
 end

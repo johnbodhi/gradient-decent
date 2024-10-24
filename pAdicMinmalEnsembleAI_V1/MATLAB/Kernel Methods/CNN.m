@@ -26,7 +26,7 @@ function [ RA ] = CNN( A_ )
 
     CONTAINMENT = floor(0.50 * N);
     
-    V   = zeros(N-CONTAINMENT,M); % Stencil limit...
+    V   = zeros(N-CONTAINMENT,M);
     
     IT  = size(V,1)^M;
     
@@ -91,8 +91,6 @@ function [ RA ] = CNN( A_ )
             for q = 1:1:N
                 
                 A = cat(2,A_,TL_);
-
-                A = addNoise(A);
                 
                 F = monteCarlo(A); A = 0;
                 
