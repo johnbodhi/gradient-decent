@@ -11,7 +11,7 @@ classType = [0 0]; classGroups = [0 0 0];
 
 frameLength = 10000; DATARANGE = 256; BINS = 16;
 
-Supervision = 0; Randomized = 0; Noise = 0;
+Supervision = 1; Randomized = 0; Noise = 0;
 
 GD = 1; BiCGSTAB = 0; HMM = 0;
 
@@ -53,32 +53,16 @@ end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Hypersurfaces...
+% Hypersurface...
 
-% C_ = zeros(size(A_,1),size(A_,2),size(A_,3));
-% 
-% D_ = zeros(size(A_,1),size(A_,2),size(A_,3));
-% 
-% for k =1:1:size(A_,3)
-%    for i =1:1:size(A_,1)
-% 
-%        [C_(i,:,k), D_(i,:,k)] = sort(A_(i,:,k),2,'descend');
-%    end
-% end
-% 
-% for k = 1:1:size(A_,3)
-% 
-%    G(:,:,k)  = C_(:,:,k);
-% 
-%    Gj(:,:,k) = D_(:,:,k);
-% end
+% [ G, Gj ] = hyperSurface( A_ );
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % BOOST = 1;
-% 
+
 % RA = zeros(size(classType,2)+BOOST,BINS+BOOST,size(classGroups,2)-2+BOOST);
-% 
+
 % W = zeros(size(RA,1),size(RA,2),size(RA,3)); W(1,:,1) = 1e1; W(2,:,1) = 1e2;
 
 % [ RA ] = CNN( A_ );

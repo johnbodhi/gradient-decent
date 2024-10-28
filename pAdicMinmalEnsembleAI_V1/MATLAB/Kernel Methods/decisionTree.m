@@ -1,5 +1,7 @@
 clear all; close all; clc; tic
 
+A = matrixread();
+
 N = 10; M = N; % Maximal for N odd...
 for j = 1:M
     for i = 1:N
@@ -26,7 +28,7 @@ end
 A  = A';
 AS = AS';
 
-% Generate 3-D storage of all branch subspaces within decision constraint. 
+% Generate 3-D storage of all branch subspaces (leaf) within decision constraint. 
 
 D = zeros( size(A,1), size(A,2), size(A,1) ); kk = 1;
 
@@ -113,8 +115,6 @@ Z = diag( flip( pascal( size( A, 1 ) ), 2 ) ); % Number of paths through the tri
 % We need to find all binary combinations below M-1. These are the all the
 % paths specified by the opposite diagonal of Pascal's matrix.
 
-V_ = readmatrix("binaryDirectives");
-
 qq = 0; pp = 0; kk = 1;
 for i = 1:1:N
 
@@ -123,10 +123,11 @@ for i = 1:1:N
         B = permn([0 1],M-1,kk);
 
         if( sum( B, 2 ) == qq )
-    
+
             pp = pp + 1;
 
             V_(:,pp,i) = B;
+
         end
         kk = kk + 1;
     end
@@ -135,6 +136,8 @@ end
 
 % We need to utilize symmetry once again by re-using the 
 % first half of the binaries.
+
+% V_ = readmatrix("binaryDirectives");
 
 if( mod(N,2) ~= 0 )
 
@@ -155,7 +158,7 @@ SS = zeros(1,2);
 
 RF = flip(R,2);
 
-UP = 1; DOWN = 0;
+UP = 0; DOWN = 1;
 
 DIRECTION = [UP DOWN]; % [ Toward the vertex. Toward the edge. ]
 
@@ -227,6 +230,7 @@ for kk = 1:1:size(Z,1)
         if( SS( 1 ) < SS( 2 ) )
     
             SS( 1 ) = 0;
+
         elseif( SS( 1 ) > SS( 2 ) )
     
             SS( 2 ) = 0; 
