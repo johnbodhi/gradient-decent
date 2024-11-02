@@ -13,11 +13,11 @@ frameLength = 10000; DATARANGE = 256; BINS = 16;
 
 Supervision = 1; Randomized = 0; Noise = 0;
 
-GD = 1; BiCGSTAB = 0;
+GD = 1; BiCGSTAB 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-A = readmatrix(' '); 
+A = readmatrix(  ' ' ); 
 
 N = floor( size(A,1) / frameLength );
 
