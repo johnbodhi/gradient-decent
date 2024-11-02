@@ -1,19 +1,22 @@
 clear all; close all; clc; tic
 
-A = matrixread();
+A = readmatrix("C:\Users\jmgar\OneDrive\Documents\GitHub\project-euler\Project_Euler_Problem_67\MaximumPathSumII\MaximumPathSumII\Matrices\triangle_tiny.csv");
+% A = readmatrix("C:\Users\jmgar\OneDrive\Documents\GitHub\project-euler\Project_Euler_Problem_67\MaximumPathSumII\MaximumPathSumII\Matrices\triangle_small.csv"); 
+% A = readmatrix("C:\Users\jmgar\OneDrive\Documents\GitHub\project-euler\Project_Euler_Problem_67\MaximumPathSumII\MaximumPathSumII\Matrices\triangle_large.csv"); 
 
-N = 10; M = N; % Maximal for N odd...
-for j = 1:M
-    for i = 1:N
-         if( i < j || i == j)
- 
-            A( i, j ) = randi( [ 0, N ] );
-            % A( i, j ) = 0;
-         end
-     end
-end
-A = A';
+N = size(A,1); M = size(A,2);
 
+% N = 10; M = N; % Maximal for N odd...
+% for j = 1:M
+%     for i = 1:N
+%          if( i < j || i == j)
+% 
+%             A( i, j ) = randi( [ 0, N ] );
+%             % A( i, j ) = 0;
+%          end
+%      end
+% end
+% A = A';
 
 % Flip matrix A to take advantage of symmetry.
 
@@ -104,7 +107,7 @@ else
 
     R(:,:,floor(N/2)+1:N) = flip(R(:,:,floor(N/2)+1:N),3);
 end
-D = flip(D,2); R = flip(R,2);
+D = flip(D,2); % R = flip(R,2);
 
 R = circshift(R,1,1);
 
@@ -156,7 +159,7 @@ end
 
 SS = zeros(1,2);
 
-RF = flip(R,2);
+% RF = flip(R,2);
 
 UP = 0; DOWN = 1;
 
@@ -178,7 +181,9 @@ for kk = 1:1:size(Z,1)
     
     elseif( DIRECTION(1,2) )
         
-        R = RF; ii_ = 2;
+        % R = RF; 
+        
+        ii_ = 2;
         
         ii = ii_; jj = 1; % Top-to-bottom...
      
