@@ -6,17 +6,17 @@ A = readmatrix("C:\Users\jmgar\OneDrive\Documents\GitHub\project-euler\Project_E
 
 N = size(A,1); M = size(A,2);
 
-% N = 10; M = N; % Maximal for N odd...
-% for j = 1:M
-%     for i = 1:N
-%          if( i < j || i == j)
-% 
-%             A( i, j ) = randi( [ 0, N ] );
-%             % A( i, j ) = 0;
-%          end
-%      end
-% end
-% A = A';
+N = 10; M = N; % Maximal for N odd...
+for j = 1:M
+    for i = 1:N
+         if( i < j || i == j)
+
+            A( i, j ) = randi( [ 0, N ] );
+            % A( i, j ) = 0;
+         end
+     end
+end
+A = A';
 
 % Flip matrix A to take advantage of symmetry.
 
@@ -130,7 +130,7 @@ for i = 1:1:N
             pp = pp + 1;
 
             V_(:,pp,i) = B;
-
+            
         end
         kk = kk + 1;
     end
