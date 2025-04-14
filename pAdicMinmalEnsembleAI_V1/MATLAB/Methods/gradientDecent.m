@@ -81,7 +81,7 @@ function [ Z ] = gradientDecent( F )
 
     [ ~, Z ] = min(S(BPI(1,1):BPI(1,2),1)); % Decisions are not constrained to groups. 
 
-     if( Z == 1 )
+    if( Z == 1 )
 
         Z = BPI(1,1);
 

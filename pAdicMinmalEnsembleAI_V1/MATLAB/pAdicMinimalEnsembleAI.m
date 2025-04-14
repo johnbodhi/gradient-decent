@@ -78,6 +78,6 @@ end
 % samples are classified. The size of the structure and the termination 
 % leaf determines the value of N_l ( NxN, Leaf ).
 
-% decisionTree();
+% [ D ] = decisionTree();
 
 toc
